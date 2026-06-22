@@ -16,6 +16,8 @@ const team = [
     avatarSvg: "M12 2a5 5 0 100 10 5 5 0 000-10zm0 12c-4.4 0-8 2-8 6v2h16v-2c0-4-3.6-6-8-6z"
   }
 ];
+
+const basePath = import.meta.env.BASE_URL;
 ---
 
 <Layout title="About Our Mission" description="Learn about Global Yoga Tips. Discover our story, our certified yoga instructors, and our philosophy of holistic wellness and self-care.">
@@ -43,11 +45,12 @@ const team = [
             We designed this website to serve as an online wellness retreat. From our clean fonts to our blush-white palettes, we want you to feel a sense of calm the moment you land on our pages. We do not provide quick fixes; we provide deep, life-altering self-care rituals.
           </p>
         </div>
-        <div class="md:col-span-5 bg-secondary-bg/60 border border-border-main rounded-3xl p-8 flex items-center justify-center relative overflow-hidden h-64 shadow-sm">
-          <div class="absolute inset-0 bg-[radial-gradient(#e8afc7_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
-          <svg class="h-28 w-28 text-brand-primary/60 drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2C11.5 5 9.5 8 6 8.5C7.5 10 7.5 12 7 13.5C8.5 13 10.5 13.5 12 16.5C13.5 13.5 15.5 13 17 13.5C16.5 12 16.5 10 18 8.5C14.5 8 12.5 5 12 2Z" fill="currentColor" opacity="0.4"/>
-          </svg>
+        <div class="md:col-span-5 border border-border-main rounded-3xl overflow-hidden h-64 shadow-sm relative group">
+          <img 
+            src={`${basePath}images/globalyogatips.png`} 
+            alt="Global Yoga Tips Wellness Sanctuary" 
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
         </div>
       </div>
 
