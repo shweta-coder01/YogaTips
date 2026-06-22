@@ -75,6 +75,384 @@ const poses = [
     benefits: ["Improves concentration & balance", "Stretches shoulders & upper back", "Strengthens calves & thighs"],
     description: "A challenging standing balance that integrates wrapped limbs, stretching the shoulder blades and opening the hip joints.",
     svgPath: "M12 4v16M8 8c2 0 4 2 4 4s-2 4-4 4M16 8c-2 0-4 2-4 4s 2 4 4 4"
+  },
+  {
+    englishName: "Child's Pose",
+    sanskritName: "Balasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Calms the brain and helps relieve stress", "Stretches the hips, thighs, and ankles", "Relieves back and neck pain"],
+    description: "A restful posture that can be sequence-integrated for resetting the nervous system and elongating the lower back muscles.",
+    svgPath: ""
+  },
+  {
+    englishName: "Warrior I",
+    sanskritName: "Virabhadrasana I",
+    difficulty: "Beginner" as const,
+    category: "Strength",
+    benefits: ["Strengthens shoulders and arms", "Stretches chest, lungs, and groin", "Tones thighs and calves"],
+    description: "A dynamic standing posture honoring strength and courage, extending the upper torso while stabilizing leg musculature.",
+    svgPath: ""
+  },
+  {
+    englishName: "Warrior III",
+    sanskritName: "Virabhadrasana III",
+    difficulty: "Advanced" as const,
+    category: "Balance",
+    benefits: ["Improves balance and posture", "Strengthens shoulders, back, and arms", "Tones the core abdominal area"],
+    description: "An intense standing balance pose requiring structural alignment parallel to the floor, testing balance and concentration.",
+    svgPath: ""
+  },
+  {
+    englishName: "Triangle Pose",
+    sanskritName: "Trikonasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Stretches thighs, knees, and ankles", "Opens hips, chest, and shoulders", "Improves digestion"],
+    description: "A foundational lateral extension pose that stretches the sides of the waist and strengthens the lower body.",
+    svgPath: ""
+  },
+  {
+    englishName: "Plank Pose",
+    sanskritName: "Phalakasana",
+    difficulty: "Beginner" as const,
+    category: "Strength",
+    benefits: ["Strengthens the core, arms, and wrists", "Tones the abdominals", "Improves posture"],
+    description: "A essential transitional pose that engages the entire front body, building wrist and shoulder stability.",
+    svgPath: ""
+  },
+  {
+    englishName: "Four-Limbed Staff Pose",
+    sanskritName: "Chaturanga Dandasana",
+    difficulty: "Intermediate" as const,
+    category: "Strength",
+    benefits: ["Strengthens arms and wrists", "Tones the abdomen", "Builds upper body endurance"],
+    description: "A core-stabilizing low plank pose that requires deep upper body power and alignment to protect the shoulder joints.",
+    svgPath: ""
+  },
+  {
+    englishName: "Upward-Facing Dog",
+    sanskritName: "Urdhva Mukha Svanasana",
+    difficulty: "Intermediate" as const,
+    category: "Flexibility",
+    benefits: ["Improves posture", "Strengthens spine, arms, and wrists", "Stretches chest, lungs, and shoulders"],
+    description: "A powerful backbend that lifts the hips and thighs off the floor, promoting respiratory openness and spine flexibility.",
+    svgPath: ""
+  },
+  {
+    englishName: "Mountain Pose",
+    sanskritName: "Tadasana",
+    difficulty: "Beginner" as const,
+    category: "Balance",
+    benefits: ["Improves posture and alignment", "Strengthens thighs, knees, and ankles", "Firms abdomen and buttocks"],
+    description: "The blueprint standing posture that teaches grounding, alignment awareness, and a tall, calm presence.",
+    svgPath: ""
+  },
+  {
+    englishName: "Corpse Pose",
+    sanskritName: "Savasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Calms the brain and relieves stress", "Relaxes the entire body", "Reduces headache and fatigue"],
+    description: "The final resting pose in any yoga class, focusing on absolute stillness, body scans, and conscious relaxation.",
+    svgPath: ""
+  },
+  {
+    englishName: "Lotus Pose",
+    sanskritName: "Padmasana",
+    difficulty: "Advanced" as const,
+    category: "Flexibility",
+    benefits: ["Opens the hips and ankles", "Calms the brain for meditation", "Improves overall posture"],
+    description: "The classic cross-legged meditation seat that locks the lower limbs in a secure, stable, and grounding posture.",
+    svgPath: ""
+  },
+  {
+    englishName: "Camel Pose",
+    sanskritName: "Ustrasana",
+    difficulty: "Intermediate" as const,
+    category: "Flexibility",
+    benefits: ["Stretches entire front of body", "Strengthens back muscles", "Improves spinal mobility"],
+    description: "An invigorating backbend that opens the chest, throat, and hip flexors while encouraging emotional release.",
+    svgPath: ""
+  },
+  {
+    englishName: "Cat Pose",
+    sanskritName: "Marjaryasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Stretches the back torso and neck", "Massages abdominal organs", "Relieves stress"],
+    description: "A gentle warming pose that curves the spine upward, releasing tension in the upper neck and shoulders.",
+    svgPath: ""
+  },
+  {
+    englishName: "Cow Pose",
+    sanskritName: "Bitilasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Warms and stretches the spine", "Opens the chest and throat", "Stimulates kidney and adrenal glands"],
+    description: "A gentle backbend done in tandem with Cat Pose, moving the tailbone up and chest forward with the breath.",
+    svgPath: ""
+  },
+  {
+    englishName: "Easy Pose",
+    sanskritName: "Sukhasana",
+    difficulty: "Beginner" as const,
+    category: "Balance",
+    benefits: ["Calms the mind", "Stretches knees and ankles", "Strengthens the back"],
+    description: "A comfortable seated position with crossed legs, commonly used for meditation, breath work, and centering.",
+    svgPath: ""
+  },
+  {
+    englishName: "Cobbler's Pose (Bound Angle)",
+    sanskritName: "Baddha Konasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Stretches inner thighs and groin", "Stimulates abdominal organs", "Relieves anxiety"],
+    description: "A seated pose bringing the soles of the feet together, opening the groin and pelvic floor muscles.",
+    svgPath: ""
+  },
+  {
+    englishName: "Seated Forward Fold",
+    sanskritName: "Paschimottanasana",
+    difficulty: "Intermediate" as const,
+    category: "Flexibility",
+    benefits: ["Stretches the hamstrings and calves", "Stretches the spine", "Calms the mind and relieves mild anxiety"],
+    description: "A deep seated forward bend that stretches the entire back body while inviting internal reflection.",
+    svgPath: ""
+  },
+  {
+    englishName: "Standing Forward Fold",
+    sanskritName: "Uttanasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Stretches hamstrings, calves, and hips", "Strengthens thighs and knees", "Reduces stress and fatigue"],
+    description: "A standing inversion where the torso hangs over the legs, letting gravity decompress the back and neck.",
+    svgPath: ""
+  },
+  {
+    englishName: "Chair Pose",
+    sanskritName: "Utkatasana",
+    difficulty: "Beginner" as const,
+    category: "Strength",
+    benefits: ["Strengthens ankles, calves, thighs, and spine", "Stretches shoulders and chest", "Stimulates abdominal organs"],
+    description: "An active standing posture simulating sitting back into an invisible chair, firing up leg endurance and core.",
+    svgPath: ""
+  },
+  {
+    englishName: "Locust Pose",
+    sanskritName: "Salabhasana",
+    difficulty: "Beginner" as const,
+    category: "Strength",
+    benefits: ["Strengthens spine, buttocks, and back of arms", "Stretches chest and shoulders", "Improves posture"],
+    description: "A belly-down backbend that lifts the head, chest, arms, and legs off the mat to strengthen the posterior chain.",
+    svgPath: ""
+  },
+  {
+    englishName: "Bow Pose",
+    sanskritName: "Dhanurasana",
+    difficulty: "Intermediate" as const,
+    category: "Strength",
+    benefits: ["Stretches entire front of body", "Strengthens back muscles", "Stimulates abdomen and neck"],
+    description: "A backbend resembling an archer's bow, grabbing ankles from a face-down position to pull the chest high.",
+    svgPath: ""
+  },
+  {
+    englishName: "Wheel Pose (Upward Bow)",
+    sanskritName: "Urdhva Dhanurasana",
+    difficulty: "Advanced" as const,
+    category: "Flexibility",
+    benefits: ["Stretches chest and lungs", "Strengthens arms, wrists, and legs", "Stimulates thyroid and pituitary glands"],
+    description: "An advanced full backbend pushing the body off the floor, opening the thoracic spine and front heart space.",
+    svgPath: ""
+  },
+  {
+    englishName: "Reclined Bound Angle",
+    sanskritName: "Supta Baddha Konasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Stretches groin, inner thighs, and knees", "Relieves stress and mild depression", "Stimulates heart & blood flow"],
+    description: "A deeply restorative reclined posture opening the hips, perfect for cooling down or practicing breath exercises.",
+    svgPath: ""
+  },
+  {
+    englishName: "Dolphin Pose",
+    sanskritName: "Ardha Pincha Mayurasana",
+    difficulty: "Beginner" as const,
+    category: "Strength",
+    benefits: ["Strengthens arms, shoulders, and core", "Stretches shoulders, hamstrings, and calves", "Relieves stress"],
+    description: "A forearm variation of Downward Dog that builds shoulder girdle stability and upper body strength.",
+    svgPath: ""
+  },
+  {
+    englishName: "Forearm Stand",
+    sanskritName: "Pincha Mayurasana",
+    difficulty: "Advanced" as const,
+    category: "Balance",
+    benefits: ["Strengthens shoulders, arms, and back", "Stretches chest and neck", "Improves balance and focus"],
+    description: "An advanced forearm balance inversion requiring strong shoulder support, core integration, and courage.",
+    svgPath: ""
+  },
+  {
+    englishName: "Handstand",
+    sanskritName: "Adho Mukha Vrksasana",
+    difficulty: "Advanced" as const,
+    category: "Balance",
+    benefits: ["Builds upper body and core strength", "Increases blood flow to brain", "Boosts confidence and stamina"],
+    description: "A full vertical inversion balancing solely on the hands, testing structural alignment, balance, and arm strength.",
+    svgPath: ""
+  },
+  {
+    englishName: "Shoulder Stand",
+    sanskritName: "Salamba Sarvangasana",
+    difficulty: "Intermediate" as const,
+    category: "Balance",
+    benefits: ["Calms the nervous system", "Stimulates thyroid and prostate glands", "Stretches shoulders and neck"],
+    description: "A supported inversion balancing weight on the upper shoulders, letting the legs extend vertically upward.",
+    svgPath: ""
+  },
+  {
+    englishName: "Plow Pose",
+    sanskritName: "Halasana",
+    difficulty: "Intermediate" as const,
+    category: "Flexibility",
+    benefits: ["Stretches shoulders and spine", "Calms the brain", "Stimulates abdominal organs and thyroid gland"],
+    description: "A continuation of shoulder stand, lowering the toes to the floor behind the head to stretch the entire spine.",
+    svgPath: ""
+  },
+  {
+    englishName: "Fish Pose",
+    sanskritName: "Matsyasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Stretches chest, throat, and hip flexors", "Strengthens back muscles", "Improves posture"],
+    description: "A supine backbend lifting the chest and arching the back while letting the crown of the head rest on the mat.",
+    svgPath: ""
+  },
+  {
+    englishName: "Happy Baby Pose",
+    sanskritName: "Ananda Balasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Gently stretches inner groins and back spine", "Calms the brain", "Relieves stress and fatigue"],
+    description: "A playful reclined hip opener, holding the outer edges of the feet and pulling knees toward the armpits.",
+    svgPath: ""
+  },
+  {
+    englishName: "Garland Pose (Yogi Squat)",
+    sanskritName: "Malasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Stretches ankles, groin, and back torso", "Tones the abdomen", "Opens the hip joints"],
+    description: "A deep squat that opens the pelvic area, stretches the Achilles tendons, and releases the lower lumbar spine.",
+    svgPath: ""
+  },
+  {
+    englishName: "Side Plank Pose",
+    sanskritName: "Vasisthasana",
+    difficulty: "Intermediate" as const,
+    category: "Strength",
+    benefits: ["Strengthens arms, belly, and legs", "Improves balance", "Strengthens wrists and core"],
+    description: "A lateral arm balance supporting weight on one side of the body, toning the obliques and shoulder stabilizers.",
+    svgPath: ""
+  },
+  {
+    englishName: "Warrior Lunge (High Lunge)",
+    sanskritName: "Ashta Chandrasana",
+    difficulty: "Beginner" as const,
+    category: "Strength",
+    benefits: ["Strengthens legs and arms", "Stretches groin and hip flexors", "Opens chest and shoulders"],
+    description: "A dynamic standing posture with the back heel lifted, stretching the psoas muscle while standing tall.",
+    svgPath: ""
+  },
+  {
+    englishName: "Low Lunge",
+    sanskritName: "Anjaneyasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Stretches hip flexors and thighs", "Opens chest and shoulders", "Improves overall balance"],
+    description: "A kneeling lunge that drops the hips forward and down, releasing pelvic tension and opening the front body.",
+    svgPath: ""
+  },
+  {
+    englishName: "Lizard Pose",
+    sanskritName: "Utthan Pristhasana",
+    difficulty: "Intermediate" as const,
+    category: "Flexibility",
+    benefits: ["Deeply stretches hip flexors, hamstrings, and groin", "Strengthens inner thighs", "Prepares body for deep splits"],
+    description: "An active low lunge dropping the elbows to the floor inside the front foot, targeting deep hip joints.",
+    svgPath: ""
+  },
+  {
+    englishName: "Half Splits",
+    sanskritName: "Ardha Hanumanasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Deeply stretches hamstrings and calves", "Stretches lower back", "Prepares body for full front splits"],
+    description: "A kneeling posture extending one leg forward and folding over it to target hamstring and sciatic flexibility.",
+    svgPath: ""
+  },
+  {
+    englishName: "Hero Pose",
+    sanskritName: "Virasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Stretches thighs, knees, and ankles", "Improves digestion", "Relieves tired legs"],
+    description: "A seated pose kneeling with knees together and hips sitting on the floor between the heels, stretching quadriceps.",
+    svgPath: ""
+  },
+  {
+    englishName: "Revolved Triangle",
+    sanskritName: "Parivrtta Trikonasana",
+    difficulty: "Intermediate" as const,
+    category: "Balance",
+    benefits: ["Strengthens and stretches legs and hips", "Stretches spine and chest", "Improves balance & digestion"],
+    description: "A standing twist combining lateral leg stretch and torso rotation, testing core stability and hip squareness.",
+    svgPath: ""
+  },
+  {
+    englishName: "Revolved Side Angle",
+    sanskritName: "Parivrtta Parsvakonasana",
+    difficulty: "Intermediate" as const,
+    category: "Strength",
+    benefits: ["Strengthens legs, knees, and ankles", "Stretches groin, spine, and chest", "Stimulates abdominal organs"],
+    description: "A deep standing lunge twist, bringing the elbow to the outside of the front knee, building strength and balance.",
+    svgPath: ""
+  },
+  {
+    englishName: "Extended Side Angle",
+    sanskritName: "Utthita Parsvakonasana",
+    difficulty: "Beginner" as const,
+    category: "Strength",
+    benefits: ["Strengthens legs, knees, and ankles", "Stretches groin, spine, and chest", "Increases lung capacity"],
+    description: "A standing posture extending the side body from back heel to front fingertips, creating a long side stretch.",
+    svgPath: ""
+  },
+  {
+    englishName: "Gate Pose",
+    sanskritName: "Parighasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Stretches side torso and spine", "Opens lungs and chest", "Stretches hamstrings"],
+    description: "A kneeling side-bend extending one leg out to the side and reaching the opposite arm overhead for a lateral stretch.",
+    svgPath: ""
+  },
+  {
+    englishName: "Cow Face Pose",
+    sanskritName: "Gomukhasana",
+    difficulty: "Intermediate" as const,
+    category: "Flexibility",
+    benefits: ["Opens hips and thighs", "Stretches shoulders, armpits, and chest", "Builds arm strength"],
+    description: "A seated posture stacking knees and joining fingers behind the back, opening both upper and lower girdles.",
+    svgPath: ""
+  },
+  {
+    englishName: "Eight-Angle Pose",
+    sanskritName: "Astavakrasana",
+    difficulty: "Advanced" as const,
+    category: "Strength",
+    benefits: ["Strengthens wrists, arms, and shoulders", "Tones abdominal muscles", "Improves concentration"],
+    description: "An advanced asymmetric arm balance with legs wrapped around one arm, extending sideways parallel to the floor.",
+    svgPath: ""
   }
 ];
 
