@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { title, description = "Discover expert yoga guidance, wellness tips, and premium yoga programs designed for a healthier and happier lifestyle." } = Astro.props;
+const basePath = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
@@ -14,7 +15,7 @@ const { title, description = "Discover expert yoga guidance, wellness tips, and 
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${basePath}favicon.svg`} />
     <meta name="generator" content={Astro.generator} />
     
     <!-- Primary SEO Metadata -->
@@ -27,13 +28,13 @@ const { title, description = "Discover expert yoga guidance, wellness tips, and 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={`${title} | Global Yoga Tips`} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/images/og-yoga.jpg" />
+    <meta property="og:image" content={`${basePath}images/og-yoga.jpg`} />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:title" content={`${title} | Global Yoga Tips`} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content="/images/og-yoga.jpg" />
+    <meta property="twitter:image" content={`${basePath}images/og-yoga.jpg`} />
 
     <!-- Google Analytics (Placeholder Tag) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -44,13 +45,13 @@ const { title, description = "Discover expert yoga guidance, wellness tips, and 
       gtag('config', 'G-XXXXXXXXXX');
     </script>
   </head>
-  <body class="bg-primary-bg text-text-main selection:bg-brand-accent selection:text-text-main min-h-screen flex flex-col">
+  <body data-base-url={basePath} class="bg-primary-bg text-text-main selection:bg-brand-accent selection:text-text-main min-h-screen flex flex-col">
     <!-- Header -->
     <header class="bg-white border-b border-border-main sticky top-0 z-50 shadow-sm backdrop-blur-md bg-white/95">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
           <!-- Logo -->
-          <a href="/" class="flex items-center space-x-2" id="logo-link">
+          <a href={basePath} class="flex items-center space-x-2" id="logo-link">
             <svg class="h-9 w-9 text-brand-primary fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 2C11.5 5 9.5 8 6 8.5C7.5 10 7.5 12 7 13.5C8.5 13 10.5 13.5 12 16.5C13.5 13.5 15.5 13 17 13.5C16.5 12 16.5 10 18 8.5C14.5 8 12.5 5 12 2Z"/>
               <path d="M12 7C13 11 17 11.5 19.5 12.5C17.5 13.5 15.5 14 14.5 16.5C13.5 14 12 14.5 11 16.5C10 14.5 8 14 6 16.5C5 14 3 13.5 1 12.5C3.5 11.5 7.5 11 8.5 7C9.5 9.5 10.5 10 12 7Z" opacity="0.75"/>
@@ -61,18 +62,18 @@ const { title, description = "Discover expert yoga guidance, wellness tips, and 
 
           <!-- Desktop Navigation -->
           <nav class="hidden md:flex space-x-8 items-center" id="desktop-nav">
-            <a href="/" class="text-text-main hover:text-brand-primary font-medium transition-colors">Home</a>
-            <a href="/poses" class="text-text-main hover:text-brand-primary font-medium transition-colors">Yoga Poses</a>
-            <a href="/programs" class="text-text-main hover:text-brand-primary font-medium transition-colors">Yoga Programs</a>
-            <a href="/blog" class="text-text-main hover:text-brand-primary font-medium transition-colors">Blog</a>
-            <a href="/about" class="text-text-main hover:text-brand-primary font-medium transition-colors">About</a>
-            <a href="/contact" class="text-text-main hover:text-brand-primary font-medium transition-colors">Contact</a>
+            <a href={basePath} class="text-text-main hover:text-brand-primary font-medium transition-colors">Home</a>
+            <a href={`${basePath}poses`} class="text-text-main hover:text-brand-primary font-medium transition-colors">Yoga Poses</a>
+            <a href={`${basePath}programs`} class="text-text-main hover:text-brand-primary font-medium transition-colors">Yoga Programs</a>
+            <a href={`${basePath}blog`} class="text-text-main hover:text-brand-primary font-medium transition-colors">Blog</a>
+            <a href={`${basePath}about`} class="text-text-main hover:text-brand-primary font-medium transition-colors">About</a>
+            <a href={`${basePath}contact`} class="text-text-main hover:text-brand-primary font-medium transition-colors">Contact</a>
           </nav>
 
           <!-- Desktop Authentication -->
           <div class="hidden md:flex items-center space-x-4" id="auth-nav">
-            <a href="/login" class="text-text-main hover:text-brand-primary font-medium transition-colors">Login</a>
-            <a href="/register" class="btn-primary py-2.5 px-6 text-sm">Register</a>
+            <a href={`${basePath}login`} class="text-text-main hover:text-brand-primary font-medium transition-colors">Login</a>
+            <a href={`${basePath}register`} class="btn-primary py-2.5 px-6 text-sm">Register</a>
           </div>
 
           <!-- Mobile Menu Button -->
@@ -90,16 +91,16 @@ const { title, description = "Discover expert yoga guidance, wellness tips, and 
       <!-- Mobile Menu, show/hide based on menu state. -->
       <div class="hidden md:hidden border-t border-border-main bg-white" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Home</a>
-          <a href="/poses" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Yoga Poses</a>
-          <a href="/programs" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Yoga Programs</a>
-          <a href="/blog" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Blog</a>
-          <a href="/about" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">About</a>
-          <a href="/contact" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Contact</a>
+          <a href={basePath} class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Home</a>
+          <a href={`${basePath}poses`} class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Yoga Poses</a>
+          <a href={`${basePath}programs`} class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Yoga Programs</a>
+          <a href={`${basePath}blog`} class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Blog</a>
+          <a href={`${basePath}about`} class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">About</a>
+          <a href={`${basePath}contact`} class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Contact</a>
         </div>
         <div class="pt-4 pb-4 border-t border-border-main px-5 space-y-2" id="auth-nav-mobile">
-          <a href="/login" class="block text-center w-full px-4 py-2 text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg rounded-md">Login</a>
-          <a href="/register" class="block text-center w-full btn-primary py-2.5 px-6 text-sm">Register</a>
+          <a href={`${basePath}login`} class="block text-center w-full px-4 py-2 text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg rounded-md">Login</a>
+          <a href={`${basePath}register`} class="block text-center w-full btn-primary py-2.5 px-6 text-sm">Register</a>
         </div>
       </div>
     </header>
@@ -130,10 +131,10 @@ const { title, description = "Discover expert yoga guidance, wellness tips, and 
           <div>
             <h3 class="font-heading font-semibold text-text-main mb-4 uppercase tracking-wider text-xs">Explore</h3>
             <ul class="space-y-2 text-sm">
-              <li><a href="/" class="text-text-secondary hover:text-brand-primary transition-colors">Home</a></li>
-              <li><a href="/poses" class="text-text-secondary hover:text-brand-primary transition-colors">Yoga Poses</a></li>
-              <li><a href="/programs" class="text-text-secondary hover:text-brand-primary transition-colors">Yoga Programs</a></li>
-              <li><a href="/blog" class="text-text-secondary hover:text-brand-primary transition-colors">Yoga Blog</a></li>
+              <li><a href={basePath} class="text-text-secondary hover:text-brand-primary transition-colors">Home</a></li>
+              <li><a href={`${basePath}poses`} class="text-text-secondary hover:text-brand-primary transition-colors">Yoga Poses</a></li>
+              <li><a href={`${basePath}programs`} class="text-text-secondary hover:text-brand-primary transition-colors">Yoga Programs</a></li>
+              <li><a href={`${basePath}blog`} class="text-text-secondary hover:text-brand-primary transition-colors">Yoga Blog</a></li>
             </ul>
           </div>
 
@@ -141,10 +142,10 @@ const { title, description = "Discover expert yoga guidance, wellness tips, and 
           <div>
             <h3 class="font-heading font-semibold text-text-main mb-4 uppercase tracking-wider text-xs">Categories</h3>
             <ul class="space-y-2 text-sm">
-              <li><a href="/poses?category=Beginner" class="text-text-secondary hover:text-brand-primary transition-colors">Beginner Yoga</a></li>
-              <li><a href="/poses?category=Flexibility" class="text-text-secondary hover:text-brand-primary transition-colors">Flexibility Poses</a></li>
-              <li><a href="/poses?category=Balance" class="text-text-secondary hover:text-brand-primary transition-colors">Balance & Strength</a></li>
-              <li><a href="/blog?category=Mindfulness" class="text-text-secondary hover:text-brand-primary transition-colors">Mindfulness & Meditation</a></li>
+              <li><a href={`${basePath}poses?category=Beginner`} class="text-text-secondary hover:text-brand-primary transition-colors">Beginner Yoga</a></li>
+              <li><a href={`${basePath}poses?category=Flexibility`} class="text-text-secondary hover:text-brand-primary transition-colors">Flexibility Poses</a></li>
+              <li><a href={`${basePath}poses?category=Balance`} class="text-text-secondary hover:text-brand-primary transition-colors">Balance & Strength</a></li>
+              <li><a href={`${basePath}blog?category=Mindfulness`} class="text-text-secondary hover:text-brand-primary transition-colors">Mindfulness & Meditation</a></li>
             </ul>
           </div>
 
@@ -169,9 +170,9 @@ const { title, description = "Discover expert yoga guidance, wellness tips, and 
         <div class="border-t border-border-main/50 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-text-secondary">
           <p>© {new Date().getFullYear()} Global Yoga Tips. All rights reserved.</p>
           <div class="flex space-x-6 mt-4 md:mt-0">
-            <a href="/about" class="hover:text-brand-primary">About Us</a>
-            <a href="/contact" class="hover:text-brand-primary">Contact</a>
-            <a href="/login" class="hover:text-brand-primary">Privacy Policy</a>
+            <a href={`${basePath}about`} class="hover:text-brand-primary">About Us</a>
+            <a href={`${basePath}contact`} class="hover:text-brand-primary">Contact</a>
+            <a href={`${basePath}login`} class="hover:text-brand-primary">Privacy Policy</a>
           </div>
         </div>
       </div>
@@ -180,6 +181,9 @@ const { title, description = "Discover expert yoga guidance, wellness tips, and 
     <!-- Client Script to Handle Auth & Interactions -->
     <script>
       import { supabase } from '../lib/supabase.js';
+
+      // Read base URL passed from Astro frontmatter
+      const basePath = document.body.dataset.baseUrl || '/';
 
       // 1. Manage Dynamic Login/Dashboard Header States
       const updateAuthNavbar = (session) => {
@@ -190,7 +194,7 @@ const { title, description = "Discover expert yoga guidance, wellness tips, and 
           const userMetaName = session.user?.user_metadata?.name || session.user?.name || 'Yoga Practitioner';
           const logoutHTML = `
             <div class="flex items-center space-x-4">
-              <a href="/dashboard" class="text-text-main hover:text-brand-primary font-medium transition-colors flex items-center space-x-1.5">
+              <a href="${basePath}dashboard" class="text-text-main hover:text-brand-primary font-medium transition-colors flex items-center space-x-1.5">
                 <span class="w-2 h-2 rounded-full bg-success-sage animate-pulse"></span>
                 <span>Dashboard</span>
               </a>
@@ -200,7 +204,7 @@ const { title, description = "Discover expert yoga guidance, wellness tips, and 
           const logoutMobileHTML = `
             <div class="space-y-3">
               <div class="text-xs text-text-secondary px-3">Signed in as <strong>${userMetaName}</strong></div>
-              <a href="/dashboard" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Dashboard</a>
+              <a href="${basePath}dashboard" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Dashboard</a>
               <button id="logout-btn-mobile" class="w-full text-center btn-primary py-2.5 px-6 text-sm cursor-pointer mt-1">Log Out</button>
             </div>
           `;
@@ -211,19 +215,19 @@ const { title, description = "Discover expert yoga guidance, wellness tips, and 
           // Wire up event listeners
           const handleSignOut = async () => {
             await supabase.auth.signOut();
-            window.location.href = '/';
+            window.location.href = basePath;
           };
 
           document.getElementById('logout-btn')?.addEventListener('click', handleSignOut);
           document.getElementById('logout-btn-mobile')?.addEventListener('click', handleSignOut);
         } else {
           const loginHTML = `
-            <a href="/login" class="text-text-main hover:text-brand-primary font-medium transition-colors">Login</a>
-            <a href="/register" class="btn-primary py-2.5 px-6 text-sm">Register</a>
+            <a href="${basePath}login" class="text-text-main hover:text-brand-primary font-medium transition-colors">Login</a>
+            <a href="${basePath}register" class="btn-primary py-2.5 px-6 text-sm">Register</a>
           `;
           const loginMobileHTML = `
-            <a href="/login" class="block text-center w-full px-4 py-2 text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg rounded-md">Login</a>
-            <a href="/register" class="block text-center w-full btn-primary py-2.5 px-6 text-sm">Register</a>
+            <a href="${basePath}login" class="block text-center w-full px-4 py-2 text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg rounded-md">Login</a>
+            <a href="${basePath}register" class="block text-center w-full btn-primary py-2.5 px-6 text-sm">Register</a>
           `;
 
           if (authNav) authNav.innerHTML = loginHTML;
