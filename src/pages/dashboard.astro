@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const basePath = import.meta.env.BASE_URL;
 ---
 
 <Layout title="Dashboard" description="Access your personal sanctuary dashboard. Update your profile, review order histories, and download purchased premium guides.">
@@ -80,7 +81,7 @@ import Layout from '../layouts/Layout.astro';
               <h3 class="font-heading font-semibold text-lg text-text-main">No Downloads Available</h3>
               <p class="text-text-secondary text-sm max-w-sm mx-auto">You haven't purchased any premium programs yet. Start learning with our guided resources today!</p>
             </div>
-            <a href="/programs" class="btn-primary py-2.5 px-6 text-xs shadow-sm">Shop Programs</a>
+            <a href={`${basePath}programs`} class="btn-primary py-2.5 px-6 text-xs shadow-sm">Shop Programs</a>
           </div>
 
           <!-- Downloads List Grid -->
@@ -105,7 +106,7 @@ import Layout from '../layouts/Layout.astro';
               <h3 class="font-heading font-semibold text-lg text-text-main">No Orders Placed</h3>
               <p class="text-text-secondary text-sm max-w-sm mx-auto">No transaction receipts found in your history. Buy a program guide to generate a receipt here.</p>
             </div>
-            <a href="/programs" class="btn-primary py-2.5 px-6 text-xs shadow-sm">Shop Programs</a>
+            <a href={`${basePath}programs`} class="btn-primary py-2.5 px-6 text-xs shadow-sm">Shop Programs</a>
           </div>
 
           <!-- Orders List Table -->
@@ -177,11 +178,14 @@ import Layout from '../layouts/Layout.astro';
   <script>
     import { supabase } from '../lib/supabase.js';
 
+    // Get base URL passed from body dataset
+    const basePath = document.body.dataset.baseUrl || '/';
+
     // File download mapper
     const productDownloads: Record<string, string> = {
-      "Vinyasa Flow Daily Guide": "/downloads/vinyasa_guide.pdf",
-      "Meditation & Mindfulness Guide": "/downloads/meditation_guide.pdf",
-      "30-Day Yoga Challenge for Beginners": "/downloads/challenge_30day.pdf"
+      "Vinyasa Flow Daily Guide": `${basePath}downloads/vinyasa_guide.pdf`,
+      "Meditation & Mindfulness Guide": `${basePath}downloads/meditation_guide.pdf`,
+      "30-Day Yoga Challenge for Beginners": `${basePath}downloads/challenge_30day.pdf`
     };
 
     // Card Icon SVG builder
@@ -199,7 +203,7 @@ import Layout from '../layouts/Layout.astro';
       // 1. Authenticate check
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
-        window.location.href = '/login';
+        window.location.href = `${basePath}login`;
         return;
       }
 

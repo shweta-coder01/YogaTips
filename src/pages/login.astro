@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const basePath = import.meta.env.BASE_URL;
 ---
 
 <Layout title="Login to Your Sanctuary" description="Sign in to your Global Yoga Tips account to manage your profile, view orders, and download purchased guides.">
@@ -78,7 +79,7 @@ import Layout from '../layouts/Layout.astro';
         <div class="border-t border-border-main/50 pt-4 text-center">
           <p class="text-xs text-text-secondary">
             Don't have an account? 
-            <a href="/register" class="font-bold text-brand-primary hover:text-btn-hover transition-colors">Register here</a>
+            <a href={`${basePath}register`} class="font-bold text-brand-primary hover:text-btn-hover transition-colors">Register here</a>
           </p>
         </div>
       </div>
@@ -141,12 +142,13 @@ import Layout from '../layouts/Layout.astro';
       } else {
         // Successful login
         // Check for redirects
+        const basePath = document.body.dataset.baseUrl || '/';
         const urlParams = new URLSearchParams(window.location.search);
         const redirect = urlParams.get('redirect');
         if (redirect) {
-          window.location.href = `/${redirect}`;
+          window.location.href = `${basePath}${redirect}`;
         } else {
-          window.location.href = '/dashboard';
+          window.location.href = `${basePath}dashboard`;
         }
       }
     });

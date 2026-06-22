@@ -11,6 +11,7 @@ interface Props {
 }
 
 const { title, excerpt, category, publishDate, readTime, slug, coverColor, svgPath } = Astro.props;
+const basePath = import.meta.env.BASE_URL;
 ---
 
 <article class="luxury-card flex flex-col justify-between h-full bg-white border border-border-main rounded-3xl overflow-hidden shadow-sm transition-all duration-300">
@@ -44,7 +45,7 @@ const { title, excerpt, category, publishDate, readTime, slug, coverColor, svgPa
       </div>
 
       <h3 class="font-heading font-semibold text-lg text-text-main mb-2.5 line-clamp-2 hover:text-brand-primary transition-colors">
-        <a href={`/blog/${slug}`}>{title}</a>
+        <a href={`${basePath}blog/${slug}`}>{title}</a>
       </h3>
       <p class="text-text-secondary text-sm leading-relaxed line-clamp-3 mb-4">{excerpt}</p>
     </div>
@@ -53,7 +54,7 @@ const { title, excerpt, category, publishDate, readTime, slug, coverColor, svgPa
   <!-- Read More Link -->
   <div class="p-6 pt-0">
     <a 
-      href={`/blog/${slug}`} 
+      href={`${basePath}blog/${slug}`} 
       class="group inline-flex items-center text-xs font-bold uppercase tracking-wider text-brand-primary hover:text-btn-hover transition-colors"
     >
       <span>Read Article</span>
