@@ -61,7 +61,7 @@ const basePath = import.meta.env.BASE_URL;
           </a>
 
           <!-- Desktop Navigation -->
-          <nav class="hidden md:flex space-x-8 items-center" id="desktop-nav">
+          <nav class="hidden lg:flex space-x-4 xl:space-x-6 items-center" id="desktop-nav">
             <a href={basePath} class="text-text-main hover:text-brand-primary font-medium transition-colors">Home</a>
             <a href={`${basePath}poses`} class="text-text-main hover:text-brand-primary font-medium transition-colors">Yoga Poses</a>
             <a href={`${basePath}programs`} class="text-text-main hover:text-brand-primary font-medium transition-colors">Yoga Programs</a>
@@ -71,13 +71,13 @@ const basePath = import.meta.env.BASE_URL;
           </nav>
 
           <!-- Desktop Authentication -->
-          <div class="hidden md:flex items-center space-x-4" id="auth-nav">
+          <div class="hidden lg:flex items-center space-x-3 xl:space-x-4" id="auth-nav">
             <a href={`${basePath}login`} class="text-text-main hover:text-brand-primary font-medium transition-colors">Login</a>
             <a href={`${basePath}register`} class="btn-primary py-2.5 px-6 text-sm">Register</a>
           </div>
 
           <!-- Mobile Menu Button -->
-          <div class="flex items-center md:hidden">
+          <div class="flex items-center lg:hidden">
             <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-text-secondary hover:text-brand-primary hover:bg-secondary-bg focus:outline-none transition-colors" aria-controls="mobile-menu" aria-expanded="false">
               <span class="sr-only">Open main menu</span>
               <svg class="h-6 w-6 block" stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -89,7 +89,7 @@ const basePath = import.meta.env.BASE_URL;
       </div>
 
       <!-- Mobile Menu, show/hide based on menu state. -->
-      <div class="hidden md:hidden border-t border-border-main bg-white" id="mobile-menu">
+      <div class="hidden lg:hidden border-t border-border-main bg-white" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <a href={basePath} class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Home</a>
           <a href={`${basePath}poses`} class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Yoga Poses</a>
