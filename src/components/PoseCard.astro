@@ -6,10 +6,11 @@ interface Props {
   category: string;
   benefits: string[];
   description: string;
-  svgPath: string; // inline SVG rendering fallback or custom design key
+  svgPath: string;
+  imagePath?: string;
 }
 
-const { englishName, sanskritName, difficulty, category, benefits, description, svgPath } = Astro.props;
+const { englishName, sanskritName, difficulty, category, benefits, description, svgPath, imagePath } = Astro.props;
 
 // Determine difficulty badge colors
 const diffColors = {
@@ -19,6 +20,7 @@ const diffColors = {
 };
 
 const badgeColor = diffColors[difficulty] || 'bg-secondary-bg text-text-secondary';
+const basePath = import.meta.env.BASE_URL;
 ---
 
 <div class="luxury-card p-6 flex flex-col justify-between h-full bg-white border border-border-main rounded-3xl transition-all duration-300">
@@ -27,16 +29,24 @@ const badgeColor = diffColors[difficulty] || 'bg-secondary-bg text-text-secondar
     <div class="relative w-full h-44 rounded-2xl bg-secondary-bg mb-5 flex items-center justify-center overflow-hidden border border-border-main/40">
       <div class="absolute inset-0 bg-radial-gradient from-brand-accent/20 via-transparent to-transparent opacity-60"></div>
       
-      <!-- Styled Decorative Vector Representation for Pose -->
-      <svg class="h-28 w-28 text-brand-primary/80 drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        {svgPath ? (
-          <path d={svgPath} />
-        ) : (
-          <!-- Default Lotus Shape -->
-          <path d="M12 2C11.5 5 9.5 8 6 8.5C7.5 10 7.5 12 7 13.5C8.5 13 10.5 13.5 12 16.5C13.5 13.5 15.5 13 17 13.5C16.5 12 16.5 10 18 8.5C14.5 8 12.5 5 12 2Z" fill="currentColor" opacity="0.6"/>
-        )}
-        <circle cx="12" cy="12" r="1" fill="currentColor" />
-      </svg>
+      {imagePath ? (
+        <img 
+          src={`${basePath}${imagePath.replace(/^\//, '')}`}
+          alt={englishName} 
+          class="w-full h-full object-cover"
+        />
+      ) : (
+        <!-- Styled Decorative Vector Representation for Pose -->
+        <svg class="h-28 w-28 text-brand-primary/80 drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          {svgPath ? (
+            <path d={svgPath} />
+          ) : (
+            <!-- Default Lotus Shape -->
+            <path d="M12 2C11.5 5 9.5 8 6 8.5C7.5 10 7.5 12 7 13.5C8.5 13 10.5 13.5 12 16.5C13.5 13.5 15.5 13 17 13.5C16.5 12 16.5 10 18 8.5C14.5 8 12.5 5 12 2Z" fill="currentColor" opacity="0.6"/>
+          )}
+          <circle cx="12" cy="12" r="1" fill="currentColor" />
+        </svg>
+      )}
 
       <!-- Category Tag -->
       <span class="absolute top-3 left-3 text-[10px] uppercase font-bold tracking-wider bg-white border border-border-main px-2.5 py-1 rounded-full text-text-secondary shadow-sm">
