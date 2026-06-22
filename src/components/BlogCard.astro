@@ -8,30 +8,41 @@ interface Props {
   slug: string;
   coverColor: string; // e.g. from-[#E8AFC7]/10 to-[#D9B8FF]/10
   svgPath: string; // decorative SVG icon path
+  imagePath?: string;
 }
 
-const { title, excerpt, category, publishDate, readTime, slug, coverColor, svgPath } = Astro.props;
+const { title, excerpt, category, publishDate, readTime, slug, coverColor, svgPath, imagePath } = Astro.props;
 const basePath = import.meta.env.BASE_URL;
 ---
 
 <article class="luxury-card flex flex-col justify-between h-full bg-white border border-border-main rounded-3xl overflow-hidden shadow-sm transition-all duration-300">
   <div>
     <!-- Cover Thumbnail -->
-    <div class={`h-48 bg-gradient-to-tr ${coverColor} relative flex items-center justify-center p-6 border-b border-border-main/40`}>
-      <div class="absolute inset-0 bg-[radial-gradient(#d9b8ff_1px,transparent_1px)] [background-size:20px_20px] opacity-10"></div>
-      
-      <!-- Calming SVG icon -->
-      <svg class="h-20 w-20 text-brand-primary/60 drop-shadow-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-        {svgPath ? (
-          <path d={svgPath} />
-        ) : (
-          <!-- Default Feather / Wellness Symbol -->
-          <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" />
-        )}
-      </svg>
+    <div class="h-48 relative overflow-hidden border-b border-border-main/40 group">
+      {imagePath ? (
+        <img 
+          src={`${basePath}${imagePath}`} 
+          alt={title} 
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      ) : (
+        <div class={`w-full h-full bg-gradient-to-tr ${coverColor} flex items-center justify-center p-6`}>
+          <div class="absolute inset-0 bg-[radial-gradient(#d9b8ff_1px,transparent_1px)] [background-size:20px_20px] opacity-10"></div>
+          
+          <!-- Calming SVG icon -->
+          <svg class="h-20 w-20 text-brand-primary/60 drop-shadow-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            {svgPath ? (
+              <path d={svgPath} />
+            ) : (
+              <!-- Default Feather / Wellness Symbol -->
+              <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" />
+            )}
+          </svg>
+        </div>
+      )}
 
       <!-- Category Tag -->
-      <span class="absolute top-4 left-4 text-[10px] uppercase font-bold tracking-wider bg-white border border-border-main px-3 py-1 rounded-full text-brand-primary shadow-sm">
+      <span class="absolute top-4 left-4 text-[10px] uppercase font-bold tracking-wider bg-white/90 backdrop-blur-sm border border-border-main/60 px-3 py-1 rounded-full text-brand-primary shadow-sm z-10">
         {category}
       </span>
     </div>
