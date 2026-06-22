@@ -169,10 +169,13 @@ const basePath = import.meta.env.BASE_URL;
 
         <div class="border-t border-border-main/50 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-text-secondary">
           <p>© {new Date().getFullYear()} Global Yoga Tips. All rights reserved.</p>
-          <div class="flex space-x-6 mt-4 md:mt-0">
-            <a href={`${basePath}about`} class="hover:text-brand-primary">About Us</a>
-            <a href={`${basePath}contact`} class="hover:text-brand-primary">Contact</a>
-            <a href={`${basePath}login`} class="hover:text-brand-primary">Privacy Policy</a>
+          <div class="flex flex-wrap justify-center gap-x-6 gap-y-2.5 mt-4 md:mt-0">
+            <a href={`${basePath}about`} class="hover:text-brand-primary transition-colors">About Us</a>
+            <a href={`${basePath}contact`} class="hover:text-brand-primary transition-colors">Contact</a>
+            <a href={`${basePath}privacy`} class="hover:text-brand-primary transition-colors">Privacy Policy</a>
+            <a href={`${basePath}terms`} class="hover:text-brand-primary transition-colors">Terms & Conditions</a>
+            <a href={`${basePath}refund`} class="hover:text-brand-primary transition-colors">Refund Policy</a>
+            <a href={`${basePath}shipping`} class="hover:text-brand-primary transition-colors">Shipping & Delivery</a>
           </div>
         </div>
       </div>
