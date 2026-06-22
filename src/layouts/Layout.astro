@@ -178,6 +178,24 @@ const basePath = import.meta.env.BASE_URL;
       </div>
     </footer>
 
+    <!-- Sticky Facebook Bar -->
+    <div class="fixed left-0 top-1/2 -translate-y-1/2 z-50 flex items-center">
+      <a 
+        href="https://www.facebook.com/GlobalYogaTips/" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="flex items-center justify-center bg-white/90 backdrop-blur-md border border-l-0 border-brand-accent text-brand-primary rounded-r-2xl shadow-[0_4px_20px_-2px_rgba(232,175,199,0.15)] p-3 md:p-3.5 transition-all duration-300 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] hover:shadow-[0_4px_20px_rgba(24,119,242,0.3)] group"
+        aria-label="Follow us on Facebook"
+      >
+        <svg class="h-6 w-6 fill-current transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+        <span class="max-w-0 overflow-hidden whitespace-nowrap text-sm font-semibold tracking-wider font-heading transition-all duration-300 group-hover:max-w-[100px] group-hover:ml-2">
+          Facebook
+        </span>
+      </a>
+    </div>
+
     <!-- Client Script to Handle Auth & Interactions -->
     <script>
       import { supabase } from '../lib/supabase.js';
