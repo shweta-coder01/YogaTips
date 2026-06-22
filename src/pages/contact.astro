@@ -1,0 +1,168 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact Us" description="Reach out to the Global Yoga Tips support team. Send your questions, feedback, or business inquiries through our elegant contact form.">
+  <!-- Top Banner -->
+  <section class="bg-gradient-to-b from-white to-secondary-bg/30 border-b border-border-main/40 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+      <span class="text-xs uppercase font-bold text-brand-primary tracking-wider">Get in Touch</span>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-semibold text-text-main">Contact Our Sanctuary</h1>
+      <p class="text-text-secondary text-base max-w-xl mx-auto">
+        Have questions about our poses directory or premium digital guides? We are here to support your self-care journey.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Form & Info Grid -->
+  <section class="py-20 bg-primary-bg">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <!-- Left Side: Contact Information cards -->
+        <div class="lg:col-span-4 space-y-6">
+          <div class="bg-white border border-border-main rounded-3xl p-6 shadow-sm space-y-6">
+            <h3 class="font-heading font-semibold text-lg text-text-main border-b border-border-main pb-3">Support Sanctuary</h3>
+            
+            <div class="flex items-start space-x-3.5 text-sm">
+              <div class="p-2 bg-secondary-bg rounded-xl text-brand-primary shrink-0">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </div>
+              <div class="space-y-0.5">
+                <h4 class="font-heading font-semibold text-text-main">Email Us</h4>
+                <p class="text-text-secondary">support@globalyogatips.com</p>
+                <p class="text-[11px] text-text-secondary/70">Average response time: 24 hours</p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-3.5 text-sm">
+              <div class="p-2 bg-secondary-bg rounded-xl text-brand-primary shrink-0">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <div class="space-y-0.5">
+                <h4 class="font-heading font-semibold text-text-main">Hours of Composure</h4>
+                <p class="text-text-secondary">Monday - Friday: 9 AM - 6 PM PST</p>
+                <p class="text-text-secondary">Saturday: 10 AM - 2 PM PST</p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-3.5 text-sm">
+              <div class="p-2 bg-secondary-bg rounded-xl text-brand-primary shrink-0">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div class="space-y-0.5">
+                <h4 class="font-heading font-semibold text-text-main">Location</h4>
+                <p class="text-text-secondary">108 Serenity Lane, Suite 400</p>
+                <p class="text-text-secondary">San Francisco, CA 94107</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Contact Form -->
+        <div class="lg:col-span-8">
+          <div class="bg-white border border-border-main rounded-3xl p-6 sm:p-10 shadow-sm relative overflow-hidden">
+            
+            <!-- Success Message Overlay -->
+            <div id="contact-success" class="hidden flex flex-col items-center justify-center py-12 text-center space-y-4">
+              <div class="w-16 h-16 bg-success-sage/20 text-success-sage rounded-full flex items-center justify-center">
+                <svg class="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <h3 class="font-heading font-semibold text-2xl text-text-main">Message Received!</h3>
+              <p class="text-text-secondary text-sm max-w-sm">
+                Thank you for reaching out. We have received your inquiry and our wellness coordinators will get back to you shortly.
+              </p>
+              <button id="reset-contact-btn" class="btn-secondary py-2 px-6 text-xs mt-2 cursor-pointer">Send Another Message</button>
+            </div>
+
+            <!-- Form -->
+            <form id="contact-form" class="space-y-6">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Name -->
+                <div class="space-y-1.5">
+                  <label for="name" class="text-xs uppercase font-bold text-text-secondary tracking-wider">Your Name</label>
+                  <input 
+                    type="text" 
+                    id="name" 
+                    required 
+                    placeholder="Elena Vance" 
+                    class="w-full bg-primary-bg border border-border-main rounded-2xl py-3 px-4 text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all"
+                  />
+                </div>
+                
+                <!-- Email -->
+                <div class="space-y-1.5">
+                  <label for="email" class="text-xs uppercase font-bold text-text-secondary tracking-wider">Email Address</label>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    required 
+                    placeholder="elena@example.com" 
+                    class="w-full bg-primary-bg border border-border-main rounded-2xl py-3 px-4 text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all"
+                  />
+                </div>
+              </div>
+
+              <!-- Subject -->
+              <div class="space-y-1.5">
+                <label for="subject" class="text-xs uppercase font-bold text-text-secondary tracking-wider">Subject</label>
+                <input 
+                  type="text" 
+                  id="subject" 
+                  required 
+                  placeholder="How can we assist your practice?" 
+                  class="w-full bg-primary-bg border border-border-main rounded-2xl py-3 px-4 text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all"
+                />
+              </div>
+
+              <!-- Message -->
+              <div class="space-y-1.5">
+                <label for="message" class="text-xs uppercase font-bold text-text-secondary tracking-wider">Message</label>
+                <textarea 
+                  id="message" 
+                  required 
+                  rows="5" 
+                  placeholder="Type your message here, including any questions about order receipts or pose alignments..." 
+                  class="w-full bg-primary-bg border border-border-main rounded-2xl py-3 px-4 text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all"
+                ></textarea>
+              </div>
+
+              <!-- Submit button -->
+              <button 
+                type="submit" 
+                class="w-full btn-primary py-3.5 rounded-full text-sm font-semibold tracking-wider flex items-center justify-center space-x-2 cursor-pointer shadow-sm"
+              >
+                <span>Send Message</span>
+                <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client-side form handlers -->
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const successMsg = document.getElementById('contact-success');
+    const resetBtn = document.getElementById('reset-contact-btn');
+
+    if (form && successMsg) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Hide form and show success message
+        form.classList.add('hidden');
+        successMsg.classList.remove('hidden');
+      });
+    }
+
+    if (resetBtn && form && successMsg) {
+      resetBtn.addEventListener('click', () => {
+        form.reset();
+        successMsg.classList.add('hidden');
+        form.classList.remove('hidden');
+      });
+    }
+  </script>
+</Layout>

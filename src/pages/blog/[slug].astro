@@ -1,0 +1,248 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// 1. Static path generation for Astro Static Site Export
+export function getStaticPaths() {
+  return [
+    { 
+      params: { slug: 'morning-stiffness-poses' },
+      props: {
+        title: "5 Simple Yoga Poses to Ease Morning Stiffness",
+        category: "Poses",
+        publishDate: "June 18, 2026",
+        readTime: "5 min read",
+        excerpt: "Start your day with gentle movement. These five beginner-friendly poses will stretch your spine, open your hips, and boost your energy for the day ahead.",
+        coverColor: "from-[#FFF1F5] to-[#F5C2D7]/30",
+        content: `
+          <p class="text-base sm:text-lg text-text-secondary leading-relaxed mb-6 font-medium italic border-l-4 border-brand-primary pl-4">
+            Waking up with a stiff body is a common response to prolonged stillness during sleep. By introducing gentle movement right after waking, you can increase blood circulation, lubricate your spinal joints, and set a peaceful tone for your day.
+          </p>
+          
+          <h2 class="text-2xl font-heading font-semibold text-text-main mt-10 mb-4">1. Child's Pose (Balasana)</h2>
+          <p class="mb-4">
+            Start on your hands and knees. Bring your big toes together and widen your knees apart. Sit your hips back onto your heels and extend your arms forward on the floor, lowering your chest and forehead down to your mat.
+          </p>
+          <p class="mb-6">
+            <strong>Self-Care Tip:</strong> Take 5 deep breaths here, sending the air into your lower back and letting your shoulder blades melt apart.
+          </p>
+
+          <h2 class="text-2xl font-heading font-semibold text-text-main mt-10 mb-4">2. Cat-Cow Stretch (Marjaryasana-Bitilasana)</h2>
+          <p class="mb-4">
+            Move to a tabletop position with wrists directly under shoulders and knees under hips. As you inhale, drop your belly down, lift your chest and gaze upward (Cow). As you exhale, arch your spine toward the ceiling, tucking your chin and tailbone (Cat).
+          </p>
+          <p class="mb-6">
+            <strong>Duration:</strong> Repeat this fluid motion for 8-10 breath cycles to stimulate the cerebrospinal fluid and loosen the spine.
+          </p>
+
+          <h2 class="text-2xl font-heading font-semibold text-text-main mt-10 mb-4">3. Downward-Facing Dog (Adho Mukha Svanasana)</h2>
+          <p class="mb-4">
+            From tabletop, tuck your toes, press firmly through your hands, and lift your hips high and back, forming an inverted 'V' shape. Keep a slight bend in your knees if your hamstrings feel tight, and pedal your feet out.
+          </p>
+          <p class="mb-6">
+            <strong>Alignment:</strong> Focus on keeping your spine long and straight. Press the floor away to relieve pressure on your wrists.
+          </p>
+
+          <h2 class="text-2xl font-heading font-semibold text-text-main mt-10 mb-4">4. Cobra Pose (Bhujangasana)</h2>
+          <p class="mb-4">
+            Lower your hips down and lie flat on your stomach. Place your hands under your shoulders, hugging your elbows close to your ribcage. Pressing the tops of your feet into the floor, gently lift your chest forward and upward using your back muscles.
+          </p>
+          <p class="mb-6">
+            <strong>Focus:</strong> Avoid pressing too hard with your hands. Focus on expanding your collarbones and keeping your neck long.
+          </p>
+
+          <h2 class="text-2xl font-heading font-semibold text-text-main mt-10 mb-4">5. Standing Forward Fold (Uttanasana)</h2>
+          <p class="mb-4">
+            Slowly walk your feet to meet your hands at the top of the mat. Let your head and neck hang completely heavy. Grab opposite elbows and sway gently from side to side in ragdoll position.
+          </p>
+          <p class="mb-6">
+            <strong>Release:</strong> This pose lets gravity decompress the cervical spine. Hold for 30 seconds, then roll up slowly, vertebra by vertebra.
+          </p>
+        `
+      }
+    },
+    { 
+      params: { slug: 'mindfulness-meditation-guide' },
+      props: {
+        title: "A Beginner's Guide to Mindfulness Meditation",
+        category: "Mindfulness",
+        publishDate: "June 15, 2026",
+        readTime: "7 min read",
+        excerpt: "Demystify meditation. Learn simple, step-by-step techniques to quiet your mind, focus on your breath, and establish a consistent, peaceful daily practice.",
+        coverColor: "from-[#FFF9FB] to-[#D9B8FF]/30",
+        content: `
+          <p class="text-base sm:text-lg text-text-secondary leading-relaxed mb-6 font-medium italic border-l-4 border-brand-primary pl-4">
+            Meditation is not about forcing your thoughts to stop; it is about learning to observe them without judgment. By training your attention on the present moment, you can build emotional resilience and mental composure.
+          </p>
+
+          <h2 class="text-2xl font-heading font-semibold text-text-main mt-10 mb-4">The Myth of the 'Blank Mind'</h2>
+          <p class="mb-6">
+            Many beginners give up on meditation because they find their minds filled with thoughts. A wandering mind is completely natural! The practice of meditation occurs in the very moment you notice your mind has wandered, and gently return your attention back to your breathing anchor.
+          </p>
+
+          <h2 class="text-2xl font-heading font-semibold text-text-main mt-10 mb-4">Step-by-Step Meditation Routine</h2>
+          <p class="mb-4">
+            Here is a simple, 5-step checklist to start your daily mindfulness practice:
+          </p>
+          <ul class="list-disc pl-5 mb-6 space-y-2">
+            <li><strong>Find a Quiet Space:</strong> Select a peaceful corner of your home where you will not be interrupted for 10 minutes.</li>
+            <li><strong>Adopt a Comfortable Posture:</strong> Sit upright on a chair or a cushion. Keep your spine straight but relaxed, letting your hands rest gently on your knees.</li>
+            <li><strong>Close Your Eyes:</strong> Soften your gaze or close your eyes completely to reduce external visual stimulation.</li>
+            <li><strong>Locate Your Breath Anchor:</strong> Focus on where you feel the breath most clearly—whether it is the rising of your belly, the expansion of your ribs, or the cool sensation at your nostrils.</li>
+            <li><strong>Observe Wandering Thoughts:</strong> When thoughts arise (as they will), acknowledge them like passing clouds in the sky, and gently return your attention back to the breath.</li>
+          </ul>
+
+          <h2 class="text-2xl font-heading font-semibold text-text-main mt-10 mb-4">Establishing a Consistent Ritual</h2>
+          <p class="mb-4">
+            Consistency is far more valuable than duration. Sitting for 5 minutes every single morning creates a more lasting neuropathway change than meditating for an hour once a week.
+          </p>
+          <p class="mb-6">
+            Pair your meditation with an existing habit—such as practicing immediately after brushing your teeth or right before drinking your morning tea.
+          </p>
+        `
+      }
+    },
+    { 
+      params: { slug: 'healing-restorative-sleep' },
+      props: {
+        title: "The Healing Power of Deep Restorative Sleep",
+        category: "Lifestyle",
+        publishDate: "June 10, 2026",
+        readTime: "6 min read",
+        excerpt: "Uncover the connection between quality rest and self-care. Discover simple evening yoga poses and breathing triggers that help cure insomnia naturally.",
+        coverColor: "from-[#FFF1F5] to-[#E8AFC7]/30",
+        content: `
+          <p class="text-base sm:text-lg text-text-secondary leading-relaxed mb-6 font-medium italic border-l-4 border-brand-primary pl-4">
+            Sleep is the ultimate biological act of self-care. During deep sleep, your body repairs tissues, synthesizes hormones, and consolidates memory. Let's explore how a gentle bedtime yoga ritual can prepare your nervous system for sleep.
+          </p>
+
+          <h2 class="text-2xl font-heading font-semibold text-text-main mt-10 mb-4">Insomnia and the Sympathetic Nervous System</h2>
+          <p class="mb-6">
+            In our modern hyper-connected world, we spend much of our day in 'fight-or-flight' mode (sympathetic nervous system). If we do not actively signal our body to down-regulate before bed, high cortisol levels will keep us awake. Restorative yoga poses trigger the parasympathetic nervous system (rest-and-digest), preparing us for deeper sleep cycles.
+          </p>
+
+          <h2 class="text-2xl font-heading font-semibold text-text-main mt-10 mb-4">Bedtime Yoga Sequence</h2>
+          <p class="mb-4">
+            Practice these three poses directly in bed or on a soft carpet right before falling asleep:
+          </p>
+          <ul class="list-disc pl-5 mb-6 space-y-3">
+            <li>
+              <strong>Legs-Up-The-Wall Pose (Viparita Karani):</strong> 
+              Slide your hips close to a wall and extend your legs straight up against it. Let your arms rest wide at your sides, palms up. This simple inversion relieves fluid retention, lowers your heart rate, and induces deep calm. Hold for 5-10 minutes.
+            </li>
+            <li>
+              <strong>Reclined Bound Angle (Supta Baddha Konasana):</strong> 
+              Lie on your back, bring the soles of your feet together, and let your knees fall open to the sides. Support your knees with pillows if the stretch feels too intense. Place one hand on your chest and one on your belly.
+            </li>
+            <li>
+              <strong>Deep Belly Breathing (Diaphragmatic Breathing):</strong> 
+              Inhale deeply through your nose, expanding your abdomen. Exhale slowly, letting your belly sink. Make your exhalations twice as long as your inhalations (e.g., inhale for 4 counts, exhale for 8 counts) to trigger the vagus nerve.
+            </li>
+          </ul>
+
+          <h2 class="text-2xl font-heading font-semibold text-text-main mt-10 mb-4">Evening Self-Care Rituals</h2>
+          <p class="mb-6">
+            In addition to yoga, consider winding down by turning off all electronic screens 60 minutes before bed. Blue light suppresses melatonin production. Instead, read a book, journal your thoughts to empty your mind, or enjoy a cup of warm chamomile tea.
+          </p>
+        `
+      }
+    }
+  ];
+}
+
+const { title, category, publishDate, readTime, excerpt, coverColor, content } = Astro.props;
+---
+
+<Layout title={title} description={excerpt}>
+  <!-- Reading Progress Bar -->
+  <div class="fixed top-20 left-0 right-0 h-1 z-50 bg-secondary-bg">
+    <div id="reading-bar" class="h-full bg-brand-primary w-0 transition-all duration-75"></div>
+  </div>
+
+  <article class="bg-primary-bg py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Article Header -->
+      <div class="space-y-6 text-center mb-12">
+        <a href="/blog" class="inline-flex items-center text-xs font-bold uppercase tracking-wider text-brand-primary hover:text-btn-hover transition-colors">
+          <svg class="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+          <span>Back to Blog</span>
+        </a>
+
+        <div class="flex items-center justify-center space-x-3 text-xs text-text-secondary">
+          <span class="bg-white border border-border-main rounded-full py-1 px-3.5 font-bold uppercase tracking-wider text-brand-primary">{category}</span>
+          <span>{publishDate}</span>
+          <span class="inline-block w-1.5 h-1.5 rounded-full bg-border-main"></span>
+          <span>{readTime}</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-semibold text-text-main tracking-tight leading-tight max-w-3xl mx-auto">
+          {title}
+        </h1>
+      </div>
+
+      <!-- Banner Image Visual -->
+      <div class={`w-full h-64 sm:h-96 rounded-3xl bg-gradient-to-tr ${coverColor} border border-border-main mb-12 flex items-center justify-center p-8 relative overflow-hidden shadow-sm`}>
+        <div class="absolute inset-0 bg-[radial-gradient(#e8afc7_1px,transparent_1px)] [background-size:24px_24px] opacity-15"></div>
+        <svg class="h-32 w-32 text-brand-primary/45 drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2C11.5 5 9.5 8 6 8.5C7.5 10 7.5 12 7 13.5C8.5 13 10.5 13.5 12 16.5C13.5 13.5 15.5 13 17 13.5C16.5 12 16.5 10 18 8.5C14.5 8 12.5 5 12 2Z" fill="currentColor" opacity="0.4"/>
+        </svg>
+      </div>
+
+      <!-- Article Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <!-- Sticky Left sidebar: Table of Contents & Share -->
+        <aside class="lg:col-span-3 lg:sticky lg:top-44 space-y-8 hidden lg:block">
+          <div class="space-y-4">
+            <h3 class="text-xs uppercase font-bold text-text-main tracking-wider border-b border-border-main pb-2">Contents</h3>
+            <ul class="space-y-2.5 text-xs text-text-secondary font-medium" id="toc">
+              <!-- Dynamically built TOC placeholders -->
+              <li><a href="#" class="hover:text-brand-primary block transition-colors">Introduction</a></li>
+              <li><a href="#" class="hover:text-brand-primary block transition-colors">Core Exercises</a></li>
+              <li><a href="#" class="hover:text-brand-primary block transition-colors">Mindful Practices</a></li>
+              <li><a href="#" class="hover:text-brand-primary block transition-colors">Routine Integration</a></li>
+            </ul>
+          </div>
+
+          <div class="space-y-3.5">
+            <h3 class="text-xs uppercase font-bold text-text-main tracking-wider border-b border-border-main pb-2">Share</h3>
+            <div class="flex space-x-3">
+              <button class="p-2 bg-white border border-border-main hover:bg-secondary-bg rounded-full text-text-secondary hover:text-brand-primary transition-colors cursor-pointer" aria-label="Share on Twitter">
+                <svg class="h-4.5 w-4.5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </button>
+              <button class="p-2 bg-white border border-border-main hover:bg-secondary-bg rounded-full text-text-secondary hover:text-brand-primary transition-colors cursor-pointer" aria-label="Share on Facebook">
+                <svg class="h-4.5 w-4.5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/></svg>
+              </button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Rich Text content -->
+        <div class="lg:col-span-9 bg-white border border-border-main rounded-3xl p-6 sm:p-10 shadow-sm leading-relaxed text-sm sm:text-base text-text-main space-y-6 max-w-none prose prose-indigo">
+          <div set:html={content} />
+          
+          <!-- Call To Action Inside Post -->
+          <div class="mt-12 bg-secondary-bg/50 border border-border-main rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="space-y-1.5 text-center sm:text-left">
+              <h4 class="font-heading font-semibold text-lg text-text-main">Ready to deepen your practice?</h4>
+              <p class="text-xs text-text-secondary">Download our premium, comprehensive yoga calendars and guides.</p>
+            </div>
+            <a href="/programs" class="btn-primary py-2.5 px-6 text-sm shrink-0 whitespace-nowrap shadow-sm">
+              Explore Programs
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Reading Bar logic -->
+  <script>
+    const bar = document.getElementById('reading-bar');
+    window.addEventListener('scroll', () => {
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrollPercent = (window.scrollY / scrollHeight) * 100;
+      if (bar) {
+        bar.style.width = scrollPercent + '%';
+      }
+    });
+  </script>
+</Layout>

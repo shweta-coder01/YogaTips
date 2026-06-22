@@ -1,0 +1,278 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PoseCard from '../components/PoseCard.astro';
+import BlogCard from '../components/BlogCard.astro';
+
+// Mock data for featured poses
+const featuredPoses = [
+  {
+    englishName: "Tree Pose",
+    sanskritName: "Vrksasana",
+    difficulty: "Beginner" as const,
+    category: "Balance",
+    benefits: ["Improves posture & balance", "Strengthens thighs, calves, ankles", "Relieves sciatica"],
+    description: "A foundational standing balance pose that helps build focus, mental clarity, and physical stability while opening the hips.",
+    svgPath: "M12 3v18M12 7c2 0 4 1.5 5 3.5-2 .5-4 .5-5 .5M12 9c-2 0-4 1.5-5 3.5 2 .5 4 .5 5 .5M12 12c3 0 5 2 5.5 4.5-2.5.5-4.5 0-5.5-.5M12 14c-3 0-5 2-5.5 4.5 2.5.5 4.5 0 5.5-.5"
+  },
+  {
+    englishName: "Downward-Facing Dog",
+    sanskritName: "Adho Mukha Svanasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Stretches shoulders & hamstrings", "Strengthens arms and legs", "Energizes the body"],
+    description: "One of the most widely recognized yoga poses, this gentle inversion stretches the entire back body while calming the nervous system.",
+    svgPath: "M19 20L12 4L5 20M8 15h8M12 4v4"
+  },
+  {
+    englishName: "Warrior II",
+    sanskritName: "Virabhadrasana II",
+    difficulty: "Intermediate" as const,
+    category: "Strength",
+    benefits: ["Strengthens legs and ankles", "Stretches chest and lungs", "Builds stamina & focus"],
+    description: "A powerful standing pose that builds strength in the lower body, improves circulation, and cultivates warrior-like concentration.",
+    svgPath: "M2 12h20M12 12v9M8 6l4 6 4-6"
+  }
+];
+
+// Mock data for recent blog posts
+const recentBlogs = [
+  {
+    title: "5 Simple Yoga Poses to Ease Morning Stiffness",
+    excerpt: "Start your day with gentle movement. These five beginner-friendly poses will stretch your spine, open your hips, and boost your energy for the day ahead.",
+    category: "Poses",
+    publishDate: "June 18, 2026",
+    readTime: "5 min read",
+    slug: "morning-stiffness-poses",
+    coverColor: "from-[#FFF1F5] to-[#F5C2D7]/20",
+    svgPath: "M12 3v3M12 18v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M3 12h3M18 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"
+  },
+  {
+    title: "A Beginner's Guide to Mindfulness Meditation",
+    excerpt: "Demystify meditation. Learn simple, step-by-step techniques to quiet your mind, focus on your breath, and establish a consistent, peaceful daily practice.",
+    category: "Mindfulness",
+    publishDate: "June 15, 2026",
+    readTime: "7 min read",
+    slug: "mindfulness-meditation-guide",
+    coverColor: "from-[#FFF9FB] to-[#D9B8FF]/20",
+    svgPath: "M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm1-13h-2v6h5v-2h-3z"
+  }
+];
+---
+
+<Layout title="Transform Your Life Through Yoga">
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-white to-secondary-bg/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- Left Side: Copy & Buttons -->
+        <div class="lg:col-span-6 space-y-8 text-center lg:text-left">
+          <div class="space-y-4">
+            <span class="inline-flex items-center space-x-1 bg-[#F5C2D7]/20 border border-brand-accent/30 rounded-full px-4 py-1.5 text-xs font-semibold text-brand-primary tracking-wider uppercase">
+              ✨ Welcome to Your Sanctuary
+            </span>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-semibold text-text-main tracking-tight leading-[1.08] lg:max-w-xl">
+              Transform Your Life Through <span class="bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent">Yoga</span>
+            </h1>
+            <p class="text-text-secondary text-base sm:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed font-sans">
+              Discover expert yoga guidance, wellness tips, and premium yoga programs designed for a healthier, happier, and more balanced lifestyle.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <a href="/register" class="btn-primary w-full sm:w-auto shadow-md">
+              Start Free Journey
+            </a>
+            <a href="/programs" class="btn-secondary w-full sm:w-auto">
+              Explore Programs
+            </a>
+          </div>
+
+          <!-- Quick trust indicators -->
+          <div class="pt-6 border-t border-border-main/50 flex flex-wrap justify-center lg:justify-start gap-6 text-sm text-text-secondary">
+            <div class="flex items-center space-x-2">
+              <svg class="h-5 w-5 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+              <span>100% Expert Verified</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <svg class="h-5 w-5 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              <span>Secure Razorpay Gateway</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: SVG Wellness Illustration -->
+        <div class="lg:col-span-6 flex justify-center relative">
+          <!-- Backing glow -->
+          <div class="absolute w-72 h-72 bg-brand-secondary/20 rounded-full blur-3xl -z-10 animate-pulse"></div>
+          <div class="absolute w-64 h-64 bg-brand-accent/20 rounded-full blur-3xl -z-10 translate-x-20 -translate-y-20"></div>
+
+          <!-- Hand-crafted vector SVG for yoga practitioner -->
+          <svg class="w-full max-w-[450px] h-auto text-brand-primary drop-shadow-2xl" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background Sun -->
+            <circle cx="250" cy="230" r="130" fill="#FFF1F5" />
+            <circle cx="250" cy="230" r="100" fill="#F5C2D7" fill-opacity="0.3" />
+            
+            <!-- Lotus Base -->
+            <path d="M150 360 C180 340, 200 370, 250 370 C300 370, 320 340, 350 360 C320 380, 280 390, 250 390 C220 390, 180 380, 150 360 Z" fill="#D9B8FF" fill-opacity="0.7"/>
+            <path d="M180 350 C210 330, 230 360, 250 360 C270 360, 290 330, 320 350 C290 365, 270 370, 250 370 C230 370, 210 365, 180 350 Z" fill="#E8AFC7"/>
+
+            <!-- Yoga Silhouette sitting cross-legged -->
+            <!-- Torso & Arms (Meditation posture - Anjali Mudra) -->
+            <path d="M250 160 L230 250 C230 250, 210 270, 190 280 L200 295 L240 270 L250 340" stroke="#2D2D2D" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M250 160 L270 250 C270 250, 290 270, 310 280 L300 295 L260 270 L250 340" stroke="#2D2D2D" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+            
+            <!-- Head & Neck -->
+            <circle cx="250" cy="120" r="28" fill="#2D2D2D" />
+            <path d="M250 148 L250 162" stroke="#2D2D2D" stroke-width="10" stroke-linecap="round" />
+
+            <!-- Hands folded in prayer (Anjali Mudra) at center chest -->
+            <path d="M235 210 Q250 195 250 195 Q250 195 265 210" stroke="#2D2D2D" stroke-width="8" stroke-linecap="round" />
+            <path d="M235 210 L250 240 L265 210" stroke="#2D2D2D" stroke-width="8" stroke-linecap="round" />
+
+            <!-- Legs crossed -->
+            <path d="M160 330 C190 320, 200 340, 250 340 C300 340, 310 320, 340 330 C310 360, 280 360, 250 360 C220 360, 190 360, 160 330 Z" fill="#2D2D2D" />
+            <circle cx="165" cy="330" r="14" fill="#2D2D2D" />
+            <circle cx="335" cy="330" r="14" fill="#2D2D2D" />
+
+            <!-- Floating Leaves/Flowers (Wellness vibe) -->
+            <path d="M80 180 C80 160, 100 150, 110 170 C100 190, 90 190, 80 180 Z" fill="#E8AFC7" />
+            <path d="M410 150 C410 130, 390 120, 380 140 C390 160, 400 160, 410 150 Z" fill="#D9B8FF" />
+            <path d="M120 280 C110 290, 100 270, 110 260 C125 265, 125 275, 120 280 Z" fill="#FFF1F5" stroke="#E8AFC7" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Philosophy / Features -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+        <h2 class="text-3xl sm:text-4xl font-heading font-semibold text-text-main">
+          Harmonizing Mind, Body & Spirit
+        </h2>
+        <div class="w-16 h-1 bg-brand-primary mx-auto rounded-full"></div>
+        <p class="text-text-secondary text-sm sm:text-base leading-relaxed">
+          Global Yoga Tips is designed to guide practitioners of all levels. We offer premium resources that prioritize mental composure and self-care.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="luxury-card p-8 bg-white border border-border-main rounded-3xl text-center space-y-5">
+          <div class="h-14 w-14 bg-secondary-bg rounded-2xl flex items-center justify-center text-brand-primary mx-auto shadow-sm">
+            <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+          </div>
+          <h3 class="font-heading font-semibold text-lg text-text-main">Calm Composure</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            Quiet your thoughts. Our curated programs and guides teach breathing patterns and meditation techniques that bring long-term tranquility.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="luxury-card p-8 bg-white border border-border-main rounded-3xl text-center space-y-5">
+          <div class="h-14 w-14 bg-[#FFF9FB] rounded-2xl flex items-center justify-center text-brand-secondary mx-auto shadow-sm">
+            <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3 class="font-heading font-semibold text-lg text-text-main">Trusted Guidance</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            Every posture instruction and wellness routine is researched and written by certified instructors, keeping your practice safe and effective.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="luxury-card p-8 bg-white border border-border-main rounded-3xl text-center space-y-5">
+          <div class="h-14 w-14 bg-secondary-bg rounded-2xl flex items-center justify-center text-brand-primary mx-auto shadow-sm">
+            <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.317-1.317a4.5 4.5 0 00-6.364 0z"/></svg>
+          </div>
+          <h3 class="font-heading font-semibold text-lg text-text-main">Nurturing Self-Care</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            Invest in yourself. Yoga is not just exercise; it is an act of self-care and self-love. Explore directories and courses built to pamper your mind.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Poses -->
+  <section class="py-20 bg-secondary-bg/20 border-t border-b border-border-main/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+        <div class="space-y-3 text-center md:text-left">
+          <span class="text-xs uppercase font-bold text-brand-primary tracking-wider">Explore the Postures</span>
+          <h2 class="text-3xl sm:text-4xl font-heading font-semibold text-text-main">Popular Yoga Poses</h2>
+          <p class="text-text-secondary text-sm sm:text-base max-w-xl">
+            A small taste of our extensive poses library. Search through detailed benefits and Sanskrit histories in our directory.
+          </p>
+        </div>
+        <a href="/poses" class="btn-secondary whitespace-nowrap self-center md:self-end">
+          View Poses Directory
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {featuredPoses.map(pose => (
+          <PoseCard {...pose} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Premium Course Promo CTA -->
+  <section class="py-24 bg-white relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gradient-to-br from-[#FFF1F5] via-white to-[#D9B8FF]/10 border border-border-main rounded-3xl p-8 sm:p-12 lg:p-16 relative shadow-sm">
+        <div class="absolute inset-0 bg-[radial-gradient(#e8afc7_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-10"></div>
+        <div class="absolute right-0 bottom-0 top-0 w-1/3 bg-radial-gradient from-brand-accent/20 to-transparent blur-2xl pointer-events-none"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+          <div class="lg:col-span-8 space-y-6">
+            <span class="inline-flex items-center space-x-1.5 bg-brand-primary/10 border border-brand-primary/20 text-brand-primary rounded-full px-3.5 py-1 text-xs font-bold uppercase tracking-wider">
+              🔥 Featured Wellness Guide
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-heading font-semibold text-text-main tracking-tight leading-snug">
+              30-Day Yoga Challenge for Beginners
+            </h2>
+            <p class="text-text-secondary text-sm sm:text-base leading-relaxed max-w-2xl">
+              Kickstart your wellness ritual today. Our downloadable 30-day schedule contains structured daily practices, mindfulness tips, breathing cards, and PDF checklist logs. Just $25 for lifetime access.
+            </p>
+            <div class="flex flex-wrap gap-4 text-xs font-semibold text-text-main pt-2">
+              <span class="bg-white border border-border-main py-2 px-4 rounded-full">✓ 30 Daily Worksheets</span>
+              <span class="bg-white border border-border-main py-2 px-4 rounded-full">✓ Beginner-Friendly</span>
+              <span class="bg-white border border-border-main py-2 px-4 rounded-full">✓ Instant PDF Download</span>
+            </div>
+          </div>
+          <div class="lg:col-span-4 flex lg:justify-end">
+            <a href="/programs" class="btn-primary py-4 px-8 w-full lg:w-auto text-center shadow-md">
+              Buy Now for $25
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Articles -->
+  <section class="py-20 bg-secondary-bg/20 border-t border-border-main/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+        <div class="space-y-3 text-center md:text-left">
+          <span class="text-xs uppercase font-bold text-brand-primary tracking-wider">Wellness Articles</span>
+          <h2 class="text-3xl sm:text-4xl font-heading font-semibold text-text-main">Latest Tips & Blog</h2>
+          <p class="text-text-secondary text-sm sm:text-base max-w-xl">
+            Stay updated with self-care routines, alignment corrections, recipes, and yogic philosophy.
+          </p>
+        </div>
+        <a href="/blog" class="btn-secondary whitespace-nowrap self-center md:self-end">
+          Explore All Articles
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        {recentBlogs.map(blog => (
+          <BlogCard {...blog} />
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

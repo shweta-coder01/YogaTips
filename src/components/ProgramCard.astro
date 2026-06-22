@@ -1,0 +1,74 @@
+---
+interface Props {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  features: string[];
+  coverSvg: string; // inline SVG for wellness theme illustrations
+}
+
+const { id, name, price, description, features, coverSvg } = Astro.props;
+---
+
+<div class="luxury-card flex flex-col justify-between h-full bg-white border border-border-main rounded-3xl overflow-hidden shadow-sm transition-all duration-300">
+  <div>
+    <!-- Cover Visual -->
+    <div class="h-48 bg-gradient-to-br from-secondary-bg via-brand-accent/20 to-brand-secondary/20 relative flex items-center justify-center p-6 border-b border-border-main/50">
+      <div class="absolute inset-0 bg-[radial-gradient(#e8afc7_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
+      
+      <!-- Premium Wellness SVG Graphic -->
+      <svg class="h-28 w-28 text-brand-primary drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        {coverSvg ? (
+          <path d={coverSvg} />
+        ) : (
+          <!-- Default Book/Guide Symbol -->
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5z" />
+        )}
+      </svg>
+
+      <!-- Price Badge -->
+      <div class="absolute bottom-4 right-4 bg-white border border-border-main rounded-full py-1.5 px-4 shadow-md flex items-center">
+        <span class="text-xs font-heading font-medium text-text-secondary mr-0.5">$</span>
+        <span class="text-lg font-heading font-bold text-text-main">{price}</span>
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="p-6">
+      <h3 class="font-heading font-semibold text-xl text-text-main mb-2 tracking-tight leading-snug">{name}</h3>
+      <p class="text-text-secondary text-sm leading-relaxed mb-6">{description}</p>
+
+      <!-- Features List -->
+      <div class="space-y-3">
+        <h4 class="text-xs uppercase font-bold text-text-main tracking-wider">What's Included:</h4>
+        <ul class="space-y-2">
+          {features.map(feature => (
+            <li class="flex items-start text-xs text-text-secondary">
+              <svg class="h-4 w-4 text-brand-primary mr-2 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke-width="1.5" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4" />
+              </svg>
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buy Action Button -->
+  <div class="p-6 pt-0">
+    <button 
+      class="checkout-btn w-full btn-primary py-3 rounded-full text-sm font-semibold tracking-wide shadow-sm flex items-center justify-center space-x-2"
+      data-id={id}
+      data-name={name}
+      data-price={price}
+    >
+      <span>Buy Now</span>
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+      </svg>
+    </button>
+  </div>
+</div>

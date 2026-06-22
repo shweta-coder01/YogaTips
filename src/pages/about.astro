@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Instructors profiles
+const team = [
+  {
+    name: "Elena Rostova",
+    role: "Founder & Lead Yoga Instructor",
+    bio: "Elena has spent over 12 years studying Vinyasa and Yin yoga in Rishikesh, India. She founded Global Yoga Tips to make luxury studio guidance accessible to anyone at home.",
+    avatarSvg: "M12 2a5 5 0 100 10 5 5 0 000-10zm0 12c-4.4 0-8 2-8 6v2h16v-2c0-4-3.6-6-8-6z"
+  },
+  {
+    name: "Marcus Vance",
+    role: "Mindfulness & Meditation Coach",
+    bio: "Marcus is a certified cognitive mindfulness specialist with a background in neuroscience. He curates our meditation blueprints to help busy professionals alleviate anxiety.",
+    avatarSvg: "M12 2a5 5 0 100 10 5 5 0 000-10zm0 12c-4.4 0-8 2-8 6v2h16v-2c0-4-3.6-6-8-6z"
+  }
+];
+---
+
+<Layout title="About Our Mission" description="Learn about Global Yoga Tips. Discover our story, our certified yoga instructors, and our philosophy of holistic wellness and self-care.">
+  <!-- Top Banner -->
+  <section class="bg-gradient-to-b from-white to-secondary-bg/30 border-b border-border-main/40 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+      <span class="text-xs uppercase font-bold text-brand-primary tracking-wider">Our Story</span>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-semibold text-text-main">About Global Yoga Tips</h1>
+      <p class="text-text-secondary text-base max-w-xl mx-auto">
+        Empowering individuals worldwide to discover composure, flexibility, and physical restoration through yogic routines.
+      </p>
+    </div>
+  </section>
+
+  <!-- Narrative / Mission Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+        <div class="md:col-span-7 space-y-6">
+          <h2 class="text-2xl sm:text-3xl font-heading font-semibold text-text-main">A Digital Sanctuary for Self-Care</h2>
+          <p class="text-text-secondary text-sm sm:text-base leading-relaxed">
+            Global Yoga Tips was born in 2026 out of a simple realization: while yoga has surged in popularity, finding authentic, safe, and calming resources without cluttered ad layouts remains surprisingly difficult. 
+          </p>
+          <p class="text-text-secondary text-sm sm:text-base leading-relaxed">
+            We designed this website to serve as an online wellness retreat. From our clean fonts to our blush-white palettes, we want you to feel a sense of calm the moment you land on our pages. We do not provide quick fixes; we provide deep, life-altering self-care rituals.
+          </p>
+        </div>
+        <div class="md:col-span-5 bg-secondary-bg/60 border border-border-main rounded-3xl p-8 flex items-center justify-center relative overflow-hidden h-64 shadow-sm">
+          <div class="absolute inset-0 bg-[radial-gradient(#e8afc7_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
+          <svg class="h-28 w-28 text-brand-primary/60 drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2C11.5 5 9.5 8 6 8.5C7.5 10 7.5 12 7 13.5C8.5 13 10.5 13.5 12 16.5C13.5 13.5 15.5 13 17 13.5C16.5 12 16.5 10 18 8.5C14.5 8 12.5 5 12 2Z" fill="currentColor" opacity="0.4"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Core Philosophy pillars -->
+      <div class="pt-12 border-t border-border-main/50 space-y-8">
+        <h3 class="text-xl font-heading font-semibold text-text-main text-center">Our Core Principles</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="space-y-2.5 text-center p-4">
+            <div class="text-2xl">🌱</div>
+            <h4 class="font-heading font-semibold text-text-main">Mindful Design</h4>
+            <p class="text-xs text-text-secondary leading-relaxed">We keep our content clean, spacious, and readable. Insomnia, fatigue, and stress require calming visual cues, not cluttered alerts.</p>
+          </div>
+          <div class="space-y-2.5 text-center p-4">
+            <div class="text-2xl">🔬</div>
+            <h4 class="font-heading font-semibold text-text-main">Anatomical Safety</h4>
+            <p class="text-xs text-text-secondary leading-relaxed">We avoid hyper-extending poses. Alignment guidelines are structured for joints safety, catering to real bodies.</p>
+          </div>
+          <div class="space-y-2.5 text-center p-4">
+            <div class="text-2xl">💖</div>
+            <h4 class="font-heading font-semibold text-text-main">Inclusive Wellness</h4>
+            <p class="text-xs text-text-secondary leading-relaxed">Whether you have five minutes or an hour, your self-care journey is fully respected here. We celebrate progress of all scales.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meet the Team -->
+  <section class="py-20 bg-secondary-bg/20 border-t border-border-main/40">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-xl mx-auto mb-16 space-y-3">
+        <span class="text-xs uppercase font-bold text-brand-primary tracking-wider font-heading">Certified Guides</span>
+        <h2 class="text-3xl font-heading font-semibold text-text-main">Meet Our Instructors</h2>
+        <p class="text-text-secondary text-sm leading-relaxed">
+          Our articles and digital product checklist guides are researched and authored by professional wellness facilitators.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+        {team.map(member => (
+          <div class="luxury-card p-6 bg-white border border-border-main rounded-3xl flex flex-col items-center text-center space-y-4">
+            <!-- Icon Avatar -->
+            <div class="h-20 w-20 rounded-full bg-secondary-bg flex items-center justify-center border border-border-main/50 text-brand-primary shadow-sm">
+              <svg class="h-10 w-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d={member.avatarSvg} />
+              </svg>
+            </div>
+            
+            <div class="space-y-1">
+              <h3 class="font-heading font-semibold text-lg text-text-main leading-snug">{member.name}</h3>
+              <p class="text-xs font-semibold text-brand-primary uppercase tracking-wide">{member.role}</p>
+            </div>
+
+            <p class="text-text-secondary text-xs leading-relaxed font-sans">{member.bio}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

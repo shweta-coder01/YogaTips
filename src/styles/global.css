@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary-bg: #FFF9FB;
+  --color-secondary-bg: #FFF1F5;
+  --color-brand-primary: #E8AFC7;
+  --color-brand-secondary: #D9B8FF;
+  --color-brand-accent: #F5C2D7;
+  --color-btn: #E8AFC7;
+  --color-btn-hover: #D996B6;
+  --color-text-main: #2D2D2D;
+  --color-text-secondary: #6B7280;
+  --color-border-main: #F3DCE5;
+  --color-success-sage: #7FBF9F;
+
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Poppins', sans-serif;
+}
+
+/* Custom utility styles for luxury yoga theme */
+body {
+  background-color: var(--color-primary-bg);
+  color: var(--color-text-main);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+.luxury-card {
+  background-color: #ffffff;
+  border: 1px solid var(--color-border-main);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px -2px rgba(232, 175, 199, 0.12);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.luxury-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px -4px rgba(232, 175, 199, 0.22);
+}
+
+.btn-primary {
+  background-color: var(--color-btn);
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.75rem 1.75rem;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-btn-hover);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-text-main);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  border: 2px solid var(--color-brand-primary);
+  border-radius: 9999px;
+  padding: 0.65rem 1.65rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-secondary-bg);
+  border-color: var(--color-btn-hover);
+  color: var(--color-btn-hover);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-primary-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-accent);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-primary);
+}

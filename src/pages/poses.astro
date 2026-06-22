@@ -1,0 +1,300 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PoseCard from '../components/PoseCard.astro';
+
+// A collection of yoga poses
+const poses = [
+  {
+    englishName: "Tree Pose",
+    sanskritName: "Vrksasana",
+    difficulty: "Beginner" as const,
+    category: "Balance",
+    benefits: ["Improves posture & balance", "Strengthens thighs, calves, ankles", "Relieves sciatica"],
+    description: "A foundational standing balance pose that helps build focus, mental clarity, and physical stability while opening the hips.",
+    svgPath: "M12 3v18M12 7c2 0 4 1.5 5 3.5-2 .5-4 .5-5 .5M12 9c-2 0-4 1.5-5 3.5 2 .5 4 .5 5 .5M12 12c3 0 5 2 5.5 4.5-2.5.5-4.5 0-5.5-.5M12 14c-3 0-5 2-5.5 4.5 2.5.5 4.5 0 5.5-.5"
+  },
+  {
+    englishName: "Downward-Facing Dog",
+    sanskritName: "Adho Mukha Svanasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Stretches shoulders & hamstrings", "Strengthens arms and legs", "Energizes the body"],
+    description: "One of the most widely recognized yoga poses, this gentle inversion stretches the entire back body while calming the nervous system.",
+    svgPath: "M19 20L12 4L5 20M8 15h8M12 4v4"
+  },
+  {
+    englishName: "Warrior II",
+    sanskritName: "Virabhadrasana II",
+    difficulty: "Intermediate" as const,
+    category: "Strength",
+    benefits: ["Strengthens legs and ankles", "Stretches chest and lungs", "Builds stamina & focus"],
+    description: "A powerful standing pose that builds strength in the lower body, improves circulation, and cultivates warrior-like concentration.",
+    svgPath: "M2 12h20M12 12v9M8 6l4 6 4-6"
+  },
+  {
+    englishName: "Cobra Pose",
+    sanskritName: "Bhujangasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Strengthens the spine", "Stretches chest and abdomen", "Relieves stress and fatigue"],
+    description: "A gentle backbend that opens the chest, stimulates the abdominal organs, and helps build flexibility in the vertebral column.",
+    svgPath: "M2 20c10-2 14-8 16-12c1.5-3 2-6 4-6M10 20c4-1 8-3 10-5M4 14a8 8 0 0 1 8-8"
+  },
+  {
+    englishName: "Crow Pose",
+    sanskritName: "Bakasana",
+    difficulty: "Advanced" as const,
+    category: "Strength",
+    benefits: ["Strengthens arms and wrists", "Tones abdominal muscles", "Increases confidence & balance"],
+    description: "An advanced arm balance that requires core engagement and shoulder stability, teaching focus and control over fear.",
+    svgPath: "M4 18c4-4 8-6 12-6M10 20c6 0 10-6 10-10M12 6a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"
+  },
+  {
+    englishName: "Bridge Pose",
+    sanskritName: "Setu Bandha Sarvangasana",
+    difficulty: "Beginner" as const,
+    category: "Flexibility",
+    benefits: ["Stretches chest & neck", "Strengthens back & hamstrings", "Calms mind & reduces anxiety"],
+    description: "A restorative backbend that stimulates the thyroid, stretches the thorax, and can be supported with blocks for deep relaxation.",
+    svgPath: "M4 20c2-5 6-7 10-7h6M6 10c4 0 8 3 10 7M20 20V12"
+  },
+  {
+    englishName: "Half Lord of the Fishes",
+    sanskritName: "Ardha Matsyendrasana",
+    difficulty: "Intermediate" as const,
+    category: "Flexibility",
+    benefits: ["Improves spine flexibility", "Stimulates liver & kidneys", "Relieves backache & fatigue"],
+    description: "An active seated spinal twist that encourages abdominal massage, chest expansion, and helps realign the vertebral column.",
+    svgPath: "M5 20c5-5 8-5 12-5M12 4c3 3 3 7 0 10M19 12c-2 3-5 5-7 5M12 8a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"
+  },
+  {
+    englishName: "Eagle Pose",
+    sanskritName: "Garudasana",
+    difficulty: "Intermediate" as const,
+    category: "Balance",
+    benefits: ["Improves concentration & balance", "Stretches shoulders & upper back", "Strengthens calves & thighs"],
+    description: "A challenging standing balance that integrates wrapped limbs, stretching the shoulder blades and opening the hip joints.",
+    svgPath: "M12 4v16M8 8c2 0 4 2 4 4s-2 4-4 4M16 8c-2 0-4 2-4 4s 2 4 4 4"
+  }
+];
+
+// Combine unique categories and difficulties for filters
+const categories = ["All", "Balance", "Flexibility", "Strength"];
+const difficulties = ["All", "Beginner", "Intermediate", "Advanced"];
+---
+
+<Layout title="Yoga Poses Directory" description="Explore our comprehensive library of yoga poses. Learn proper alignment, Sanskrit names, difficulty ratings, and specific wellness benefits.">
+  <!-- Top Banner -->
+  <section class="bg-gradient-to-b from-white to-secondary-bg/30 border-b border-border-main/40 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+      <span class="text-xs uppercase font-bold text-brand-primary tracking-wider">Sanctuary Library</span>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-semibold text-text-main">Yoga Poses Directory</h1>
+      <p class="text-text-secondary text-base max-w-xl mx-auto">
+        Deepen your knowledge of the postures. Discover translation, benefits, difficulty levels, and step-by-step muscle alignment tags.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filter & Search Controls -->
+  <section class="py-12 bg-white sticky top-20 z-40 shadow-sm border-b border-border-main/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <!-- Search Input -->
+        <div class="lg:col-span-4 relative">
+          <label for="pose-search" class="sr-only">Search poses</label>
+          <input 
+            type="text" 
+            id="pose-search" 
+            placeholder="Search by pose name or benefits..." 
+            class="w-full bg-primary-bg border border-border-main rounded-full py-3 px-5 pl-12 text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all"
+          />
+          <svg class="absolute left-4 top-3.5 h-4.5 w-4.5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+
+        <!-- Filters Grid -->
+        <div class="lg:col-span-8 flex flex-wrap gap-4 items-center">
+          <!-- Category Filter -->
+          <div class="flex items-center space-x-2.5">
+            <span class="text-xs font-bold uppercase text-text-secondary tracking-wider">Type:</span>
+            <div class="flex flex-wrap gap-2">
+              {categories.map(cat => (
+                <button 
+                  type="button"
+                  class={`category-filter-btn px-4 py-1.5 rounded-full text-xs font-medium border border-border-main transition-colors ${cat === 'All' ? 'bg-brand-primary border-brand-primary text-white' : 'bg-white hover:bg-secondary-bg text-text-main'}`}
+                  data-category={cat}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div class="hidden lg:block h-6 w-px bg-border-main"></div>
+
+          <!-- Difficulty Filter -->
+          <div class="flex items-center space-x-2.5">
+            <span class="text-xs font-bold uppercase text-text-secondary tracking-wider">Level:</span>
+            <div class="flex flex-wrap gap-2">
+              {difficulties.map(diff => (
+                <button 
+                  type="button"
+                  class={`difficulty-filter-btn px-4 py-1.5 rounded-full text-xs font-medium border border-border-main transition-colors ${diff === 'All' ? 'bg-brand-primary border-brand-primary text-white' : 'bg-white hover:bg-secondary-bg text-text-main'}`}
+                  data-difficulty={diff}
+                >
+                  {diff}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Live Counter -->
+      <div class="text-xs text-text-secondary font-medium" id="results-counter">
+        Showing all {poses.length} poses
+      </div>
+    </div>
+  </section>
+
+  <!-- Poses Grid Section -->
+  <section class="py-16 bg-primary-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Empty state -->
+      <div id="empty-state" class="hidden text-center py-20 space-y-4">
+        <svg class="h-16 w-16 text-brand-primary/50 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h3 class="font-heading font-semibold text-lg text-text-main">No Poses Found</h3>
+        <p class="text-text-secondary text-sm max-w-xs mx-auto">We couldn't find any poses matching your criteria. Try adjusting your search query or filter tags.</p>
+        <button id="reset-filters-btn" class="btn-secondary py-2 px-5 text-xs">Reset All Filters</button>
+      </div>
+
+      <!-- Main Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="poses-grid">
+        {poses.map(pose => (
+          <div 
+            class="pose-card-wrapper transition-all duration-300"
+            data-category={pose.category}
+            data-difficulty={pose.difficulty}
+            data-search-terms={`${pose.englishName.toLowerCase()} ${pose.sanskritName.toLowerCase()} ${pose.benefits.join(' ').toLowerCase()} ${pose.description.toLowerCase()}`}
+          >
+            <PoseCard {...pose} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Client-side Filtering Script -->
+  <script>
+    let activeCategory = 'All';
+    let activeDifficulty = 'All';
+    let searchQuery = '';
+
+    const searchInput = document.getElementById('pose-search') as HTMLInputElement;
+    const catBtns = document.querySelectorAll('.category-filter-btn');
+    const diffBtns = document.querySelectorAll('.difficulty-filter-btn');
+    const cardWrappers = document.querySelectorAll('.pose-card-wrapper');
+    const resultsCounter = document.getElementById('results-counter');
+    const emptyState = document.getElementById('empty-state');
+    const resetBtn = document.getElementById('reset-filters-btn');
+
+    // Update styling for active filters
+    const updateActiveButtonStyles = (buttons: NodeListOf<Element>, activeValue: string, dataAttr: string) => {
+      buttons.forEach(btn => {
+        const val = btn.getAttribute(dataAttr);
+        if (val === activeValue) {
+          btn.classList.add('bg-brand-primary', 'border-brand-primary', 'text-white');
+          btn.classList.remove('bg-white', 'text-text-main', 'hover:bg-secondary-bg');
+        } else {
+          btn.classList.remove('bg-brand-primary', 'border-brand-primary', 'text-white');
+          btn.classList.add('bg-white', 'text-text-main', 'hover:bg-secondary-bg');
+        }
+      });
+    };
+
+    // Filter Logic
+    const applyFilters = () => {
+      let visibleCount = 0;
+
+      cardWrappers.forEach(card => {
+        const wrapper = card as HTMLElement;
+        const cardCat = wrapper.dataset.category || '';
+        const cardDiff = wrapper.dataset.difficulty || '';
+        const searchTerms = wrapper.dataset.searchTerms || '';
+
+        const matchesCat = activeCategory === 'All' || cardCat === activeCategory;
+        const matchesDiff = activeDifficulty === 'All' || cardDiff === activeDifficulty;
+        const matchesSearch = searchQuery === '' || searchTerms.includes(searchQuery);
+
+        if (matchesCat && matchesDiff && matchesSearch) {
+          wrapper.style.display = 'block';
+          wrapper.style.opacity = '1';
+          wrapper.style.transform = 'scale(1)';
+          visibleCount++;
+        } else {
+          wrapper.style.display = 'none';
+          wrapper.style.opacity = '0';
+          wrapper.style.transform = 'scale(0.95)';
+        }
+      });
+
+      // Update counter
+      if (resultsCounter) {
+        resultsCounter.textContent = searchQuery || activeCategory !== 'All' || activeDifficulty !== 'All' 
+          ? `Found ${visibleCount} matching poses` 
+          : `Showing all ${cardWrappers.length} poses`;
+      }
+
+      // Handle Empty State
+      if (emptyState) {
+        if (visibleCount === 0) {
+          emptyState.classList.remove('hidden');
+        } else {
+          emptyState.classList.add('hidden');
+        }
+      }
+    };
+
+    // Wire Category Events
+    catBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeCategory = btn.getAttribute('data-category') || 'All';
+        updateActiveButtonStyles(catBtns, activeCategory, 'data-category');
+        applyFilters();
+      });
+    });
+
+    // Wire Difficulty Events
+    diffBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeDifficulty = btn.getAttribute('data-difficulty') || 'All';
+        updateActiveButtonStyles(diffBtns, activeDifficulty, 'data-difficulty');
+        applyFilters();
+      });
+    });
+
+    // Wire Search Input
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = (e.target as HTMLInputElement).value.trim().toLowerCase();
+        applyFilters();
+      });
+    }
+
+    // Reset button
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        activeCategory = 'All';
+        activeDifficulty = 'All';
+        searchQuery = '';
+        if (searchInput) searchInput.value = '';
+        updateActiveButtonStyles(catBtns, 'All', 'data-category');
+        updateActiveButtonStyles(diffBtns, 'All', 'data-difficulty');
+        applyFilters();
+      });
+    }
+  </script>
+</Layout>

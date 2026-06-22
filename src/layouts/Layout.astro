@@ -1,0 +1,265 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Discover expert yoga guidance, wellness tips, and premium yoga programs designed for a healthier and happier lifestyle." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary SEO Metadata -->
+    <title>{title} | Global Yoga Tips</title>
+    <meta name="title" content={`${title} | Global Yoga Tips`} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href="https://globalyogatips.com/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={`${title} | Global Yoga Tips`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/images/og-yoga.jpg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content={`${title} | Global Yoga Tips`} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="/images/og-yoga.jpg" />
+
+    <!-- Google Analytics (Placeholder Tag) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+  </head>
+  <body class="bg-primary-bg text-text-main selection:bg-brand-accent selection:text-text-main min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white border-b border-border-main sticky top-0 z-50 shadow-sm backdrop-blur-md bg-white/95">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <!-- Logo -->
+          <a href="/" class="flex items-center space-x-2" id="logo-link">
+            <svg class="h-9 w-9 text-brand-primary fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C11.5 5 9.5 8 6 8.5C7.5 10 7.5 12 7 13.5C8.5 13 10.5 13.5 12 16.5C13.5 13.5 15.5 13 17 13.5C16.5 12 16.5 10 18 8.5C14.5 8 12.5 5 12 2Z"/>
+              <path d="M12 7C13 11 17 11.5 19.5 12.5C17.5 13.5 15.5 14 14.5 16.5C13.5 14 12 14.5 11 16.5C10 14.5 8 14 6 16.5C5 14 3 13.5 1 12.5C3.5 11.5 7.5 11 8.5 7C9.5 9.5 10.5 10 12 7Z" opacity="0.75"/>
+              <path d="M12 12C12.5 14.5 14.5 16.5 17 17.5C14.5 18 13.5 19.5 12 22C10.5 19.5 9.5 18 7 17.5C9.5 16.5 11.5 14.5 12 12Z" opacity="0.6"/>
+            </svg>
+            <span class="font-heading font-semibold text-xl tracking-tight bg-gradient-to-r from-text-main to-brand-primary bg-clip-text text-transparent">Global Yoga Tips</span>
+          </a>
+
+          <!-- Desktop Navigation -->
+          <nav class="hidden md:flex space-x-8 items-center" id="desktop-nav">
+            <a href="/" class="text-text-main hover:text-brand-primary font-medium transition-colors">Home</a>
+            <a href="/poses" class="text-text-main hover:text-brand-primary font-medium transition-colors">Yoga Poses</a>
+            <a href="/programs" class="text-text-main hover:text-brand-primary font-medium transition-colors">Yoga Programs</a>
+            <a href="/blog" class="text-text-main hover:text-brand-primary font-medium transition-colors">Blog</a>
+            <a href="/about" class="text-text-main hover:text-brand-primary font-medium transition-colors">About</a>
+            <a href="/contact" class="text-text-main hover:text-brand-primary font-medium transition-colors">Contact</a>
+          </nav>
+
+          <!-- Desktop Authentication -->
+          <div class="hidden md:flex items-center space-x-4" id="auth-nav">
+            <a href="/login" class="text-text-main hover:text-brand-primary font-medium transition-colors">Login</a>
+            <a href="/register" class="btn-primary py-2.5 px-6 text-sm">Register</a>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <div class="flex items-center md:hidden">
+            <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-text-secondary hover:text-brand-primary hover:bg-secondary-bg focus:outline-none transition-colors" aria-controls="mobile-menu" aria-expanded="false">
+              <span class="sr-only">Open main menu</span>
+              <svg class="h-6 w-6 block" stroke="currentColor" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu, show/hide based on menu state. -->
+      <div class="hidden md:hidden border-t border-border-main bg-white" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Home</a>
+          <a href="/poses" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Yoga Poses</a>
+          <a href="/programs" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Yoga Programs</a>
+          <a href="/blog" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Blog</a>
+          <a href="/about" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">About</a>
+          <a href="/contact" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Contact</a>
+        </div>
+        <div class="pt-4 pb-4 border-t border-border-main px-5 space-y-2" id="auth-nav-mobile">
+          <a href="/login" class="block text-center w-full px-4 py-2 text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg rounded-md">Login</a>
+          <a href="/register" class="block text-center w-full btn-primary py-2.5 px-6 text-sm">Register</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-secondary-bg border-t border-border-main py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <!-- Logo & Description -->
+          <div class="space-y-4">
+            <div class="flex items-center space-x-2">
+              <svg class="h-8 w-8 text-brand-primary fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C11.5 5 9.5 8 6 8.5C7.5 10 7.5 12 7 13.5C8.5 13 10.5 13.5 12 16.5C13.5 13.5 15.5 13 17 13.5C16.5 12 16.5 10 18 8.5C14.5 8 12.5 5 12 2Z"/>
+              </svg>
+              <span class="font-heading font-semibold text-lg text-text-main">Global Yoga Tips</span>
+            </div>
+            <p class="text-text-secondary text-sm leading-relaxed">
+              We provide expert yoga instruction, beginner-friendly pose directories, and premium wellness programs. Learn to harmonize mind, body, and spirit in our elegant digital sanctuary.
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h3 class="font-heading font-semibold text-text-main mb-4 uppercase tracking-wider text-xs">Explore</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="/" class="text-text-secondary hover:text-brand-primary transition-colors">Home</a></li>
+              <li><a href="/poses" class="text-text-secondary hover:text-brand-primary transition-colors">Yoga Poses</a></li>
+              <li><a href="/programs" class="text-text-secondary hover:text-brand-primary transition-colors">Yoga Programs</a></li>
+              <li><a href="/blog" class="text-text-secondary hover:text-brand-primary transition-colors">Yoga Blog</a></li>
+            </ul>
+          </div>
+
+          <!-- Yoga Categories -->
+          <div>
+            <h3 class="font-heading font-semibold text-text-main mb-4 uppercase tracking-wider text-xs">Categories</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="/poses?category=Beginner" class="text-text-secondary hover:text-brand-primary transition-colors">Beginner Yoga</a></li>
+              <li><a href="/poses?category=Flexibility" class="text-text-secondary hover:text-brand-primary transition-colors">Flexibility Poses</a></li>
+              <li><a href="/poses?category=Balance" class="text-text-secondary hover:text-brand-primary transition-colors">Balance & Strength</a></li>
+              <li><a href="/blog?category=Mindfulness" class="text-text-secondary hover:text-brand-primary transition-colors">Mindfulness & Meditation</a></li>
+            </ul>
+          </div>
+
+          <!-- Newsletter Signup -->
+          <div>
+            <h3 class="font-heading font-semibold text-text-main mb-4 uppercase tracking-wider text-xs">Newsletter</h3>
+            <p class="text-text-secondary text-sm mb-4 leading-relaxed">
+              Join our list to receive weekly self-care tips, poses, and exclusive course discounts.
+            </p>
+            <form id="newsletter-form" class="space-y-2">
+              <div class="relative">
+                <input type="email" placeholder="Your email address" required class="w-full bg-white border border-border-main rounded-full py-2.5 px-4 pr-12 text-sm text-text-main placeholder-text-secondary/70 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all" />
+                <button type="submit" class="absolute right-1 top-1 bg-brand-primary hover:bg-btn-hover text-white rounded-full p-2 transition-colors" aria-label="Subscribe">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+              </div>
+              <p id="newsletter-feedback" class="text-xs text-success-sage font-medium hidden">Thank you for subscribing to our self-care community!</p>
+            </form>
+          </div>
+        </div>
+
+        <div class="border-t border-border-main/50 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-text-secondary">
+          <p>© {new Date().getFullYear()} Global Yoga Tips. All rights reserved.</p>
+          <div class="flex space-x-6 mt-4 md:mt-0">
+            <a href="/about" class="hover:text-brand-primary">About Us</a>
+            <a href="/contact" class="hover:text-brand-primary">Contact</a>
+            <a href="/login" class="hover:text-brand-primary">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Client Script to Handle Auth & Interactions -->
+    <script>
+      import { supabase } from '../lib/supabase.js';
+
+      // 1. Manage Dynamic Login/Dashboard Header States
+      const updateAuthNavbar = (session) => {
+        const authNav = document.getElementById('auth-nav');
+        const authNavMobile = document.getElementById('auth-nav-mobile');
+
+        if (session) {
+          const userMetaName = session.user?.user_metadata?.name || session.user?.name || 'Yoga Practitioner';
+          const logoutHTML = `
+            <div class="flex items-center space-x-4">
+              <a href="/dashboard" class="text-text-main hover:text-brand-primary font-medium transition-colors flex items-center space-x-1.5">
+                <span class="w-2 h-2 rounded-full bg-success-sage animate-pulse"></span>
+                <span>Dashboard</span>
+              </a>
+              <button id="logout-btn" class="btn-primary py-2.5 px-5 text-sm cursor-pointer">Log Out</button>
+            </div>
+          `;
+          const logoutMobileHTML = `
+            <div class="space-y-3">
+              <div class="text-xs text-text-secondary px-3">Signed in as <strong>${userMetaName}</strong></div>
+              <a href="/dashboard" class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Dashboard</a>
+              <button id="logout-btn-mobile" class="w-full text-center btn-primary py-2.5 px-6 text-sm cursor-pointer mt-1">Log Out</button>
+            </div>
+          `;
+
+          if (authNav) authNav.innerHTML = logoutHTML;
+          if (authNavMobile) authNavMobile.innerHTML = logoutMobileHTML;
+
+          // Wire up event listeners
+          const handleSignOut = async () => {
+            await supabase.auth.signOut();
+            window.location.href = '/';
+          };
+
+          document.getElementById('logout-btn')?.addEventListener('click', handleSignOut);
+          document.getElementById('logout-btn-mobile')?.addEventListener('click', handleSignOut);
+        } else {
+          const loginHTML = `
+            <a href="/login" class="text-text-main hover:text-brand-primary font-medium transition-colors">Login</a>
+            <a href="/register" class="btn-primary py-2.5 px-6 text-sm">Register</a>
+          `;
+          const loginMobileHTML = `
+            <a href="/login" class="block text-center w-full px-4 py-2 text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg rounded-md">Login</a>
+            <a href="/register" class="block text-center w-full btn-primary py-2.5 px-6 text-sm">Register</a>
+          `;
+
+          if (authNav) authNav.innerHTML = loginHTML;
+          if (authNavMobile) authNavMobile.innerHTML = loginMobileHTML;
+        }
+      };
+
+      // Listen for auth events
+      supabase.auth.onAuthStateChange((event, session) => {
+        updateAuthNavbar(session);
+      });
+
+      // 2. Mobile Menu Toggle
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+
+      // 3. Newsletter Submission Mock
+      const newsletterForm = document.getElementById('newsletter-form');
+      const newsletterFeedback = document.getElementById('newsletter-feedback');
+      if (newsletterForm && newsletterFeedback) {
+        newsletterForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const input = newsletterForm.querySelector('input');
+          if (input) input.value = '';
+          newsletterFeedback.classList.remove('hidden');
+          setTimeout(() => {
+            newsletterFeedback.classList.add('hidden');
+          }, 5000);
+        });
+      }
+    </script>
+  </body>
+</html>
