@@ -16,6 +16,8 @@ concurrency:
 
 env:
   ASTRO_TELEMETRY_DISABLED: true
+  PUBLIC_SUPABASE_URL: https://plenwjvcmqjegxzubakw.supabase.co
+  PUBLIC_SUPABASE_ANON_KEY: sb_publishable_XnbP5mIdBMb3m7Im79xTlA_0IY2eS6N
 
 jobs:
   deploy:
