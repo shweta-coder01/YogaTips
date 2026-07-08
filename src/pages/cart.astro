@@ -55,10 +55,11 @@ const basePath = import.meta.env.BASE_URL;
           </div>
 
           <button id="proceed-checkout-btn" class="w-full btn-primary py-3.5 rounded-full text-sm font-semibold shadow-sm flex items-center justify-center space-x-2">
-            <span>Proceed to Checkout</span>
-            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            <span id="proceed-btn-text">Place Order</span>
+            <svg id="proceed-btn-icon" class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
             </svg>
+            <div id="proceed-spinner" class="hidden w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
           </button>
           
           <p class="text-[10px] text-center text-text-secondary">By proceeding to checkout, you agree to our Terms of Service.</p>
@@ -67,92 +68,6 @@ const basePath = import.meta.env.BASE_URL;
       </div>
     </div>
   </section>
-
-  <!-- Checkout Modal Overlay -->
-  <div id="mock-payment-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm hidden">
-    <div class="bg-white rounded-3xl border border-border-main p-8 max-w-md w-full mx-4 shadow-2xl relative space-y-6 animate-in fade-in zoom-in-95 duration-200">
-      
-      <div class="flex justify-between items-start">
-        <div class="space-y-1">
-          <div class="text-[10px] uppercase font-bold text-brand-primary tracking-wider flex items-center">
-            <span class="w-1.5 h-1.5 rounded-full bg-brand-primary mr-1.5 animate-pulse"></span>
-            Secure Payment
-          </div>
-          <h3 class="font-heading font-semibold text-xl text-text-main">Checkout</h3>
-        </div>
-        <button id="close-modal-btn" class="p-1 rounded-full text-text-secondary hover:bg-secondary-bg transition-colors cursor-pointer">
-          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-
-      <div class="bg-secondary-bg/55 border border-border-main/50 rounded-2xl p-4 flex justify-between items-center">
-        <span class="text-sm text-text-secondary">Amount Due:</span>
-        <span class="font-heading font-bold text-lg text-text-main" id="modal-total-price">$0.00</span>
-      </div>
-
-      <!-- Payment Form Content -->
-      <form id="mock-payment-form" class="space-y-4">
-        <div class="space-y-1">
-          <label for="mock-card-number" class="text-xs uppercase font-bold text-text-secondary tracking-wider">Card Number</label>
-          <input 
-            type="text" 
-            id="mock-card-number" 
-            placeholder="4111 2222 3333 4444" 
-            maxlength="19" 
-            required 
-            class="w-full bg-primary-bg border border-border-main rounded-xl py-3 px-4 text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all"
-          />
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="space-y-1">
-            <label for="mock-expiry" class="text-xs uppercase font-bold text-text-secondary tracking-wider">Expiry Date</label>
-            <input 
-              type="text" 
-              id="mock-expiry" 
-              placeholder="MM/YY" 
-              maxlength="5" 
-              required 
-              class="w-full bg-primary-bg border border-border-main rounded-xl py-3 px-4 text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all"
-            />
-          </div>
-          <div class="space-y-1">
-            <label for="mock-cvv" class="text-xs uppercase font-bold text-text-secondary tracking-wider">CVV</label>
-            <input 
-              type="password" 
-              id="mock-cvv" 
-              placeholder="•••" 
-              maxlength="3" 
-              required 
-              class="w-full bg-primary-bg border border-border-main rounded-xl py-3 px-4 text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all"
-            />
-          </div>
-        </div>
-
-        <button type="submit" id="submit-payment-btn" class="w-full btn-primary py-3.5 rounded-full text-sm font-semibold tracking-wider flex items-center justify-center space-x-2 mt-4 cursor-pointer">
-          <svg class="h-4.5 w-4.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-          <span id="payment-btn-text">Pay Securely</span>
-        </button>
-      </form>
-
-      <!-- Processing State -->
-      <div id="payment-processing-state" class="hidden flex flex-col items-center justify-center py-10 space-y-4">
-        <div class="w-16 h-16 border-4 border-brand-accent border-t-brand-primary rounded-full animate-spin"></div>
-        <h4 class="font-heading font-semibold text-text-main">Verifying Transaction...</h4>
-        <p class="text-xs text-text-secondary text-center max-w-xs">Connecting to secure gateway. Please do not close this window or refresh the page.</p>
-      </div>
-
-      <!-- Success State -->
-      <div id="payment-success-state" class="hidden flex flex-col items-center justify-center py-10 space-y-4 text-center">
-        <div class="w-16 h-16 bg-success-sage/20 text-success-sage rounded-full flex items-center justify-center">
-          <svg class="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-        </div>
-        <h4 class="font-heading font-semibold text-xl text-text-main">Payment Successful!</h4>
-        <p class="text-sm text-text-secondary max-w-xs">Your purchase is complete. Redirecting you to your downloads area to access your PDF...</p>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://checkout.razorpay.com/v1/checkout.js" is:inline></script>
 
   <script>
     import { supabase } from '../lib/supabase.js';
@@ -164,42 +79,8 @@ const basePath = import.meta.env.BASE_URL;
       const totalEl = document.getElementById('summary-total');
       const proceedBtn = document.getElementById('proceed-checkout-btn') as HTMLButtonElement;
 
-      // Modal elements
-      const modal = document.getElementById('mock-payment-modal');
-      const closeBtn = document.getElementById('close-modal-btn');
-      const modalTotalPrice = document.getElementById('modal-total-price');
-      const paymentForm = document.getElementById('mock-payment-form');
-      const processingState = document.getElementById('payment-processing-state');
-      const successState = document.getElementById('payment-success-state');
-      
-      const cardInput = document.getElementById('mock-card-number') as HTMLInputElement;
-      const expiryInput = document.getElementById('mock-expiry') as HTMLInputElement;
-
       let currentCart: any[] = [];
       let currentTotal = 0;
-
-      // Card formatters
-      if (cardInput) {
-        cardInput.addEventListener('input', (e) => {
-          let value = (e.target as HTMLInputElement).value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-          let formatted = '';
-          for (let i = 0; i < value.length; i++) {
-            if (i > 0 && i % 4 === 0) formatted += ' ';
-            formatted += value[i];
-          }
-          (e.target as HTMLInputElement).value = formatted;
-        });
-      }
-      if (expiryInput) {
-        expiryInput.addEventListener('input', (e) => {
-          let value = (e.target as HTMLInputElement).value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-          if (value.length > 2) {
-            (e.target as HTMLInputElement).value = value.substring(0, 2) + '/' + value.substring(2, 4);
-          } else {
-            (e.target as HTMLInputElement).value = value;
-          }
-        });
-      }
 
       function renderCart() {
         const cartStr = localStorage.getItem('yoga_cart');
@@ -252,12 +133,11 @@ const basePath = import.meta.env.BASE_URL;
 
         if (subtotalEl) subtotalEl.textContent = `$${currentTotal.toFixed(2)}`;
         if (totalEl) totalEl.textContent = `$${currentTotal.toFixed(2)}`;
-        if (modalTotalPrice) modalTotalPrice.textContent = `$${currentTotal.toFixed(2)}`;
       }
 
       renderCart();
 
-      // Proceed to Checkout
+      // Proceed to Place Order
       proceedBtn?.addEventListener('click', async () => {
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
@@ -265,55 +145,46 @@ const basePath = import.meta.env.BASE_URL;
           return;
         }
 
-        // Show mock payment modal
-        modal?.classList.remove('hidden');
-        paymentForm?.classList.remove('hidden');
-        processingState?.classList.add('hidden');
-        successState?.classList.add('hidden');
-      });
-
-      // Close modal
-      const closeModal = () => modal?.classList.add('hidden');
-      closeBtn?.addEventListener('click', closeModal);
-      modal?.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-      });
-
-      // Submit mock payment
-      paymentForm?.addEventListener('submit', async (e) => {
-        e.preventDefault();
+        // Disable button, show spinner
+        proceedBtn.disabled = true;
+        const btnText = document.getElementById('proceed-btn-text');
+        const btnIcon = document.getElementById('proceed-btn-icon');
+        const spinner = document.getElementById('proceed-spinner');
         
-        paymentForm.classList.add('hidden');
-        processingState?.classList.remove('hidden');
+        if (btnText) btnText.textContent = 'Processing...';
+        if (btnIcon) btnIcon.classList.add('hidden');
+        if (spinner) spinner.classList.remove('hidden');
 
+        // Place order directly
         setTimeout(async () => {
-          const { data: { session } } = await supabase.auth.getSession();
-          if (session) {
-            // Process all items in cart as separate order rows for dashboard compatibility
-            const mockPaymentGroupId = 'pay_mock_' + Math.random().toString(36).substring(2, 11);
-            
-            for (const item of currentCart) {
-              await supabase.from('orders').insert({
-                id: mockPaymentGroupId + '_' + Math.random().toString(36).substring(2, 6),
-                user_id: session.user.id,
-                product_name: item.name,
-                amount: item.price,
-                payment_status: 'completed'
-              });
-            }
+          const mockPaymentGroupId = 'order_' + Math.random().toString(36).substring(2, 11);
+          
+          for (const item of currentCart) {
+            await supabase.from('orders').insert({
+              id: mockPaymentGroupId + '_' + Math.random().toString(36).substring(2, 6),
+              user_id: session.user.id,
+              product_name: item.name,
+              amount: item.price,
+              payment_status: 'completed'
+            });
           }
 
           // Clear cart
           localStorage.removeItem('yoga_cart');
           window.dispatchEvent(new Event('cart-updated'));
 
-          processingState?.classList.add('hidden');
-          successState?.classList.remove('hidden');
+          if (btnText) btnText.textContent = 'Order Placed!';
+          if (spinner) spinner.classList.add('hidden');
+          if (btnIcon) {
+            btnIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>`;
+            btnIcon.classList.remove('hidden');
+          }
 
+          // Redirect to dashboard orders
           setTimeout(() => {
             window.location.href = '/dashboard?tab=orders';
-          }, 2200);
-        }, 1500);
+          }, 1500);
+        }, 1000);
       });
     });
   </script>
