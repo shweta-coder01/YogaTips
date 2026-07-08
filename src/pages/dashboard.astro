@@ -119,6 +119,7 @@ const basePath = import.meta.env.BASE_URL;
                   <th scope="col" class="px-6 py-4">Receipt ID</th>
                   <th scope="col" class="px-6 py-4">Amount</th>
                   <th scope="col" class="px-6 py-4">Status</th>
+                  <th scope="col" class="px-6 py-4">Invoice</th>
                 </tr>
               </thead>
               <tbody id="orders-tbody" class="divide-y divide-border-main/20 text-text-secondary bg-white">
@@ -177,6 +178,7 @@ const basePath = import.meta.env.BASE_URL;
   <!-- Client-side Dashboard Control Script -->
   <script>
     import { supabase } from '../lib/supabase.js';
+    import { jsPDF } from 'jspdf';
 
     // Get base URL passed from body dataset
     const basePath = document.body.dataset.baseUrl || '/';
@@ -262,8 +264,25 @@ const basePath = import.meta.env.BASE_URL;
                   Completed
                 </span>
               </td>
+              <td class="px-6 py-4">
+                <button type="button" class="download-invoice-btn text-brand-primary hover:underline font-semibold text-xs transition-colors cursor-pointer" data-order='${JSON.stringify(order).replace(/'/g, "&#39;")}'>
+                  PDF
+                </button>
+              </td>
             </tr>
           `).join('');
+
+          // Wire up invoice download buttons
+          document.querySelectorAll('.download-invoice-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              const target = e.currentTarget as HTMLButtonElement;
+              const orderData = target.getAttribute('data-order');
+              if (orderData) {
+                const order = JSON.parse(orderData);
+                generateInvoice(order, user, profileName);
+              }
+            });
+          });
         }
       }
 
@@ -386,5 +405,68 @@ const basePath = import.meta.env.BASE_URL;
         }
       });
     });
+
+    // Generate Invoice PDF function
+    function generateInvoice(order: any, user: any, profileName: string) {
+      const doc = new jsPDF();
+      const pageWidth = doc.internal.pageSize.width;
+      
+      // Global Yoga Tips Logo/Header
+      doc.setFontSize(24);
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(232, 175, 199); // #E8AFC7
+      doc.text("Global Yoga Tips", pageWidth / 2, 30, { align: 'center' });
+      
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(100, 100, 100);
+      doc.text("Premium Wellness Programs", pageWidth / 2, 38, { align: 'center' });
+      
+      // Invoice Title
+      doc.setFontSize(20);
+      doc.setTextColor(51, 51, 51);
+      doc.text("INVOICE", 20, 60);
+      
+      // Invoice Details
+      doc.setFontSize(12);
+      doc.text(`Receipt ID: ${order.id}`, 20, 75);
+      doc.text(`Date: ${new Date(order.purchase_date).toLocaleDateString()}`, 20, 82);
+      
+      // Customer Details
+      doc.text(`Billed To:`, 120, 75);
+      doc.setFont("helvetica", "bold");
+      doc.text(profileName, 120, 82);
+      doc.setFont("helvetica", "normal");
+      if (user.email) doc.text(user.email, 120, 89);
+      if (user.phone) doc.text(user.phone, 120, 96);
+      
+      // Table Header
+      doc.setDrawColor(200, 200, 200);
+      doc.line(20, 110, pageWidth - 20, 110);
+      doc.setFont("helvetica", "bold");
+      doc.text("Description", 20, 118);
+      doc.text("Amount", pageWidth - 40, 118);
+      doc.line(20, 123, pageWidth - 20, 123);
+      
+      // Table Content
+      doc.setFont("helvetica", "normal");
+      doc.text(order.product_name, 20, 135);
+      doc.text(`$${parseFloat(order.amount).toFixed(2)}`, pageWidth - 40, 135);
+      
+      // Total
+      doc.line(120, 145, pageWidth - 20, 145);
+      doc.setFont("helvetica", "bold");
+      doc.text("Total Paid:", 120, 155);
+      doc.text(`$${parseFloat(order.amount).toFixed(2)}`, pageWidth - 40, 155);
+      
+      // Footer
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.setTextColor(150, 150, 150);
+      doc.text("Thank you for choosing Global Yoga Tips.", pageWidth / 2, 270, { align: 'center' });
+      
+      // Save PDF
+      doc.save(`Invoice_${order.id}.pdf`);
+    }
   </script>
 </Layout>

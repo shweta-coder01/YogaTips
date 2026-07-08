@@ -70,10 +70,16 @@ const basePath = import.meta.env.BASE_URL;
             <a href={`${basePath}contact`} class="text-text-main hover:text-brand-primary font-medium transition-colors">Contact</a>
           </nav>
 
-          <!-- Desktop Authentication -->
-          <div class="hidden lg:flex items-center space-x-3 xl:space-x-4" id="auth-nav">
-            <a href={`${basePath}login`} class="text-text-main hover:text-brand-primary font-medium transition-colors">Login</a>
-            <a href={`${basePath}register`} class="btn-primary py-2.5 px-6 text-sm">Register</a>
+          <!-- Desktop Cart & Authentication -->
+          <div class="hidden lg:flex items-center space-x-3 xl:space-x-4">
+            <a href={`${basePath}cart`} class="relative text-text-main hover:text-brand-primary transition-colors flex items-center mr-2">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              <span id="cart-badge" class="absolute -top-1.5 -right-2 bg-brand-primary text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center hidden">0</span>
+            </a>
+            <div class="flex items-center space-x-3 xl:space-x-4" id="auth-nav">
+              <a href={`${basePath}login`} class="text-text-main hover:text-brand-primary font-medium transition-colors">Login</a>
+              <a href={`${basePath}register`} class="btn-primary py-2.5 px-6 text-sm">Register</a>
+            </div>
           </div>
 
           <!-- Mobile Menu Button -->
@@ -98,9 +104,15 @@ const basePath = import.meta.env.BASE_URL;
           <a href={`${basePath}about`} class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">About</a>
           <a href={`${basePath}contact`} class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Contact</a>
         </div>
-        <div class="pt-4 pb-4 border-t border-border-main px-5 space-y-2" id="auth-nav-mobile">
-          <a href={`${basePath}login`} class="block text-center w-full px-4 py-2 text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg rounded-md">Login</a>
-          <a href={`${basePath}register`} class="block text-center w-full btn-primary py-2.5 px-6 text-sm">Register</a>
+        <div class="pt-4 pb-4 border-t border-border-main px-5 space-y-2">
+          <a href={`${basePath}cart`} class="flex items-center justify-between w-full px-4 py-2 text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg rounded-md">
+            <span>Cart</span>
+            <span id="cart-badge-mobile" class="bg-brand-primary text-white text-xs font-bold px-2 py-0.5 rounded-full hidden">0</span>
+          </a>
+          <div id="auth-nav-mobile" class="space-y-2 mt-2">
+            <a href={`${basePath}login`} class="block text-center w-full px-4 py-2 text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg rounded-md">Login</a>
+            <a href={`${basePath}register`} class="block text-center w-full btn-primary py-2.5 px-6 text-sm">Register</a>
+          </div>
         </div>
       </div>
     </header>
@@ -286,6 +298,29 @@ const basePath = import.meta.env.BASE_URL;
           }, 5000);
         });
       }
+      // 4. Cart Badge Manager
+      const updateCartBadge = () => {
+        const cartStr = localStorage.getItem('yoga_cart');
+        const cart = cartStr ? JSON.parse(cartStr) : [];
+        const count = cart.length;
+        
+        const badgeDesktop = document.getElementById('cart-badge');
+        const badgeMobile = document.getElementById('cart-badge-mobile');
+        
+        if (count > 0) {
+          if (badgeDesktop) { badgeDesktop.textContent = count; badgeDesktop.classList.remove('hidden'); }
+          if (badgeMobile) { badgeMobile.textContent = count; badgeMobile.classList.remove('hidden'); }
+        } else {
+          if (badgeDesktop) badgeDesktop.classList.add('hidden');
+          if (badgeMobile) badgeMobile.classList.add('hidden');
+        }
+      };
+
+      updateCartBadge();
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'yoga_cart') updateCartBadge();
+      });
+      window.addEventListener('cart-updated', updateCartBadge);
     </script>
   </body>
 </html>

@@ -1,0 +1,320 @@
+---
+import Layout from '../layouts/Layout.astro';
+const basePath = import.meta.env.BASE_URL;
+---
+
+<Layout title="Shopping Cart" description="Review your selected yoga programs before checking out securely.">
+  <section class="py-16 bg-primary-bg min-h-[calc(100vh-22rem)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-10 space-y-2">
+        <h1 class="font-heading font-semibold text-3xl sm:text-4xl text-text-main">Your Shopping Cart</h1>
+        <p class="text-text-secondary text-sm">Review your items and proceed to secure checkout.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Cart Items Column -->
+        <div class="lg:col-span-8 bg-white border border-border-main rounded-3xl p-6 shadow-sm space-y-6 min-h-[300px]">
+          
+          <!-- Empty State -->
+          <div id="cart-empty-state" class="hidden flex-col items-center justify-center py-16 text-center space-y-4">
+            <div class="w-16 h-16 bg-secondary-bg rounded-full flex items-center justify-center text-brand-primary">
+              <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-heading font-semibold text-lg text-text-main">Your cart is empty</h3>
+              <p class="text-sm text-text-secondary">Looks like you haven't added any programs yet.</p>
+            </div>
+            <a href={`${basePath}programs`} class="btn-primary py-2.5 px-6 text-sm rounded-full mt-2">Explore Programs</a>
+          </div>
+
+          <!-- Items List -->
+          <div id="cart-items-container" class="space-y-4">
+            <!-- Dynamic items go here -->
+          </div>
+        </div>
+
+        <!-- Order Summary Column -->
+        <div class="lg:col-span-4 bg-white border border-border-main rounded-3xl p-6 shadow-sm sticky top-28 space-y-6">
+          <h2 class="font-heading font-semibold text-xl text-text-main border-b border-border-main/50 pb-4">Order Summary</h2>
+          
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between text-text-secondary">
+              <span>Subtotal</span>
+              <span id="summary-subtotal" class="font-medium">$0.00</span>
+            </div>
+            <div class="flex justify-between text-text-secondary">
+              <span>Tax (Included)</span>
+              <span class="font-medium">$0.00</span>
+            </div>
+            <div class="border-t border-border-main/50 pt-3 flex justify-between items-center">
+              <span class="font-semibold text-text-main">Total</span>
+              <span id="summary-total" class="font-heading font-bold text-xl text-brand-primary">$0.00</span>
+            </div>
+          </div>
+
+          <button id="proceed-checkout-btn" class="w-full btn-primary py-3.5 rounded-full text-sm font-semibold shadow-sm flex items-center justify-center space-x-2">
+            <span>Proceed to Checkout</span>
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
+          </button>
+          
+          <p class="text-[10px] text-center text-text-secondary">By proceeding to checkout, you agree to our Terms of Service.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Checkout Modal Overlay -->
+  <div id="mock-payment-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm hidden">
+    <div class="bg-white rounded-3xl border border-border-main p-8 max-w-md w-full mx-4 shadow-2xl relative space-y-6 animate-in fade-in zoom-in-95 duration-200">
+      
+      <div class="flex justify-between items-start">
+        <div class="space-y-1">
+          <div class="text-[10px] uppercase font-bold text-brand-primary tracking-wider flex items-center">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-primary mr-1.5 animate-pulse"></span>
+            Secure Payment
+          </div>
+          <h3 class="font-heading font-semibold text-xl text-text-main">Checkout</h3>
+        </div>
+        <button id="close-modal-btn" class="p-1 rounded-full text-text-secondary hover:bg-secondary-bg transition-colors cursor-pointer">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="bg-secondary-bg/55 border border-border-main/50 rounded-2xl p-4 flex justify-between items-center">
+        <span class="text-sm text-text-secondary">Amount Due:</span>
+        <span class="font-heading font-bold text-lg text-text-main" id="modal-total-price">$0.00</span>
+      </div>
+
+      <!-- Payment Form Content -->
+      <form id="mock-payment-form" class="space-y-4">
+        <div class="space-y-1">
+          <label for="mock-card-number" class="text-xs uppercase font-bold text-text-secondary tracking-wider">Card Number</label>
+          <input 
+            type="text" 
+            id="mock-card-number" 
+            placeholder="4111 2222 3333 4444" 
+            maxlength="19" 
+            required 
+            class="w-full bg-primary-bg border border-border-main rounded-xl py-3 px-4 text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all"
+          />
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="space-y-1">
+            <label for="mock-expiry" class="text-xs uppercase font-bold text-text-secondary tracking-wider">Expiry Date</label>
+            <input 
+              type="text" 
+              id="mock-expiry" 
+              placeholder="MM/YY" 
+              maxlength="5" 
+              required 
+              class="w-full bg-primary-bg border border-border-main rounded-xl py-3 px-4 text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all"
+            />
+          </div>
+          <div class="space-y-1">
+            <label for="mock-cvv" class="text-xs uppercase font-bold text-text-secondary tracking-wider">CVV</label>
+            <input 
+              type="password" 
+              id="mock-cvv" 
+              placeholder="•••" 
+              maxlength="3" 
+              required 
+              class="w-full bg-primary-bg border border-border-main rounded-xl py-3 px-4 text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all"
+            />
+          </div>
+        </div>
+
+        <button type="submit" id="submit-payment-btn" class="w-full btn-primary py-3.5 rounded-full text-sm font-semibold tracking-wider flex items-center justify-center space-x-2 mt-4 cursor-pointer">
+          <svg class="h-4.5 w-4.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          <span id="payment-btn-text">Pay Securely</span>
+        </button>
+      </form>
+
+      <!-- Processing State -->
+      <div id="payment-processing-state" class="hidden flex flex-col items-center justify-center py-10 space-y-4">
+        <div class="w-16 h-16 border-4 border-brand-accent border-t-brand-primary rounded-full animate-spin"></div>
+        <h4 class="font-heading font-semibold text-text-main">Verifying Transaction...</h4>
+        <p class="text-xs text-text-secondary text-center max-w-xs">Connecting to secure gateway. Please do not close this window or refresh the page.</p>
+      </div>
+
+      <!-- Success State -->
+      <div id="payment-success-state" class="hidden flex flex-col items-center justify-center py-10 space-y-4 text-center">
+        <div class="w-16 h-16 bg-success-sage/20 text-success-sage rounded-full flex items-center justify-center">
+          <svg class="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <h4 class="font-heading font-semibold text-xl text-text-main">Payment Successful!</h4>
+        <p class="text-sm text-text-secondary max-w-xs">Your purchase is complete. Redirecting you to your downloads area to access your PDF...</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js" is:inline></script>
+
+  <script>
+    import { supabase } from '../lib/supabase.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const cartContainer = document.getElementById('cart-items-container');
+      const emptyState = document.getElementById('cart-empty-state');
+      const subtotalEl = document.getElementById('summary-subtotal');
+      const totalEl = document.getElementById('summary-total');
+      const proceedBtn = document.getElementById('proceed-checkout-btn') as HTMLButtonElement;
+
+      // Modal elements
+      const modal = document.getElementById('mock-payment-modal');
+      const closeBtn = document.getElementById('close-modal-btn');
+      const modalTotalPrice = document.getElementById('modal-total-price');
+      const paymentForm = document.getElementById('mock-payment-form');
+      const processingState = document.getElementById('payment-processing-state');
+      const successState = document.getElementById('payment-success-state');
+      
+      const cardInput = document.getElementById('mock-card-number') as HTMLInputElement;
+      const expiryInput = document.getElementById('mock-expiry') as HTMLInputElement;
+
+      let currentCart: any[] = [];
+      let currentTotal = 0;
+
+      // Card formatters
+      if (cardInput) {
+        cardInput.addEventListener('input', (e) => {
+          let value = (e.target as HTMLInputElement).value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+          let formatted = '';
+          for (let i = 0; i < value.length; i++) {
+            if (i > 0 && i % 4 === 0) formatted += ' ';
+            formatted += value[i];
+          }
+          (e.target as HTMLInputElement).value = formatted;
+        });
+      }
+      if (expiryInput) {
+        expiryInput.addEventListener('input', (e) => {
+          let value = (e.target as HTMLInputElement).value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+          if (value.length > 2) {
+            (e.target as HTMLInputElement).value = value.substring(0, 2) + '/' + value.substring(2, 4);
+          } else {
+            (e.target as HTMLInputElement).value = value;
+          }
+        });
+      }
+
+      function renderCart() {
+        const cartStr = localStorage.getItem('yoga_cart');
+        currentCart = cartStr ? JSON.parse(cartStr) : [];
+        
+        if (currentCart.length === 0) {
+          cartContainer?.classList.add('hidden');
+          emptyState?.classList.remove('hidden');
+          emptyState?.classList.add('flex');
+          proceedBtn.disabled = true;
+          proceedBtn.classList.add('opacity-50', 'cursor-not-allowed');
+          currentTotal = 0;
+        } else {
+          emptyState?.classList.add('hidden');
+          emptyState?.classList.remove('flex');
+          cartContainer?.classList.remove('hidden');
+          proceedBtn.disabled = false;
+          proceedBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+
+          currentTotal = currentCart.reduce((sum, item) => sum + item.price, 0);
+          
+          if (cartContainer) {
+            cartContainer.innerHTML = currentCart.map((item, index) => `
+              <div class="flex items-center justify-between p-4 border border-border-main rounded-2xl">
+                <div class="flex flex-col">
+                  <span class="font-semibold text-text-main">${item.name}</span>
+                  <span class="text-xs text-text-secondary">Premium PDF Download</span>
+                </div>
+                <div class="flex items-center space-x-6">
+                  <span class="font-heading font-bold text-text-main">$${item.price.toFixed(2)}</span>
+                  <button class="remove-item-btn text-text-secondary hover:text-[#E53E3E] transition-colors p-1" data-id="${item.id}">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  </button>
+                </div>
+              </div>
+            `).join('');
+
+            // Wire up remove buttons
+            document.querySelectorAll('.remove-item-btn').forEach(btn => {
+              btn.addEventListener('click', (e) => {
+                const idToRemove = (e.currentTarget as HTMLElement).getAttribute('data-id');
+                currentCart = currentCart.filter(item => item.id !== idToRemove);
+                localStorage.setItem('yoga_cart', JSON.stringify(currentCart));
+                window.dispatchEvent(new Event('cart-updated'));
+                renderCart();
+              });
+            });
+          }
+        }
+
+        if (subtotalEl) subtotalEl.textContent = `$${currentTotal.toFixed(2)}`;
+        if (totalEl) totalEl.textContent = `$${currentTotal.toFixed(2)}`;
+        if (modalTotalPrice) modalTotalPrice.textContent = `$${currentTotal.toFixed(2)}`;
+      }
+
+      renderCart();
+
+      // Proceed to Checkout
+      proceedBtn?.addEventListener('click', async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          window.location.href = `/login?redirect=cart`;
+          return;
+        }
+
+        // Show mock payment modal
+        modal?.classList.remove('hidden');
+        paymentForm?.classList.remove('hidden');
+        processingState?.classList.add('hidden');
+        successState?.classList.add('hidden');
+      });
+
+      // Close modal
+      const closeModal = () => modal?.classList.add('hidden');
+      closeBtn?.addEventListener('click', closeModal);
+      modal?.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      // Submit mock payment
+      paymentForm?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        paymentForm.classList.add('hidden');
+        processingState?.classList.remove('hidden');
+
+        setTimeout(async () => {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session) {
+            // Process all items in cart as separate order rows for dashboard compatibility
+            const mockPaymentGroupId = 'pay_mock_' + Math.random().toString(36).substring(2, 11);
+            
+            for (const item of currentCart) {
+              await supabase.from('orders').insert({
+                id: mockPaymentGroupId + '_' + Math.random().toString(36).substring(2, 6),
+                user_id: session.user.id,
+                product_name: item.name,
+                amount: item.price,
+                payment_status: 'completed'
+              });
+            }
+          }
+
+          // Clear cart
+          localStorage.removeItem('yoga_cart');
+          window.dispatchEvent(new Event('cart-updated'));
+
+          processingState?.classList.add('hidden');
+          successState?.classList.remove('hidden');
+
+          setTimeout(() => {
+            window.location.href = '/dashboard?tab=orders';
+          }, 2200);
+        }, 1500);
+      });
+    });
+  </script>
+</Layout>

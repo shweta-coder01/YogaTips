@@ -38,14 +38,14 @@ const basePath = import.meta.env.BASE_URL;
             />
           </div>
 
-          <!-- Email -->
+          <!-- Email or Phone -->
           <div class="space-y-1.5">
-            <label for="email" class="text-xs uppercase font-bold text-text-secondary tracking-wider">Email Address</label>
+            <label for="emailOrPhone" class="text-xs uppercase font-bold text-text-secondary tracking-wider">Email or Phone Number</label>
             <input 
-              type="email" 
-              id="email" 
+              type="text" 
+              id="emailOrPhone" 
               required 
-              placeholder="name@example.com" 
+              placeholder="name@example.com or +1234567890" 
               class="w-full bg-primary-bg border border-border-main rounded-2xl py-3 px-4 text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all"
             />
           </div>
@@ -120,9 +120,13 @@ const basePath = import.meta.env.BASE_URL;
       e.preventDefault();
       
       const name = (document.getElementById('name') as HTMLInputElement).value.trim();
-      const email = (document.getElementById('email') as HTMLInputElement).value.trim();
+      const emailOrPhone = (document.getElementById('emailOrPhone') as HTMLInputElement).value.trim();
       const password = (document.getElementById('password') as HTMLInputElement).value;
       const confirmPassword = (document.getElementById('confirm-password') as HTMLInputElement).value;
+
+      const isEmail = emailOrPhone.includes('@');
+      const email = isEmail ? emailOrPhone : undefined;
+      const phone = !isEmail ? emailOrPhone : undefined;
 
       errorAlert?.classList.add('hidden');
 
@@ -141,6 +145,7 @@ const basePath = import.meta.env.BASE_URL;
       // 2. Register via Supabase Client Auth
       const { data, error } = await supabase.auth.signUp({
         email,
+        phone,
         password,
         options: {
           data: {

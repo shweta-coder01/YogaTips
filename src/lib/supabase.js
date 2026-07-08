@@ -28,17 +28,21 @@ class MockSupabase {
   get auth() {
     const self = this;
     return {
-      async signUp({ email, password, options }) {
+      async signUp({ email, phone, password, options }) {
         if (typeof window === 'undefined') return { data: null, error: { message: 'Browser environment required' } };
 
         const users = JSON.parse(localStorage.getItem('mock_users') || '[]');
-        if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
+        const identifier = email || phone;
+        if (!identifier) return { data: null, error: { message: 'Email or phone required' } };
+
+        if (users.find(u => (u.email && u.email.toLowerCase() === (email || '').toLowerCase()) || (u.phone && u.phone === phone))) {
           return { data: null, error: { message: 'User already exists' } };
         }
 
         const newUser = {
           id: crypto.randomUUID(),
-          email,
+          email: email || null,
+          phone: phone || null,
           name: options?.data?.name || 'Yoga Practitioner',
           created_at: new Date().toISOString(),
         };
@@ -53,6 +57,7 @@ class MockSupabase {
           id: newUser.id,
           name: newUser.name,
           email: newUser.email,
+          phone: newUser.phone,
           created_at: newUser.created_at
         });
         localStorage.setItem('mock_profiles', JSON.stringify(profiles));
@@ -65,17 +70,21 @@ class MockSupabase {
         return { data: { user: newUser, session }, error: null };
       },
 
-      async signInWithPassword({ email, password }) {
+      async signInWithPassword({ email, phone, password }) {
         if (typeof window === 'undefined') return { data: null, error: { message: 'Browser environment required' } };
 
         const users = JSON.parse(localStorage.getItem('mock_users') || '[]');
-        const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+        const user = users.find(u => {
+          const matchIdentifier = email ? (u.email && u.email.toLowerCase() === email.toLowerCase()) : (u.phone && u.phone === phone);
+          return matchIdentifier && u.password === password;
+        });
+
         if (!user) {
           return { data: null, error: { message: 'Invalid login credentials' } };
         }
 
         const session = {
-          user: { id: user.id, email: user.email, name: user.name, created_at: user.created_at },
+          user: { id: user.id, email: user.email, phone: user.phone, name: user.name, created_at: user.created_at },
           token: 'mock-jwt-token'
         };
         localStorage.setItem('mock_session', JSON.stringify(session));
