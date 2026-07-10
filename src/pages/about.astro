@@ -7,7 +7,7 @@ const team = [
     name: "Elena Rostova",
     role: "Lead Yoga Instructor",
     bio: "Elena has spent over 12 years studying Vinyasa and Yin yoga in Rishikesh, India. She provides expert guidance to make professional studio practice accessible to anyone at home.",
-    avatarSvg: "M12 2a5 5 0 100 10 5 5 0 000-10zm0 12c-4.4 0-8 2-8 6v2h16v-2c0-4-3.6-6-8-6z"
+    imagePath: "images/elena_rostova.png"
   }
 ];
 
@@ -86,11 +86,13 @@ const basePath = import.meta.env.BASE_URL;
       <div class="max-w-md mx-auto">
         {team.map(member => (
           <div class="luxury-card p-6 bg-white border border-border-main rounded-3xl flex flex-col items-center text-center space-y-4">
-            <!-- Icon Avatar -->
-            <div class="h-20 w-20 rounded-full bg-secondary-bg flex items-center justify-center border border-border-main/50 text-brand-primary shadow-sm">
-              <svg class="h-10 w-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" d={member.avatarSvg} />
-              </svg>
+            <!-- Portrait Avatar -->
+            <div class="h-24 w-24 rounded-full overflow-hidden border border-border-main/50 shadow-sm shrink-0">
+              <img 
+                src={`${basePath}${member.imagePath}`} 
+                alt={member.name} 
+                class="w-full h-full object-cover"
+              />
             </div>
             
             <div class="space-y-1">
