@@ -180,9 +180,9 @@ const basePath = import.meta.env.BASE_URL;
           submitBtn.querySelector('span')!.textContent = 'Register Account';
         }
       } else {
-        // Send Welcome email (guest/user registration confirmation)
+        // Send Welcome email (guest/user registration confirmation) in background
         if (email) {
-          await sendWelcomeEmail(email, name);
+          sendWelcomeEmail(email, name);
         }
 
         // If a session does not exist (meaning email confirmation is required by Supabase)
