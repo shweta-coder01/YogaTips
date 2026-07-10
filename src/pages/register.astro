@@ -162,6 +162,11 @@ const basePath = import.meta.env.BASE_URL;
           submitBtn.querySelector('span')!.textContent = 'Register Account';
         }
       } else {
+        // Send Welcome email (guest/user registration confirmation)
+        if (email) {
+          await sendWelcomeEmail(email, name);
+        }
+
         // Successful registration. Check if we redirect back to checkout or dashboard
         const basePath = document.body.dataset.baseUrl || '/';
         const urlParams = new URLSearchParams(window.location.search);
@@ -173,5 +178,63 @@ const basePath = import.meta.env.BASE_URL;
         }
       }
     });
+
+    async function sendWelcomeEmail(email: string, name: string) {
+      const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID || '';
+      const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID || '';
+      const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY || '';
+
+      const emailParams = {
+        to_email: email,
+        to_name: name || 'Valued Practitioner',
+        subject: 'Welcome to Global Yoga Tips!',
+        site_name: 'Global Yoga Tips',
+        contact_email: 'support@globalyogatips.com'
+      };
+
+      const emailContentText = `
+================================================
+GLOBAL YOGA TIPS - WELCOME TO YOUR SANCTUARY
+================================================
+To:          ${emailParams.to_email}
+Name:        ${emailParams.to_name}
+Date:        ${new Date().toLocaleString()}
+
+Welcome to Global Yoga Tips! Your account has been registered successfully.
+You can now access your profile, track purchases, and download premium yoga guides at any time.
+
+Log in here: https://www.globalyogatips.com/login
+
+For support, contact us at: support@globalyogatips.com
+================================================`;
+
+      console.log("================================================");
+      console.log("SIMULATED WELCOME EMAIL:");
+      console.log(emailContentText);
+      console.log("================================================");
+
+      if (serviceId && templateId && publicKey) {
+        try {
+          await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              service_id: serviceId,
+              template_id: templateId,
+              user_id: publicKey,
+              template_params: {
+                ...emailParams,
+                order_summary: 'Thank you for registering your account at Global Yoga Tips!',
+                total_price: 'Free Access Registration',
+                order_id: 'WELCOME-' + Math.random().toString(36).substring(2, 8).toUpperCase()
+              }
+            })
+          });
+          console.log("EmailJS welcome email sent successfully!");
+        } catch (err) {
+          console.error("Failed to connect to EmailJS for welcome email:", err);
+        }
+      }
+    }
   </script>
 </Layout>
