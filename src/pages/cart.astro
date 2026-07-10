@@ -841,9 +841,9 @@ const basePath = import.meta.env.BASE_URL;
 
       // Send Order Confirmation Email (via EmailJS)
       async function sendOrderConfirmationEmail(email: string, name: string, orderId: string, items: any[], totalStr: string) {
-        const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID || '';
-        const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID || '';
-        const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY || '';
+        const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID || 'service_9x0ot27';
+        const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID || 'template_85akutm';
+        const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY || 'o3tejlg5hyrcE5bn9';
 
         const orderSummary = items.map(item => `- ${item.product_name || item.name} (${totalStr})`).join('\n');
         
