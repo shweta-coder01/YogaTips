@@ -243,20 +243,11 @@ For support, contact us at: support@globalyogatips.com
       console.log(emailContentText);
       console.log("================================================");
 
-      // Dynamically load SMTP.js
-      if (!(window as any).Email) {
-        await new Promise<void>((resolve) => {
-          const script = document.createElement('script');
-          script.src = "https://smtpjs.com/v3/smtp.js";
-          script.onload = () => resolve();
-          document.head.appendChild(script);
-        });
-      }
+      const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID || '';
+      const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID || '';
+      const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY || '';
 
-      const resendApiKey = import.meta.env.PUBLIC_RESEND_API_KEY || 're_KpCG861R_DozM9bRm9C36NcuTtZK4ynBy';
-      const senderEmail = import.meta.env.PUBLIC_SENDER_EMAIL || 'noreply@globalyogatips.com';
-
-      if ((window as any).Email) {
+      if (serviceId && templateId && publicKey) {
         try {
           const htmlBody = `
             <div style="font-family: sans-serif; padding: 20px; color: #1a1a1a; max-width: 600px; margin: 0 auto; border: 1px solid #eaeaea; border-radius: 12px;">
@@ -275,19 +266,34 @@ For support, contact us at: support@globalyogatips.com
             </div>
           `;
 
-          await (window as any).Email.send({
-            Host: "smtp.resend.com",
-            Username: "resend",
-            Password: resendApiKey,
-            To: email,
-            From: senderEmail,
-            Subject: "Welcome to Global Yoga Tips!",
-            Body: htmlBody
+          const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              service_id: serviceId,
+              template_id: templateId,
+              user_id: publicKey,
+              template_params: {
+                subject: "Welcome to Global Yoga Tips!",
+                message: htmlBody,
+                to_email: email
+              }
+            })
           });
-          console.log("Real welcome email sent successfully via Resend SMTP!");
-        } catch (smtpErr) {
-          console.error("Failed to send welcome email:", smtpErr);
+
+          if (response.ok) {
+            console.log("EmailJS welcome email sent successfully!");
+          } else {
+            const errorText = await response.text();
+            console.error("EmailJS welcome sending failed:", errorText);
+            alert("Welcome Email Delivery Failure: " + errorText);
+          }
+        } catch (err: any) {
+          console.error("Failed to connect to EmailJS for welcome email:", err);
+          alert("Welcome Email Connection Error: " + err.message);
         }
+      } else {
+        console.warn("EmailJS credentials not configured in .env. Skipping welcome email dispatch.");
       }
     }
   </script>
