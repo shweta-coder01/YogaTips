@@ -24,6 +24,24 @@ const basePath = import.meta.env.BASE_URL;
           <span id="error-message">Registration failed.</span>
         </div>
 
+        <!-- Verification Pending Alert Box -->
+        <div id="verification-pending-box" class="hidden text-center py-6 space-y-6">
+          <div class="inline-flex items-center justify-center w-14 h-14 bg-brand-primary/10 text-brand-primary rounded-full">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <div class="space-y-2">
+            <h3 class="font-heading font-semibold text-xl text-text-main">Verify Your Email</h3>
+            <p class="text-xs text-text-secondary max-w-sm mx-auto leading-relaxed">
+              We've sent a verification link to <strong id="verification-email-text" class="text-text-main"></strong>. Please check your inbox and click the link to confirm your account, then you can log in to place your order.
+            </p>
+          </div>
+          <div class="pt-2">
+            <a id="go-to-login-btn" href={`${basePath}login`} class="btn-primary py-2.5 px-6 text-sm text-center inline-block">Go to Login Page</a>
+          </div>
+        </div>
+
         <!-- Form -->
         <form id="register-form" class="space-y-4">
           <!-- Name -->
@@ -167,37 +185,49 @@ const basePath = import.meta.env.BASE_URL;
           await sendWelcomeEmail(email, name);
         }
 
-        // Successful registration. Check if we redirect back to checkout or dashboard
-        const basePath = document.body.dataset.baseUrl || '/';
-        const urlParams = new URLSearchParams(window.location.search);
-        const redirect = urlParams.get('redirect');
-        if (redirect) {
-          window.location.href = `${basePath}${redirect}`;
+        // If a session does not exist (meaning email confirmation is required by Supabase)
+        if (!data.session) {
+          const form = document.getElementById('register-form');
+          const headerTitle = document.querySelector('.text-center h1');
+          const headerDesc = document.querySelector('.text-center p');
+          const verificationBox = document.getElementById('verification-pending-box');
+          const emailText = document.getElementById('verification-email-text');
+          const goToLoginBtn = document.getElementById('go-to-login-btn') as HTMLAnchorElement;
+          
+          if (emailText) emailText.textContent = email || '';
+          
+          const basePath = document.body.dataset.baseUrl || '/';
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirect = urlParams.get('redirect');
+          if (goToLoginBtn && redirect) {
+            goToLoginBtn.href = `${basePath}login?redirect=${redirect}`;
+          }
+
+          form?.classList.add('hidden');
+          headerTitle?.classList.add('hidden');
+          headerDesc?.classList.add('hidden');
+          verificationBox?.classList.remove('hidden');
         } else {
-          window.location.href = `${basePath}dashboard`;
+          // Successful registration (automatic login enabled). Redirect back to checkout or dashboard
+          const basePath = document.body.dataset.baseUrl || '/';
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirect = urlParams.get('redirect');
+          if (redirect) {
+            window.location.href = `${basePath}${redirect}`;
+          } else {
+            window.location.href = `${basePath}dashboard`;
+          }
         }
       }
     });
 
     async function sendWelcomeEmail(email: string, name: string) {
-      const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID || '';
-      const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID || '';
-      const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY || '';
-
-      const emailParams = {
-        to_email: email,
-        to_name: name || 'Valued Practitioner',
-        subject: 'Welcome to Global Yoga Tips!',
-        site_name: 'Global Yoga Tips',
-        contact_email: 'support@globalyogatips.com'
-      };
-
       const emailContentText = `
 ================================================
 GLOBAL YOGA TIPS - WELCOME TO YOUR SANCTUARY
 ================================================
-To:          ${emailParams.to_email}
-Name:        ${emailParams.to_name}
+To:          ${email}
+Name:        ${name || 'Valued Practitioner'}
 Date:        ${new Date().toLocaleString()}
 
 Welcome to Global Yoga Tips! Your account has been registered successfully.
@@ -209,30 +239,54 @@ For support, contact us at: support@globalyogatips.com
 ================================================`;
 
       console.log("================================================");
-      console.log("SIMULATED WELCOME EMAIL:");
+      console.log("SENDING WELCOME EMAIL VIA RESEND...");
       console.log(emailContentText);
       console.log("================================================");
 
-      if (serviceId && templateId && publicKey) {
+      // Dynamically load SMTP.js
+      if (!(window as any).Email) {
+        await new Promise<void>((resolve) => {
+          const script = document.createElement('script');
+          script.src = "https://smtpjs.com/v3/smtp.js";
+          script.onload = () => resolve();
+          document.head.appendChild(script);
+        });
+      }
+
+      const resendApiKey = import.meta.env.PUBLIC_RESEND_API_KEY || 're_KpCG861R_DozM9bRm9C36NcuTtZK4ynBy';
+      const senderEmail = import.meta.env.PUBLIC_SENDER_EMAIL || 'noreply@globalyogatips.com';
+
+      if ((window as any).Email) {
         try {
-          await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              service_id: serviceId,
-              template_id: templateId,
-              user_id: publicKey,
-              template_params: {
-                ...emailParams,
-                order_summary: 'Thank you for registering your account at Global Yoga Tips!',
-                total_price: 'Free Access Registration',
-                order_id: 'WELCOME-' + Math.random().toString(36).substring(2, 8).toUpperCase()
-              }
-            })
+          const htmlBody = `
+            <div style="font-family: sans-serif; padding: 20px; color: #1a1a1a; max-width: 600px; margin: 0 auto; border: 1px solid #eaeaea; border-radius: 12px;">
+              <h2 style="color: #c4829e; font-weight: bold; border-bottom: 2px solid #eaeaea; padding-bottom: 10px;">WELCOME TO GLOBAL YOGA TIPS</h2>
+              <p>Hello <strong>${name || 'Practitioner'}</strong>,</p>
+              <p>Welcome to Global Yoga Tips! Your account has been registered successfully.</p>
+              <p>You can now manage your practitioner profile, view purchases, and download premium yoga guides at any time.</p>
+              
+              <div style="text-align: center; margin: 30px 0;">
+                <a href="https://www.globalyogatips.com/login" style="background-color: #c4829e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block;">Log In to Your Sanctuary</a>
+              </div>
+
+              <p style="margin-top: 30px; font-size: 11px; color: #888888; border-top: 1px solid #eaeaea; padding-top: 15px; text-align: center;">
+                If you have any questions, reply to this email or contact support@globalyogatips.com.
+              </p>
+            </div>
+          `;
+
+          await (window as any).Email.send({
+            Host: "smtp.resend.com",
+            Username: "resend",
+            Password: resendApiKey,
+            To: email,
+            From: senderEmail,
+            Subject: "Welcome to Global Yoga Tips!",
+            Body: htmlBody
           });
-          console.log("EmailJS welcome email sent successfully!");
-        } catch (err) {
-          console.error("Failed to connect to EmailJS for welcome email:", err);
+          console.log("Real welcome email sent successfully via Resend SMTP!");
+        } catch (smtpErr) {
+          console.error("Failed to send welcome email:", smtpErr);
         }
       }
     }
