@@ -72,6 +72,14 @@ const basePath = import.meta.env.BASE_URL;
 
           <!-- Desktop Cart & Authentication -->
           <div class="hidden lg:flex items-center space-x-3 xl:space-x-4">
+            <!-- Currency Switcher Dropdown -->
+            <div class="relative inline-block text-left mr-1">
+              <select id="currency-select" class="bg-white border border-border-main text-text-main rounded-full py-1.5 px-3 pr-7 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-brand-primary appearance-none cursor-pointer shadow-sm bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23707070%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:0.5rem_auto] bg-[right_0.5rem_center] bg-no-repeat">
+                <option value="INR">🇮🇳 INR (₹)</option>
+                <option value="USD">🇺🇸 USD ($)</option>
+                <option value="GBP">🇬🇧 GBP (£)</option>
+              </select>
+            </div>
             <a href={`${basePath}cart`} class="relative text-text-main hover:text-brand-primary transition-colors flex items-center mr-2">
               <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
               <span id="cart-badge" class="absolute -top-1.5 -right-2 bg-brand-primary text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center hidden">0</span>
@@ -105,6 +113,15 @@ const basePath = import.meta.env.BASE_URL;
           <a href={`${basePath}contact`} class="block px-3 py-2 rounded-md text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg">Contact</a>
         </div>
         <div class="pt-4 pb-4 border-t border-border-main px-5 space-y-2">
+          <!-- Currency switcher for mobile -->
+          <div class="flex items-center justify-between w-full px-4 py-2 text-base font-medium text-text-main hover:bg-secondary-bg rounded-md border-b border-border-main/20 pb-4">
+            <span>Currency</span>
+            <select id="currency-select-mobile" class="bg-white border border-border-main text-text-main rounded-xl py-1.5 px-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-primary appearance-none cursor-pointer bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23707070%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:0.5rem_auto] bg-[right_0.5rem_center] bg-no-repeat pr-6">
+              <option value="INR">🇮🇳 INR</option>
+              <option value="USD">🇺🇸 USD</option>
+              <option value="GBP">🇬🇧 GBP</option>
+            </select>
+          </div>
           <a href={`${basePath}cart`} class="flex items-center justify-between w-full px-4 py-2 text-base font-medium text-text-main hover:text-brand-primary hover:bg-secondary-bg rounded-md">
             <span>Cart</span>
             <span id="cart-badge-mobile" class="bg-brand-primary text-white text-xs font-bold px-2 py-0.5 rounded-full hidden">0</span>
@@ -321,6 +338,113 @@ const basePath = import.meta.env.BASE_URL;
         if (e.key === 'yoga_cart') updateCartBadge();
       });
       window.addEventListener('cart-updated', updateCartBadge);
+
+      // Currency Switcher Logic
+      const EXCHANGE_RATES = {
+        INR: 95.37,
+        USD: 1.00,
+        GBP: 0.74
+      };
+
+      const CURRENCY_SYMBOLS = {
+        INR: '₹',
+        USD: '$',
+        GBP: '£'
+      };
+
+      // Get initial currency or default to INR
+      let currentCurrency = localStorage.getItem('selected_currency');
+      if (!currentCurrency || !EXCHANGE_RATES[currentCurrency]) {
+        currentCurrency = 'INR';
+        localStorage.setItem('selected_currency', 'INR');
+      }
+
+      // Synchronize select dropdowns
+      const currencySelect = document.getElementById('currency-select');
+      const currencySelectMobile = document.getElementById('currency-select-mobile');
+
+      if (currencySelect) currencySelect.value = currentCurrency;
+      if (currencySelectMobile) currencySelectMobile.value = currentCurrency;
+
+      // Update all prices on the page
+      const updatePagePrices = () => {
+        const currency = localStorage.getItem('selected_currency') || 'INR';
+        const rate = EXCHANGE_RATES[currency] || 95.37;
+        const symbol = CURRENCY_SYMBOLS[currency] || '₹';
+
+        // 1. Update elements with data-base-price attribute
+        const priceVals = document.querySelectorAll('.price-val');
+        priceVals.forEach(el => {
+          const basePrice = parseFloat(el.getAttribute('data-base-price') || '0');
+          const converted = basePrice * rate;
+          
+          if (currency === 'INR') {
+            el.textContent = Math.round(converted).toLocaleString('en-IN');
+          } else {
+            el.textContent = converted.toFixed(2);
+          }
+        });
+
+        // 2. Update currency symbol elements
+        const priceSymbols = document.querySelectorAll('.price-symbol');
+        priceSymbols.forEach(el => {
+          el.textContent = symbol;
+        });
+
+        // 3. Update generic inline currency format strings if any
+        const dynamicPrices = document.querySelectorAll('.dynamic-price');
+        dynamicPrices.forEach(el => {
+          const usdAmount = parseFloat(el.getAttribute('data-usd-amount') || '0');
+          const converted = usdAmount * rate;
+          if (currency === 'INR') {
+            el.textContent = new Intl.NumberFormat('en-IN', {
+              style: 'currency',
+              currency: 'INR',
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0
+            }).format(converted);
+          } else if (currency === 'GBP') {
+            el.textContent = new Intl.NumberFormat('en-GB', {
+              style: 'currency',
+              currency: 'GBP',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            }).format(converted);
+          } else {
+            el.textContent = new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            }).format(converted);
+          }
+        });
+      };
+
+      // Set up event listeners for switcher
+      const handleCurrencyChange = (newCurrency) => {
+        localStorage.setItem('selected_currency', newCurrency);
+        if (currencySelect) currencySelect.value = newCurrency;
+        if (currencySelectMobile) currencySelectMobile.value = newCurrency;
+        updatePagePrices();
+        // Dispatch event for other components to listen
+        window.dispatchEvent(new CustomEvent('currency-changed', { detail: { currency: newCurrency } }));
+      };
+
+      currencySelect?.addEventListener('change', (e) => {
+        handleCurrencyChange(e.target.value);
+      });
+
+      currencySelectMobile?.addEventListener('change', (e) => {
+        handleCurrencyChange(e.target.value);
+      });
+
+      // Initial page update
+      updatePagePrices();
+      
+      // Also run updatePagePrices on DOMContentLoaded and load
+      document.addEventListener('DOMContentLoaded', updatePagePrices);
+      window.addEventListener('load', updatePagePrices);
     </script>
   </body>
 </html>

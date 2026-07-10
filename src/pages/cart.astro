@@ -8,35 +8,207 @@ const basePath = import.meta.env.BASE_URL;
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="text-center mb-10 space-y-2">
-        <h1 class="font-heading font-semibold text-3xl sm:text-4xl text-text-main">Your Shopping Cart</h1>
-        <p class="text-text-secondary text-sm">Review your items and proceed to secure checkout.</p>
+        <h1 class="font-heading font-semibold text-3xl sm:text-4xl text-text-main" id="checkout-title">Your Shopping Cart</h1>
+        <p class="text-text-secondary text-sm" id="checkout-subtitle">Review your items and proceed to secure checkout.</p>
+      </div>
+
+      <!-- Steps Indicator -->
+      <div class="max-w-3xl mx-auto mb-12" id="checkout-steps-bar">
+        <div class="flex items-center justify-between text-xs sm:text-sm font-semibold text-text-secondary">
+          <div class="flex flex-col items-center space-y-2 step-indicator active" data-step="1" id="step-ind-1">
+            <span class="w-8 h-8 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold text-xs">1</span>
+            <span class="text-brand-primary">Cart</span>
+          </div>
+          <div class="h-0.5 bg-border-main flex-grow -mt-6 mx-2" id="step-line-1"></div>
+          <div class="flex flex-col items-center space-y-2 step-indicator" data-step="2" id="step-ind-2">
+            <span class="w-8 h-8 rounded-full bg-secondary-bg text-text-secondary flex items-center justify-center font-bold border border-border-main text-xs">2</span>
+            <span>Customer Info</span>
+          </div>
+          <div class="h-0.5 bg-border-main flex-grow -mt-6 mx-2" id="step-line-2"></div>
+          <div class="flex flex-col items-center space-y-2 step-indicator" data-step="3" id="step-ind-3">
+            <span class="w-8 h-8 rounded-full bg-secondary-bg text-text-secondary flex items-center justify-center font-bold border border-border-main text-xs">3</span>
+            <span>Payment</span>
+          </div>
+          <div class="h-0.5 bg-border-main flex-grow -mt-6 mx-2" id="step-line-3"></div>
+          <div class="flex flex-col items-center space-y-2 step-indicator" data-step="4" id="step-ind-4">
+            <span class="w-8 h-8 rounded-full bg-secondary-bg text-text-secondary flex items-center justify-center font-bold border border-border-main border-dashed text-xs">✓</span>
+            <span>Access Portal</span>
+          </div>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        <!-- Cart Items Column -->
-        <div class="lg:col-span-8 bg-white border border-border-main rounded-3xl p-6 shadow-sm space-y-6 min-h-[300px]">
+        <!-- Main Checkout Column -->
+        <div class="lg:col-span-8 bg-white border border-border-main rounded-3xl p-6 shadow-sm min-h-[300px]">
           
-          <!-- Empty State -->
-          <div id="cart-empty-state" class="hidden flex-col items-center justify-center py-16 text-center space-y-4">
-            <div class="w-16 h-16 bg-secondary-bg rounded-full flex items-center justify-center text-brand-primary">
-              <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          <!-- STEP 1: CART PANEL -->
+          <div id="step-cart-panel" class="space-y-6">
+            <!-- Empty State -->
+            <div id="cart-empty-state" class="hidden flex-col items-center justify-center py-16 text-center space-y-4">
+              <div class="w-16 h-16 bg-secondary-bg rounded-full flex items-center justify-center text-brand-primary">
+                <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              </div>
+              <div>
+                <h3 class="font-heading font-semibold text-lg text-text-main">Your cart is empty</h3>
+                <p class="text-sm text-text-secondary">Looks like you haven't added any programs yet.</p>
+              </div>
+              <a href={`${basePath}programs`} class="btn-primary py-2.5 px-6 text-sm rounded-full mt-2">Explore Programs</a>
             </div>
-            <div>
-              <h3 class="font-heading font-semibold text-lg text-text-main">Your cart is empty</h3>
-              <p class="text-sm text-text-secondary">Looks like you haven't added any programs yet.</p>
+
+            <!-- Items List -->
+            <div id="cart-items-container" class="space-y-4">
+              <!-- Dynamic items go here -->
             </div>
-            <a href={`${basePath}programs`} class="btn-primary py-2.5 px-6 text-sm rounded-full mt-2">Explore Programs</a>
           </div>
 
-          <!-- Items List -->
-          <div id="cart-items-container" class="space-y-4">
-            <!-- Dynamic items go here -->
+          <!-- STEP 2: CUSTOMER INFORMATION -->
+          <div id="step-info-panel" class="hidden space-y-6">
+            <h2 id="info-heading" class="font-heading font-semibold text-2xl text-text-main">Customer Details</h2>
+            <p id="info-description" class="text-xs text-text-secondary -mt-4">Verify your name and email address for instant digital product delivery.</p>
+            
+            <!-- Auth Required Panel (if not logged in) -->
+            <div id="auth-required-panel" class="hidden text-center py-10 px-6 border border-border-main rounded-3xl space-y-6 bg-secondary-bg/20">
+              <div class="inline-flex items-center justify-center w-14 h-14 bg-brand-primary/10 text-brand-primary rounded-full">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+              </div>
+              <div class="space-y-2">
+                <h3 class="font-heading font-semibold text-xl text-text-main">Account Login Required</h3>
+                <p class="text-xs text-text-secondary max-w-sm mx-auto leading-relaxed">
+                  To complete your checkout and secure your digital downloads, please log in to your practitioner account or register a new one.
+                </p>
+              </div>
+              <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto pt-2">
+                <a href={`${basePath}login?redirect=cart`} class="btn-primary py-2.5 px-6 text-sm text-center">Log In to Checkout</a>
+                <a href={`${basePath}register?redirect=cart`} class="btn-secondary py-2.5 px-6 text-sm text-center bg-white border border-border-main">Register Account</a>
+                <button type="button" id="guest-checkout-btn" class="btn-secondary py-2.5 px-6 text-sm text-center bg-white border border-border-main hover:bg-secondary-bg/20 transition-all cursor-pointer">Checkout as Guest</button>
+              </div>
+              <div class="pt-2">
+                <button type="button" class="back-to-step1-btn text-xs text-text-secondary hover:text-brand-primary transition-colors underline font-medium cursor-pointer">
+                  Back to Shopping Cart
+                </button>
+              </div>
+            </div>
+
+            <form id="checkout-info-form" class="space-y-4">
+              <div>
+                <label for="checkout-name" class="block text-xs font-bold text-text-main uppercase tracking-wider mb-2">Full Name</label>
+                <input type="text" id="checkout-name" required placeholder="Your full name" class="w-full bg-white border border-border-main rounded-xl py-2.5 px-4 text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-brand-primary" />
+              </div>
+              
+              <div>
+                <label for="checkout-email" class="block text-xs font-bold text-text-main uppercase tracking-wider mb-2">Email Address</label>
+                <input type="email" id="checkout-email" required placeholder="your.email@example.com" class="w-full bg-white border border-border-main rounded-xl py-2.5 px-4 text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-brand-primary" />
+              </div>
+              
+              <div class="pt-4 flex space-x-3">
+                <button type="button" class="back-to-step1-btn w-1/2 border border-border-main rounded-full py-3 text-sm font-semibold hover:bg-secondary-bg/20 transition-colors cursor-pointer">Back to Cart</button>
+                <button type="submit" class="w-1/2 btn-primary py-3 rounded-full text-sm font-semibold shadow-sm cursor-pointer">Continue to Payment</button>
+              </div>
+            </form>
           </div>
+
+          <!-- STEP 3: PAYMENT METHOD -->
+          <div id="step-payment-panel" class="hidden space-y-6">
+            <h2 class="font-heading font-semibold text-2xl text-text-main">Select Payment Method</h2>
+            <p class="text-xs text-text-secondary -mt-4">Select your preferred payment gateway. Transactions are fully encrypted.</p>
+            
+            <div class="space-y-3">
+              <label class="payment-method-option flex items-center justify-between p-4 border border-brand-primary bg-brand-primary/5 rounded-2xl cursor-pointer hover:bg-brand-primary/5 transition-all">
+                <div class="flex items-center space-x-3">
+                  <input type="radio" name="payment-method" value="Razorpay" checked class="h-4 w-4 text-brand-primary focus:ring-brand-primary border-border-main cursor-pointer" />
+                  <span class="font-semibold text-sm text-text-main">Razorpay (UPI / Cards / Netbanking)</span>
+                </div>
+                <div class="text-[9px] uppercase font-bold tracking-wider text-brand-primary bg-brand-primary/10 px-2.5 py-0.5 rounded">Razorpay</div>
+              </label>
+
+              <label class="payment-method-option flex items-center justify-between p-4 border border-border-main rounded-2xl cursor-pointer hover:bg-secondary-bg/20 transition-all">
+                <div class="flex items-center space-x-3">
+                  <input type="radio" name="payment-method" value="Stripe" class="h-4 w-4 text-brand-primary focus:ring-brand-primary border-border-main cursor-pointer" />
+                  <span class="font-semibold text-sm text-text-main">Stripe Checkout</span>
+                </div>
+                <div class="text-[9px] uppercase font-bold tracking-wider text-text-secondary bg-secondary-bg px-2.5 py-0.5 rounded">Stripe</div>
+              </label>
+
+              <label class="payment-method-option flex items-center justify-between p-4 border border-border-main rounded-2xl cursor-pointer hover:bg-secondary-bg/20 transition-all">
+                <div class="flex items-center space-x-3">
+                  <input type="radio" name="payment-method" value="PayPal" class="h-4 w-4 text-brand-primary focus:ring-brand-primary border-border-main cursor-pointer" />
+                  <span class="font-semibold text-sm text-text-main">PayPal Secure Payment</span>
+                </div>
+                <div class="text-[9px] uppercase font-bold tracking-wider text-[#003087] bg-[#003087]/5 px-2.5 py-0.5 rounded">PayPal</div>
+              </label>
+            </div>
+            
+            <div class="pt-4 flex space-x-3">
+              <button type="button" class="back-to-step2-btn w-1/2 border border-border-main rounded-full py-3 text-sm font-semibold hover:bg-secondary-bg/20 transition-colors cursor-pointer">Back to Details</button>
+              <button type="button" id="pay-now-btn" class="w-1/2 btn-primary py-3 rounded-full text-sm font-semibold shadow-sm cursor-pointer">Complete Payment</button>
+            </div>
+          </div>
+
+          <!-- STEP 4: THANK YOU & ACCESS PORTAL -->
+          <div id="step-success-panel" class="hidden space-y-8 py-4">
+            <div class="text-center space-y-3">
+              <div class="inline-flex items-center justify-center w-16 h-16 bg-success-sage/10 text-success-sage rounded-full border border-success-sage/20">
+                <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h2 class="font-heading font-semibold text-3xl text-text-main">Order Successfully Placed!</h2>
+              <p class="text-sm text-text-secondary max-w-md mx-auto">
+                Thank you for your purchase! A confirmation email has been dispatched to <strong id="success-email-text" class="text-text-main"></strong>.
+              </p>
+            </div>
+
+            <!-- Access Portal Banner -->
+            <div class="bg-success-sage/5 border border-success-sage/20 rounded-3xl p-6 space-y-4">
+              <h3 class="font-heading font-semibold text-base text-success-sage flex items-center">
+                <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" />
+                </svg>
+                Instant Digital Downloads & Credentials
+              </h3>
+              
+              <div id="purchased-items-access" class="space-y-3">
+                <!-- Dynamically generated download boxes -->
+              </div>
+            </div>
+
+            <!-- Next Steps / Instructions -->
+            <div class="border border-border-main/60 rounded-3xl p-6 space-y-4">
+              <h4 class="font-heading font-semibold text-xs text-text-main uppercase tracking-wider">How to access your guides:</h4>
+              <ul class="space-y-3 text-xs text-text-secondary leading-relaxed">
+                <li class="flex items-start">
+                  <span class="bg-brand-primary/10 text-brand-primary w-5 h-5 rounded-full flex items-center justify-center font-bold text-[10px] mr-2.5 shrink-0 mt-0.5">1</span>
+                  <span><strong>Download Ticket:</strong> Click any download button above to retrieve your purchase ticket (.txt format) containing your reference ID and order details.</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="bg-brand-primary/10 text-brand-primary w-5 h-5 rounded-full flex items-center justify-center font-bold text-[10px] mr-2.5 shrink-0 mt-0.5">2</span>
+                  <span><strong>User Dashboard:</strong> Your digital materials are permanently saved in your profile. You can access them at any time in the <strong>Dashboard</strong> under the <em>Orders & Downloads</em> tab.</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="bg-brand-primary/10 text-brand-primary w-5 h-5 rounded-full flex items-center justify-center font-bold text-[10px] mr-2.5 shrink-0 mt-0.5">3</span>
+                  <span><strong>Receipt Invoice:</strong> Click the button below to download the official PDF invoice for your files.</span>
+                </li>
+              </ul>
+
+              <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                <button type="button" id="download-success-invoice-btn" class="btn-secondary py-3 px-6 rounded-full text-xs font-semibold tracking-wide flex items-center justify-center space-x-2 w-full sm:w-auto cursor-pointer">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <span>Download PDF Receipt</span>
+                </button>
+                <a href={`${basePath}dashboard`} class="btn-primary py-3 px-6 rounded-full text-xs font-semibold tracking-wide text-center w-full sm:w-auto flex items-center justify-center">Go to User Dashboard</a>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Order Summary Column -->
-        <div class="lg:col-span-4 bg-white border border-border-main rounded-3xl p-6 shadow-sm sticky top-28 space-y-6">
+        <!-- Sticky Order Summary Column (Steps 1, 2, 3) -->
+        <div class="lg:col-span-4 bg-white border border-border-main rounded-3xl p-6 shadow-sm sticky top-28 space-y-6" id="checkout-summary-column">
           <h2 class="font-heading font-semibold text-xl text-text-main border-b border-border-main/50 pb-4">Order Summary</h2>
           
           <div class="space-y-3 text-sm">
@@ -44,22 +216,55 @@ const basePath = import.meta.env.BASE_URL;
               <span>Subtotal</span>
               <span id="summary-subtotal" class="font-medium">$0.00</span>
             </div>
+            
+            <div class="flex justify-between text-text-secondary hidden" id="coupon-discount-row">
+              <span class="flex items-center text-success-sage">
+                <span>Discount</span>
+                <span id="applied-coupon-label" class="ml-1.5 bg-success-sage/10 text-success-sage text-[9px] font-bold px-1.5 py-0.5 rounded border border-success-sage/20 uppercase"></span>
+              </span>
+              <span id="summary-discount" class="font-medium text-success-sage">-$0.00</span>
+            </div>
+
             <div class="flex justify-between text-text-secondary">
               <span>Tax (Included)</span>
               <span class="font-medium">$0.00</span>
             </div>
+            
             <div class="border-t border-border-main/50 pt-3 flex justify-between items-center">
               <span class="font-semibold text-text-main">Total</span>
               <span id="summary-total" class="font-heading font-bold text-xl text-brand-primary">$0.00</span>
             </div>
           </div>
 
-          <button id="proceed-checkout-btn" class="w-full btn-primary py-3.5 rounded-full text-sm font-semibold shadow-sm flex items-center justify-center space-x-2">
-            <span id="proceed-btn-text">Place Order</span>
+          <!-- Coupon Application Form (only visible in Step 1) -->
+          <div id="coupon-box" class="border-t border-border-main/50 pt-6 space-y-4">
+            <div class="text-xs uppercase font-bold text-text-main tracking-wider">Apply Promo Coupon</div>
+            
+            <!-- Quick Selection Options -->
+            <div class="grid grid-cols-2 gap-2" id="coupon-quick-list">
+              <button type="button" class="coupon-btn border border-border-main bg-white rounded-xl py-2 px-2.5 text-center hover:border-brand-primary transition-all cursor-pointer" data-coupon="YOGA10">
+                <span class="block font-heading font-bold text-xs text-text-main">YOGA10</span>
+                <span class="text-[9px] text-text-secondary uppercase">10% OFF</span>
+              </button>
+              <button type="button" class="coupon-btn border border-border-main bg-white rounded-xl py-2 px-2.5 text-center hover:border-brand-primary transition-all cursor-pointer" data-coupon="NAMASTE20">
+                <span class="block font-heading font-bold text-xs text-text-main">NAMASTE20</span>
+                <span class="text-[9px] text-text-secondary uppercase">20% OFF (Buy 2+)</span>
+              </button>
+            </div>
+
+            <div class="flex gap-2">
+              <input type="text" id="coupon-input" placeholder="Type code" class="flex-grow bg-white border border-border-main rounded-xl px-3 py-2 text-xs text-text-main placeholder-text-secondary/70 uppercase focus:outline-none focus:ring-2 focus:ring-brand-primary" />
+              <button type="button" id="apply-coupon-btn" class="btn-primary py-2 px-3 text-xs font-semibold rounded-xl shrink-0 cursor-pointer">Apply</button>
+            </div>
+            <p id="coupon-feedback" class="text-[10px] font-medium hidden"></p>
+          </div>
+
+          <!-- Checkout Proceed CTA (only visible in Step 1) -->
+          <button id="proceed-checkout-btn" class="w-full btn-primary py-3.5 rounded-full text-sm font-semibold shadow-sm flex items-center justify-center space-x-2 cursor-pointer">
+            <span id="proceed-btn-text">Proceed to Checkout</span>
             <svg id="proceed-btn-icon" class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
             </svg>
-            <div id="proceed-spinner" class="hidden w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
           </button>
           
           <p class="text-[10px] text-center text-text-secondary">By proceeding to checkout, you agree to our Terms of Service.</p>
@@ -69,30 +274,286 @@ const basePath = import.meta.env.BASE_URL;
     </div>
   </section>
 
+  <!-- Payment Simulation Modal -->
+  <div id="payment-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl border border-border-main/50 space-y-6 animate-fade-in">
+      <div class="text-center space-y-2">
+        <div class="inline-flex items-center space-x-1.5 mb-1">
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-primary animate-ping"></span>
+          <span class="font-heading font-extrabold text-[10px] uppercase tracking-widest text-text-secondary" id="modal-gateway-name">Razorpay</span>
+          <span class="font-heading font-extrabold text-[10px] uppercase tracking-widest text-brand-primary">Secure Portal</span>
+        </div>
+        <h3 class="font-heading font-semibold text-xl text-text-main">Simulate Payment Gateway</h3>
+        <p class="text-xs text-text-secondary leading-relaxed">
+          Verify e-commerce success or failure scenarios below.
+        </p>
+      </div>
+
+      <div class="bg-secondary-bg/50 border border-border-main/40 rounded-2xl p-4 flex justify-between items-center text-sm">
+        <div class="flex flex-col">
+          <span class="text-xs text-text-secondary">Total Payable</span>
+          <span class="font-heading font-bold text-text-main text-lg" id="modal-amount-payable">₹0.00</span>
+        </div>
+        <div class="flex flex-col items-end">
+          <span class="text-xs text-text-secondary">Billing Account</span>
+          <span class="font-mono text-xs text-text-main font-semibold" id="modal-user-email">guest@example.com</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <button type="button" id="sim-success-btn" class="w-full bg-success-sage hover:bg-success-sage/90 text-white font-semibold py-3.5 rounded-full text-sm shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          <span>Simulate Success (Authorise Payment)</span>
+        </button>
+        
+        <button type="button" id="sim-failure-btn" class="w-full bg-[#E53E3E] hover:bg-[#E53E3E]/90 text-white font-semibold py-3.5 rounded-full text-sm shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+          <span>Simulate Gateway Failure</span>
+        </button>
+        
+        <button type="button" id="close-modal-btn" class="w-full border border-border-main hover:bg-secondary-bg/30 text-text-secondary font-semibold py-2.5 rounded-full text-xs transition-colors cursor-pointer">
+          Cancel Authorization
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     import { supabase } from '../lib/supabase.js';
+    import { jsPDF } from 'jspdf';
+
+    // 1. Core Config
+    const EXCHANGE_RATES: Record<string, number> = {
+      INR: 95.37,
+      USD: 1.00,
+      GBP: 0.74
+    };
+
+    const CURRENCY_SYMBOLS: Record<string, string> = {
+      INR: '₹',
+      USD: '$',
+      GBP: '£'
+    };
+
+    const COUPON_DISCOUNTS: Record<string, number> = {
+      YOGA10: 0.10,
+      NAMASTE20: 0.20
+    };
+
+    // 2. Global Checkout State
+    let currentCart: any[] = [];
+    let currentStep = 1;
+    let appliedCoupon = '';
+    let currentTotalUSD = 0;
+    let orderDetailsCache: any = null;
+
+    // Helper formatter
+    function formatVal(amount: number, curr: string) {
+      const rate = EXCHANGE_RATES[curr] || 95.37;
+      const converted = amount * rate;
+      if (curr === 'INR') {
+        return new Intl.NumberFormat('en-IN', {
+          style: 'currency',
+          currency: 'INR',
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        }).format(converted);
+      } else if (curr === 'GBP') {
+        return new Intl.NumberFormat('en-GB', {
+          style: 'currency',
+          currency: 'GBP',
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(converted);
+      } else {
+        return new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(converted);
+      }
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
+      // Element Bindings
       const cartContainer = document.getElementById('cart-items-container');
       const emptyState = document.getElementById('cart-empty-state');
       const subtotalEl = document.getElementById('summary-subtotal');
       const totalEl = document.getElementById('summary-total');
+      const discountRow = document.getElementById('coupon-discount-row');
+      const discountEl = document.getElementById('summary-discount');
+      const couponLabel = document.getElementById('applied-coupon-label');
+      
       const proceedBtn = document.getElementById('proceed-checkout-btn') as HTMLButtonElement;
+      const paymentModal = document.getElementById('payment-modal');
+      const payNowBtn = document.getElementById('pay-now-btn');
+      
+      // Panels
+      const panelCart = document.getElementById('step-cart-panel');
+      const panelInfo = document.getElementById('step-info-panel');
+      const panelPayment = document.getElementById('step-payment-panel');
+      const panelSuccess = document.getElementById('step-success-panel');
+      const summaryColumn = document.getElementById('checkout-summary-column');
 
-      let currentCart: any[] = [];
-      let currentTotal = 0;
+      // Forms & Inputs
+      const couponInput = document.getElementById('coupon-input') as HTMLInputElement;
+      const applyCouponBtn = document.getElementById('apply-coupon-btn');
+      const couponFeedback = document.getElementById('coupon-feedback');
+      const infoForm = document.getElementById('checkout-info-form');
+      const clientNameInput = document.getElementById('checkout-name') as HTMLInputElement;
+      const clientEmailInput = document.getElementById('checkout-email') as HTMLInputElement;
 
+      // 3. Multi-step navigation logic
+      function updateStepsBar(step: number) {
+        const totalSteps = 4;
+        for (let i = 1; i <= totalSteps; i++) {
+          const indicator = document.getElementById(`step-ind-${i}`);
+          const line = document.getElementById(`step-line-${i}`);
+          
+          if (!indicator) continue;
+          
+          const badge = indicator.querySelector('span');
+          const label = indicator.querySelector('span:nth-child(2)');
+
+          if (i < step) {
+            // Completed steps
+            badge?.classList.remove('bg-brand-primary', 'bg-secondary-bg', 'text-white', 'text-text-secondary');
+            badge?.classList.add('bg-success-sage', 'text-white');
+            if (badge) badge.textContent = '✓';
+            label?.classList.remove('text-brand-primary');
+            label?.classList.add('text-success-sage');
+            if (line) line.className = 'h-0.5 bg-success-sage flex-grow -mt-6 mx-2';
+          } else if (i === step) {
+            // Active step
+            badge?.classList.remove('bg-success-sage', 'bg-secondary-bg', 'text-white', 'text-text-secondary');
+            badge?.classList.add('bg-brand-primary', 'text-white');
+            if (badge && i !== 4) badge.textContent = i.toString();
+            label?.classList.remove('text-success-sage');
+            label?.classList.add('text-brand-primary');
+            if (line) line.className = 'h-0.5 bg-border-main flex-grow -mt-6 mx-2';
+          } else {
+            // Future steps
+            badge?.classList.remove('bg-brand-primary', 'bg-success-sage', 'text-white');
+            badge?.classList.add('bg-secondary-bg', 'text-text-secondary', 'border', 'border-border-main');
+            if (badge && i !== 4) badge.textContent = i.toString();
+            label?.classList.remove('text-brand-primary', 'text-success-sage');
+            if (line) line.className = 'h-0.5 bg-border-main flex-grow -mt-6 mx-2';
+          }
+        }
+      }
+
+      function goToStep(step: number) {
+        currentStep = step;
+        updateStepsBar(step);
+
+        // Hide all panels
+        panelCart?.classList.add('hidden');
+        panelInfo?.classList.add('hidden');
+        panelPayment?.classList.add('hidden');
+        panelSuccess?.classList.add('hidden');
+
+        const titleEl = document.getElementById('checkout-title');
+        const subtitleEl = document.getElementById('checkout-subtitle');
+
+        if (step === 1) {
+          panelCart?.classList.remove('hidden');
+          summaryColumn?.classList.remove('hidden');
+          if (titleEl) titleEl.textContent = 'Your Shopping Cart';
+          if (subtitleEl) subtitleEl.textContent = 'Review your items and proceed to secure checkout.';
+        } else if (step === 2) {
+          panelInfo?.classList.remove('hidden');
+          summaryColumn?.classList.remove('hidden');
+          if (titleEl) titleEl.textContent = 'Verification details';
+          if (subtitleEl) subtitleEl.textContent = 'Confirm delivery info below.';
+          checkAuthAndPrefill();
+        } else if (step === 3) {
+          panelPayment?.classList.remove('hidden');
+          summaryColumn?.classList.remove('hidden');
+          if (titleEl) titleEl.textContent = 'Choose Payment Portal';
+          if (subtitleEl) subtitleEl.textContent = 'Secure gateway authorization.';
+        } else if (step === 4) {
+          panelSuccess?.classList.remove('hidden');
+          summaryColumn?.classList.add('hidden'); // Hide summary on final thank you portal
+          if (titleEl) titleEl.textContent = 'Checkout Success!';
+          if (subtitleEl) subtitleEl.textContent = 'Thank you for choosing Global Yoga Tips.';
+          renderSuccessPortal();
+        }
+      }
+
+      // Check User Authentication Profile and Auto-Prefill
+      async function checkAuthAndPrefill() {
+        const authPanel = document.getElementById('auth-required-panel');
+        const infoForm = document.getElementById('checkout-info-form');
+        const infoHeading = document.getElementById('info-heading');
+        const infoDesc = document.getElementById('info-description');
+        
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (!session) {
+          authPanel?.classList.remove('hidden');
+          infoForm?.classList.add('hidden');
+          infoHeading?.classList.add('hidden');
+          infoDesc?.classList.add('hidden');
+        } else {
+          authPanel?.classList.add('hidden');
+          infoForm?.classList.remove('hidden');
+          infoHeading?.classList.remove('hidden');
+          infoDesc?.classList.remove('hidden');
+          
+          if (clientEmailInput) clientEmailInput.value = session.user.email || '';
+          
+          const { data: profile } = await supabase.from('profiles').select('name').eq('id', session.user.id).single();
+          if (clientNameInput && profile) {
+            clientNameInput.value = profile.name || 'Yoga Practitioner';
+          }
+        }
+      }
+
+      // Back Buttons
+      document.querySelectorAll('.back-to-step1-btn').forEach(btn => {
+        btn.addEventListener('click', () => goToStep(1));
+      });
+      document.querySelectorAll('.back-to-step2-btn').forEach(btn => {
+        btn.addEventListener('click', () => goToStep(2));
+      });
+
+      // Guest Checkout click
+      document.getElementById('guest-checkout-btn')?.addEventListener('click', () => {
+        const authPanel = document.getElementById('auth-required-panel');
+        const infoForm = document.getElementById('checkout-info-form');
+        const infoHeading = document.getElementById('info-heading');
+        const infoDesc = document.getElementById('info-description');
+        
+        authPanel?.classList.add('hidden');
+        infoForm?.classList.remove('hidden');
+        infoHeading?.classList.remove('hidden');
+        infoDesc?.classList.remove('hidden');
+        
+        // Clear input values since it's guest checkout
+        if (clientNameInput) clientNameInput.value = '';
+        if (clientEmailInput) clientEmailInput.value = '';
+      });
+
+      // Submit Form step 2 -> step 3
+      infoForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        goToStep(3);
+      });
+
+      // 4. Cart Rendering
       function renderCart() {
         const cartStr = localStorage.getItem('yoga_cart');
         currentCart = cartStr ? JSON.parse(cartStr) : [];
+        const currency = localStorage.getItem('selected_currency') || 'INR';
         
-        if (currentCart.length === 0) {
+        if (currentCart.length === 0 && currentStep === 1) {
           cartContainer?.classList.add('hidden');
           emptyState?.classList.remove('hidden');
           emptyState?.classList.add('flex');
           proceedBtn.disabled = true;
           proceedBtn.classList.add('opacity-50', 'cursor-not-allowed');
-          currentTotal = 0;
+          currentTotalUSD = 0;
         } else {
           emptyState?.classList.add('hidden');
           emptyState?.classList.remove('flex');
@@ -100,9 +561,9 @@ const basePath = import.meta.env.BASE_URL;
           proceedBtn.disabled = false;
           proceedBtn.classList.remove('opacity-50', 'cursor-not-allowed');
 
-          currentTotal = currentCart.reduce((sum, item) => sum + item.price, 0);
+          currentTotalUSD = currentCart.reduce((sum, item) => sum + item.price, 0);
           
-          if (cartContainer) {
+          if (cartContainer && currentStep === 1) {
             cartContainer.innerHTML = currentCart.map((item, index) => `
               <div class="flex items-center justify-between p-4 border border-border-main rounded-2xl">
                 <div class="flex flex-col">
@@ -110,8 +571,8 @@ const basePath = import.meta.env.BASE_URL;
                   <span class="text-xs text-text-secondary">Premium PDF Download</span>
                 </div>
                 <div class="flex items-center space-x-6">
-                  <span class="font-heading font-bold text-text-main">$${item.price.toFixed(2)}</span>
-                  <button class="remove-item-btn text-text-secondary hover:text-[#E53E3E] transition-colors p-1" data-id="${item.id}">
+                  <span class="font-heading font-bold text-text-main">${formatVal(item.price, currency)}</span>
+                  <button class="remove-item-btn text-text-secondary hover:text-[#E53E3E] transition-colors p-1 cursor-pointer" data-id="${item.id}">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                   </button>
                 </div>
@@ -130,62 +591,354 @@ const basePath = import.meta.env.BASE_URL;
             });
           }
         }
+        
+        // Re-validate applied coupon conditions in case cart items changed
+        if (appliedCoupon === 'NAMASTE20' && currentCart.length <= 1) {
+          appliedCoupon = '';
+          if (couponFeedback) {
+            couponFeedback.textContent = 'NAMASTE20 was removed (requires 2+ products).';
+            couponFeedback.className = 'text-xs font-semibold text-[#E53E3E] block animate-pulse';
+          }
+        }
 
-        if (subtotalEl) subtotalEl.textContent = `$${currentTotal.toFixed(2)}`;
-        if (totalEl) totalEl.textContent = `$${currentTotal.toFixed(2)}`;
+        // Apply Coupon Rates
+        const discountPercentage = COUPON_DISCOUNTS[appliedCoupon] || 0;
+        const totalDiscountUSD = currentTotalUSD * discountPercentage;
+        const finalTotalUSD = currentTotalUSD - totalDiscountUSD;
+
+        // Subtotal
+        if (subtotalEl) subtotalEl.textContent = formatVal(currentTotalUSD, currency);
+
+        // Discount details
+        if (discountPercentage > 0) {
+          discountRow?.classList.remove('hidden');
+          if (discountEl) discountEl.textContent = `-${formatVal(totalDiscountUSD, currency)}`;
+          if (couponLabel) couponLabel.textContent = `${appliedCoupon} (${Math.round(discountPercentage * 100)}% OFF)`;
+        } else {
+          discountRow?.classList.add('hidden');
+        }
+
+        // Final Total
+        if (totalEl) totalEl.textContent = formatVal(finalTotalUSD, currency);
       }
 
+      // Initial Cart Load
       renderCart();
 
-      // Proceed to Place Order
+      // Listen for currency updates to update values
+      window.addEventListener('currency-changed', renderCart);
+
+      // 5. Coupon Implementation
+      function applyCouponCode(code: string) {
+        const cleaned = code.trim().toUpperCase();
+        if (COUPON_DISCOUNTS[cleaned] !== undefined) {
+          if (cleaned === 'NAMASTE20' && currentCart.length <= 1) {
+            appliedCoupon = '';
+            if (couponFeedback) {
+              couponFeedback.textContent = 'NAMASTE20 requires at least 2 items in the cart.';
+              couponFeedback.className = 'text-xs font-semibold text-[#E53E3E] block';
+            }
+          } else {
+            appliedCoupon = cleaned;
+            if (couponFeedback) {
+              couponFeedback.textContent = `Coupon "${cleaned}" applied successfully!`;
+              couponFeedback.className = 'text-xs font-semibold text-success-sage block';
+            }
+          }
+          if (couponInput) couponInput.value = cleaned;
+        } else {
+          appliedCoupon = '';
+          if (couponFeedback) {
+            couponFeedback.textContent = 'Invalid promo coupon code.';
+            couponFeedback.className = 'text-xs font-semibold text-[#E53E3E] block';
+          }
+        }
+        renderCart();
+      }
+
+      applyCouponBtn?.addEventListener('click', () => {
+        if (couponInput) applyCouponCode(couponInput.value);
+      });
+
+      // Quick select coupon buttons
+      document.querySelectorAll('.coupon-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const code = (e.currentTarget as HTMLElement).getAttribute('data-coupon') || '';
+          applyCouponCode(code);
+        });
+      });
+
+      // 6. Checkout flow validation triggers
       proceedBtn?.addEventListener('click', async () => {
+        // Enforce registration check
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
-          window.location.href = `/login?redirect=cart`;
+          goToStep(2); // Directs to Step 2 so they can see the sign-in option/warning banner.
+          return;
+        }
+        goToStep(2);
+      });
+
+      // 7. Payment simulation flow
+      payNowBtn?.addEventListener('click', () => {
+        // Form validations
+        if (!clientNameInput.value || !clientEmailInput.value) {
+          alert('Please make sure you fill in Name and Email correctly in Details.');
+          goToStep(2);
           return;
         }
 
-        // Disable button, show spinner
-        proceedBtn.disabled = true;
-        const btnText = document.getElementById('proceed-btn-text');
-        const btnIcon = document.getElementById('proceed-btn-icon');
-        const spinner = document.getElementById('proceed-spinner');
+        const selectedGateway = (document.querySelector('input[name="payment-method"]:checked') as HTMLInputElement)?.value || 'Razorpay';
+        const currency = localStorage.getItem('selected_currency') || 'INR';
+        const discountPercentage = COUPON_DISCOUNTS[appliedCoupon] || 0;
+        const finalTotalUSD = currentTotalUSD * (1 - discountPercentage);
         
-        if (btnText) btnText.textContent = 'Processing...';
-        if (btnIcon) btnIcon.classList.add('hidden');
-        if (spinner) spinner.classList.remove('hidden');
+        // Show simulation details in modal
+        const modalGateway = document.getElementById('modal-gateway-name');
+        const modalAmount = document.getElementById('modal-amount-payable');
+        const modalEmail = document.getElementById('modal-user-email');
 
-        // Place order directly
-        setTimeout(async () => {
-          const mockPaymentGroupId = 'order_' + Math.random().toString(36).substring(2, 11);
+        if (modalGateway) modalGateway.textContent = selectedGateway;
+        if (modalAmount) modalAmount.textContent = formatVal(finalTotalUSD, currency);
+        if (modalEmail) modalEmail.textContent = clientEmailInput.value;
+
+        // Open modal
+        paymentModal?.classList.remove('hidden');
+      });
+
+      // Close modal
+      document.getElementById('close-modal-btn')?.addEventListener('click', () => {
+        paymentModal?.classList.add('hidden');
+      });
+
+      // Simulation SUCCESS Path
+      document.getElementById('sim-success-btn')?.addEventListener('click', async () => {
+        paymentModal?.classList.add('hidden');
+        
+        // Block interface
+        payNowBtn!.setAttribute('disabled', 'true');
+        payNowBtn!.textContent = 'Processing Payment...';
+
+        const { data: { session } } = await supabase.auth.getSession();
+        const userId = session ? session.user.id : '00000000-0000-0000-0000-000000000000'; // Fallback guest validation if testing mock session
+
+        const currency = localStorage.getItem('selected_currency') || 'INR';
+        const rate = EXCHANGE_RATES[currency] || 95.37;
+        const discountPct = COUPON_DISCOUNTS[appliedCoupon] || 0;
+
+        const mockPaymentGroupId = 'order_' + Math.random().toString(36).substring(2, 11);
+        const orderRecords = [];
+
+        // Insert database entries
+        for (const item of currentCart) {
+          const finalPriceUSD = item.price * (1 - discountPct);
+          const finalPriceConverted = parseFloat((finalPriceUSD * rate).toFixed(2));
           
-          for (const item of currentCart) {
+          try {
             await supabase.from('orders').insert({
               id: mockPaymentGroupId + '_' + Math.random().toString(36).substring(2, 6),
-              user_id: session.user.id,
-              product_name: item.name,
-              amount: item.price,
+              user_id: userId,
+              product_name: `${item.name} [${currency}]`,
+              amount: finalPriceConverted,
               payment_status: 'completed'
             });
+          } catch (dbErr) {
+            console.warn("Could not insert order log:", dbErr);
           }
 
-          // Clear cart
-          localStorage.removeItem('yoga_cart');
-          window.dispatchEvent(new Event('cart-updated'));
+          orderRecords.push({
+            id: mockPaymentGroupId + '_' + Math.random().toString(36).substring(2, 6),
+            product_name: item.name,
+            amount: finalPriceConverted
+          });
+        }
 
-          if (btnText) btnText.textContent = 'Order Placed!';
-          if (spinner) spinner.classList.add('hidden');
-          if (btnIcon) {
-            btnIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>`;
-            btnIcon.classList.remove('hidden');
-          }
+        // Cache details for invoice generation
+        orderDetailsCache = {
+          groupId: mockPaymentGroupId,
+          buyerName: clientNameInput.value,
+          buyerEmail: clientEmailInput.value,
+          currency: currency,
+          items: orderRecords,
+          subtotal: currentTotalUSD * rate,
+          discount: currentTotalUSD * discountPct * rate,
+          total: currentTotalUSD * (1 - discountPct) * rate
+        };
 
-          // Redirect to dashboard orders
-          setTimeout(() => {
-            window.location.href = '/dashboard?tab=orders';
-          }, 1500);
-        }, 1000);
+        // Clear local storage cart
+        localStorage.removeItem('yoga_cart');
+        window.dispatchEvent(new Event('cart-updated'));
+
+        // Reset pay button
+        payNowBtn!.removeAttribute('disabled');
+        payNowBtn!.textContent = 'Complete Payment';
+
+        // Redirect to Step 4
+        goToStep(4);
       });
+
+      // Simulation FAILURE Path
+      document.getElementById('sim-failure-btn')?.addEventListener('click', () => {
+        paymentModal?.classList.add('hidden');
+        alert('Transaction simulation failed. Please review your billing details or choose another gateway and try again.');
+      });
+
+      // 8. Thank You access portal dynamic generation
+      function renderSuccessPortal() {
+        const successEmail = document.getElementById('success-email-text');
+        if (successEmail && orderDetailsCache) {
+          successEmail.textContent = orderDetailsCache.buyerEmail;
+        }
+
+        const accessContainer = document.getElementById('purchased-items-access');
+        if (accessContainer && orderDetailsCache) {
+          accessContainer.innerHTML = orderDetailsCache.items.map((item: any) => {
+            return `
+              <div class="bg-white border border-success-sage/20 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <h4 class="font-heading font-bold text-text-main text-sm">${item.product_name}</h4>
+                  <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-text-secondary mt-1">
+                    <span class="font-semibold text-success-sage flex items-center">
+                      <span class="w-1.5 h-1.5 rounded-full bg-success-sage mr-1"></span>
+                      Product Unlocked
+                    </span>
+                    <span>•</span>
+                    <span>Order Reference: <code class="bg-secondary-bg px-1 rounded font-mono font-bold text-[10px] text-text-main">${item.id}</code></span>
+                  </div>
+                </div>
+                <button type="button" class="success-download-btn btn-primary py-2 px-5 text-xs rounded-full shrink-0 cursor-pointer flex items-center justify-center space-x-1" data-name="${item.product_name}" data-id="${item.id}">
+                  <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                  <span>Download Ticket</span>
+                </button>
+              </div>
+            `;
+          }).join('');
+
+          // Download ticket action
+          document.querySelectorAll('.success-download-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              const target = e.currentTarget as HTMLButtonElement;
+              const name = target.getAttribute('data-name') || '';
+              const id = target.getAttribute('data-id') || '';
+              triggerFileDownload(name, id);
+            });
+          });
+        }
+      }
+
+      // Generate text ticket file download
+      function triggerFileDownload(name: string, id: string) {
+        const content = `================================================
+GLOBAL YOGA TIPS - DIGITAL PURCHASE TICKET
+================================================
+
+Thank you for your order! This file serves as your proof of purchase and download confirmation ticket.
+
+Product Name:   ${name}
+Reference ID:   ${id}
+Delivery Date:  ${new Date().toLocaleString()}
+Owner Account:  ${orderDetailsCache ? orderDetailsCache.buyerEmail : 'Practitioner'}
+
+INSTRUCTIONS:
+Your purchased guide is now fully unlocked. You can download the PDF files directly from your User Dashboard at www.globalyogatips.com/dashboard in the "Orders & Downloads" section.
+
+For support, reach out via: support@globalyogatips.com
+================================================`;
+        
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${name.replace(/\s+/g, '_')}_Purchase_Ticket.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      // 9. PDF Invoice Download Trigger
+      document.getElementById('download-success-invoice-btn')?.addEventListener('click', () => {
+        if (!orderDetailsCache) return;
+        
+        const doc = new jsPDF();
+        const pageWidth = doc.internal.pageSize.width;
+        
+        // Brand Header
+        doc.setFontSize(24);
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(232, 175, 199); // #E8AFC7
+        doc.text("Global Yoga Tips", pageWidth / 2, 30, { align: 'center' });
+        
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(100, 100, 100);
+        doc.text("Premium Wellness Programs & Digital Downloads", pageWidth / 2, 38, { align: 'center' });
+        
+        // Invoice Title
+        doc.setFontSize(20);
+        doc.setTextColor(51, 51, 51);
+        doc.text("INVOICE", 20, 60);
+        
+        // Details
+        doc.setFontSize(11);
+        doc.text(`Receipt Reference ID: ${orderDetailsCache.groupId}`, 20, 75);
+        doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 82);
+        doc.text(`Payment Gateway: simulated`, 20, 89);
+        
+        // Customer Details
+        doc.text(`Billed To:`, 120, 75);
+        doc.setFont("helvetica", "bold");
+        doc.text(orderDetailsCache.buyerName, 120, 82);
+        doc.setFont("helvetica", "normal");
+        doc.text(orderDetailsCache.buyerEmail, 120, 89);
+        
+        // Table Header
+        doc.setDrawColor(220, 220, 220);
+        doc.line(20, 105, pageWidth - 20, 105);
+        doc.setFont("helvetica", "bold");
+        doc.text("Description (Digital Download)", 20, 112);
+        doc.text("Price", pageWidth - 50, 112);
+        doc.line(20, 116, pageWidth - 20, 116);
+        
+        // Table Items
+        doc.setFont("helvetica", "normal");
+        let startY = 125;
+        const curr = orderDetailsCache.currency;
+        const sym = curr === 'INR' ? 'Rs.' : curr === 'GBP' ? 'GBP' : '$';
+        
+        orderDetailsCache.items.forEach((item: any) => {
+          doc.text(item.product_name, 20, startY);
+          doc.text(`${sym} ${parseFloat(item.amount).toFixed(2)}`, pageWidth - 50, startY);
+          startY += 10;
+        });
+
+        // Totals
+        const summaryY = startY + 10;
+        doc.line(100, summaryY - 5, pageWidth - 20, summaryY - 5);
+        
+        doc.text("Subtotal:", 100, summaryY);
+        doc.text(`${sym} ${parseFloat(orderDetailsCache.subtotal).toFixed(2)}`, pageWidth - 50, summaryY);
+
+        if (orderDetailsCache.discount > 0) {
+          doc.text("Discount:", 100, summaryY + 8);
+          doc.text(`-${sym} ${parseFloat(orderDetailsCache.discount).toFixed(2)}`, pageWidth - 50, summaryY + 8);
+        }
+
+        doc.setFont("helvetica", "bold");
+        doc.text("Total Paid:", 100, summaryY + 16);
+        doc.text(`${sym} ${parseFloat(orderDetailsCache.total).toFixed(2)}`, pageWidth - 50, summaryY + 16);
+        
+        // Footer
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        doc.setTextColor(150, 150, 150);
+        doc.text("This receipt constitutes proof of payment. Downloads are accessible permanently on your dashboard.", pageWidth / 2, 270, { align: 'center' });
+        
+        // Save PDF
+        doc.save(`Invoice_Receipt_${orderDetailsCache.groupId}.pdf`);
+      });
+
     });
   </script>
 </Layout>
+

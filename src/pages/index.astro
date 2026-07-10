@@ -14,7 +14,8 @@ const featuredPoses = [
     category: "Balance",
     benefits: ["Improves posture & balance", "Strengthens thighs, calves, ankles", "Relieves sciatica"],
     description: "A foundational standing balance pose that helps build focus, mental clarity, and physical stability while opening the hips.",
-    svgPath: "M12 3v18M12 7c2 0 4 1.5 5 3.5-2 .5-4 .5-5 .5M12 9c-2 0-4 1.5-5 3.5 2 .5 4 .5 5 .5M12 12c3 0 5 2 5.5 4.5-2.5.5-4.5 0-5.5-.5M12 14c-3 0-5 2-5.5 4.5 2.5.5 4.5 0 5.5-.5"
+    svgPath: "M12 3v18M12 7c2 0 4 1.5 5 3.5-2 .5-4 .5-5 .5M12 9c-2 0-4 1.5-5 3.5 2 .5 4 .5 5 .5M12 12c3 0 5 2 5.5 4.5-2.5.5-4.5 0-5.5-.5M12 14c-3 0-5 2-5.5 4.5 2.5.5 4.5 0 5.5-.5",
+    imagePath: "images/poses/tree_pose_2_1.png"
   },
   {
     englishName: "Downward-Facing Dog",
@@ -23,7 +24,8 @@ const featuredPoses = [
     category: "Flexibility",
     benefits: ["Stretches shoulders & hamstrings", "Strengthens arms and legs", "Energizes the body"],
     description: "One of the most widely recognized yoga poses, this gentle inversion stretches the entire back body while calming the nervous system.",
-    svgPath: "M19 20L12 4L5 20M8 15h8M12 4v4"
+    svgPath: "M19 20L12 4L5 20M8 15h8M12 4v4",
+    imagePath: "images/poses/downward_dog_2_1.png"
   },
   {
     englishName: "Warrior II",
@@ -32,7 +34,8 @@ const featuredPoses = [
     category: "Strength",
     benefits: ["Strengthens legs and ankles", "Stretches chest and lungs", "Builds stamina & focus"],
     description: "A powerful standing pose that builds strength in the lower body, improves circulation, and cultivates warrior-like concentration.",
-    svgPath: "M2 12h20M12 12v9M8 6l4 6 4-6"
+    svgPath: "M2 12h20M12 12v9M8 6l4 6 4-6",
+    imagePath: "images/poses/warrior_ii_2_1.png"
   }
 ];
 
@@ -46,7 +49,8 @@ const recentBlogs = [
     readTime: "5 min read",
     slug: "morning-stiffness-poses",
     coverColor: "from-[#FFF1F5] to-[#F5C2D7]/20",
-    svgPath: "M12 3v3M12 18v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M3 12h3M18 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"
+    svgPath: "M12 3v3M12 18v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M3 12h3M18 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12",
+    imagePath: "images/blog/morning_stiffness.png"
   },
   {
     title: "A Beginner's Guide to Mindfulness Meditation",
@@ -56,7 +60,8 @@ const recentBlogs = [
     readTime: "7 min read",
     slug: "mindfulness-meditation-guide",
     coverColor: "from-[#FFF9FB] to-[#D9B8FF]/20",
-    svgPath: "M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm1-13h-2v6h5v-2h-3z"
+    svgPath: "M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm1-13h-2v6h5v-2h-3z",
+    imagePath: "images/blog/meditation_techniques.png"
   }
 ];
 ---
@@ -236,7 +241,7 @@ const recentBlogs = [
               30-Day Yoga Challenge for Beginners
             </h2>
             <p class="text-text-secondary text-sm sm:text-base leading-relaxed max-w-2xl">
-              Kickstart your wellness ritual today. Our downloadable 30-day schedule contains structured daily practices, mindfulness tips, breathing cards, and PDF checklist logs. Just $25 for lifetime access.
+              Kickstart your wellness ritual today. Our downloadable 30-day schedule contains structured daily practices, mindfulness tips, breathing cards, and PDF checklist logs. Just <span class="dynamic-price" data-usd-amount="25">₹2,384</span> for lifetime access.
             </p>
             <div class="flex flex-wrap gap-4 text-xs font-semibold text-text-main pt-2">
               <span class="bg-white border border-border-main py-2 px-4 rounded-full">✓ 30 Daily Worksheets</span>
@@ -246,7 +251,7 @@ const recentBlogs = [
           </div>
           <div class="lg:col-span-4 flex lg:justify-end">
             <a href={`${basePath}programs`} class="btn-primary py-4 px-8 w-full lg:w-auto text-center shadow-md">
-              Buy Now for $25
+              Buy Now for <span class="dynamic-price" data-usd-amount="25">₹2,384</span>
             </a>
           </div>
         </div>

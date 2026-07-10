@@ -253,24 +253,63 @@ const basePath = import.meta.env.BASE_URL;
       } else {
         tableContainer?.classList.remove('hidden');
         if (tbody) {
-          tbody.innerHTML = completedOrders.map(order => `
-            <tr class="hover:bg-secondary-bg/20 transition-colors">
-              <td class="px-6 py-4 whitespace-nowrap">${new Date(order.purchase_date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</td>
-              <td class="px-6 py-4 font-semibold text-text-main">${order.product_name}</td>
-              <td class="px-6 py-4 font-mono text-xs text-text-secondary/80">${order.id}</td>
-              <td class="px-6 py-4 font-semibold text-text-main">$${parseFloat(order.amount).toFixed(2)}</td>
-              <td class="px-6 py-4">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-[#E8F8F0] text-success-sage">
-                  Completed
-                </span>
-              </td>
-              <td class="px-6 py-4">
-                <button type="button" class="download-invoice-btn text-brand-primary hover:underline font-semibold text-xs transition-colors cursor-pointer" data-order='${JSON.stringify(order).replace(/'/g, "&#39;")}'>
-                  PDF
-                </button>
-              </td>
-            </tr>
-          `).join('');
+          tbody.innerHTML = completedOrders.map(order => {
+            const currencyRegex = /\s*\[(INR|USD|GBP)\]$/;
+            const match = order.product_name.match(currencyRegex);
+            const orderCurrency = match ? match[1] : 'USD';
+            const cleanName = order.product_name.replace(currencyRegex, '');
+            
+            let formattedAmount = '';
+            const amountVal = parseFloat(order.amount);
+            if (orderCurrency === 'INR') {
+              formattedAmount = new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+              }).format(amountVal);
+            } else if (orderCurrency === 'GBP') {
+              formattedAmount = new Intl.NumberFormat('en-GB', {
+                style: 'currency',
+                currency: 'GBP',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }).format(amountVal);
+            } else {
+              formattedAmount = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }).format(amountVal);
+            }
+
+            const invoiceOrderData = {
+              ...order,
+              product_name: cleanName,
+              amount: amountVal,
+              currency: orderCurrency
+            };
+
+            return `
+              <tr class="hover:bg-secondary-bg/20 transition-colors">
+                <td class="px-6 py-4 whitespace-nowrap">${new Date(order.purchase_date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</td>
+                <td class="px-6 py-4 font-semibold text-text-main">${cleanName}</td>
+                <td class="px-6 py-4 font-mono text-xs text-text-secondary/80">${order.id}</td>
+                <td class="px-6 py-4 font-semibold text-text-main">${formattedAmount}</td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-[#E8F8F0] text-success-sage">
+                    Completed
+                  </span>
+                </td>
+                <td class="px-6 py-4">
+                  <button type="button" class="download-invoice-btn text-brand-primary hover:underline font-semibold text-xs transition-colors cursor-pointer" data-order='${JSON.stringify(invoiceOrderData).replace(/'/g, "&#39;")}'>
+                    PDF
+                  </button>
+                </td>
+              </tr>
+            `;
+          }).join('');
 
           // Wire up invoice download buttons
           document.querySelectorAll('.download-invoice-btn').forEach(btn => {
@@ -451,13 +490,24 @@ const basePath = import.meta.env.BASE_URL;
       // Table Content
       doc.setFont("helvetica", "normal");
       doc.text(order.product_name, 20, 135);
-      doc.text(`$${parseFloat(order.amount).toFixed(2)}`, pageWidth - 40, 135);
+      
+      const currency = order.currency || 'USD';
+      let formattedAmount = '';
+      if (currency === 'INR') {
+        formattedAmount = `Rs. ${parseFloat(order.amount).toFixed(2)}`;
+      } else if (currency === 'GBP') {
+        formattedAmount = `GBP ${parseFloat(order.amount).toFixed(2)}`;
+      } else {
+        formattedAmount = `$${parseFloat(order.amount).toFixed(2)}`;
+      }
+      
+      doc.text(formattedAmount, pageWidth - 40, 135);
       
       // Total
       doc.line(120, 145, pageWidth - 20, 145);
       doc.setFont("helvetica", "bold");
       doc.text("Total Paid:", 120, 155);
-      doc.text(`$${parseFloat(order.amount).toFixed(2)}`, pageWidth - 40, 155);
+      doc.text(formattedAmount, pageWidth - 40, 155);
       
       // Footer
       doc.setFont("helvetica", "normal");

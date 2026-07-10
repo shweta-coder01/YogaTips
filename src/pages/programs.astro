@@ -224,6 +224,9 @@ const programs = [
           window.dispatchEvent(new Event('cart-updated'));
         }
 
+        const basePath = document.body.dataset.baseUrl || '/';
+        window.location.href = `${basePath}cart`;
+
         // Visual feedback
         const originalText = btn.querySelector('span')?.textContent;
         const span = btn.querySelector('span');

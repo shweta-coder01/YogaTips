@@ -41,8 +41,8 @@ const basePath = import.meta.env.BASE_URL;
 
       <!-- Price Badge -->
       <div class="absolute bottom-4 right-4 bg-white border border-border-main rounded-full py-1.5 px-4 shadow-md flex items-center">
-        <span class="text-xs font-heading font-medium text-text-secondary mr-0.5">$</span>
-        <span class="text-lg font-heading font-bold text-text-main">{price}</span>
+        <span class="text-xs font-heading font-medium text-text-secondary mr-0.5 price-symbol">₹</span>
+        <span class="text-lg font-heading font-bold text-text-main price-val" data-base-price={price}>{Math.round(price * 95.37)}</span>
       </div>
     </div>
 
