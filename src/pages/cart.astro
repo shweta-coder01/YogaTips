@@ -769,6 +769,19 @@ const basePath = import.meta.env.BASE_URL;
         localStorage.removeItem('yoga_cart');
         window.dispatchEvent(new Event('cart-updated'));
 
+        // Send Order Confirmation Transactional Email (guest & logged-in user)
+        const guestName = clientNameInput ? clientNameInput.value.trim() : 'Yoga Practitioner';
+        const guestEmail = clientEmailInput ? clientEmailInput.value.trim() : '';
+        const groupTotalStr = formatVal(currentTotalUSD * (1 - discountPct), currency);
+
+        sendOrderConfirmationEmail(
+          guestEmail,
+          guestName,
+          mockPaymentGroupId,
+          orderRecords,
+          groupTotalStr
+        );
+
         // Reset pay button
         payNowBtn!.removeAttribute('disabled');
         payNowBtn!.textContent = 'Complete Payment';
@@ -823,6 +836,75 @@ const basePath = import.meta.env.BASE_URL;
               triggerFileDownload(name, id);
             });
           });
+        }
+      }
+
+      // Send Order Confirmation Email (EmailJS with fallback sandbox console logger)
+      async function sendOrderConfirmationEmail(email: string, name: string, orderId: string, items: any[], totalStr: string) {
+        const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID || '';
+        const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID || '';
+        const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY || '';
+
+        const orderSummary = items.map(item => `- ${item.product_name || item.name} (${totalStr})`).join('\n');
+        
+        const emailParams = {
+          to_email: email,
+          to_name: name || 'Valued Practitioner',
+          order_id: orderId,
+          order_summary: orderSummary,
+          total_price: totalStr,
+          site_name: 'Global Yoga Tips',
+          contact_email: 'support@globalyogatips.com'
+        };
+
+        const emailContentText = `
+================================================
+GLOBAL YOGA TIPS - ORDER CONFIRMATION RECEIPT
+================================================
+To:          ${emailParams.to_email}
+Name:        ${emailParams.to_name}
+Order Ref:   ${emailParams.order_id}
+Date:        ${new Date().toLocaleString()}
+
+Thank you for your purchase from Global Yoga Tips!
+Your digital files are ready for download.
+
+ORDER SUMMARY:
+${emailParams.order_summary}
+
+Total Paid:  ${emailParams.total_price}
+
+INSTRUCTIONS:
+Your purchased guide is now fully unlocked. You can download the PDF files directly from your User Dashboard at www.globalyogatips.com/dashboard in the "Orders & Downloads" section.
+
+For support, contact us at: support@globalyogatips.com
+================================================`;
+
+        console.log("================================================");
+        console.log("SIMULATED TRANSACTIONAL EMAIL:");
+        console.log(emailContentText);
+        console.log("================================================");
+
+        if (serviceId && templateId && publicKey) {
+          try {
+            const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                service_id: serviceId,
+                template_id: templateId,
+                user_id: publicKey,
+                template_params: emailParams
+              })
+            });
+            if (response.ok) {
+              console.log("EmailJS order email sent successfully!");
+            } else {
+              console.error("EmailJS sending failed:", await response.text());
+            }
+          } catch (err) {
+            console.error("Failed to connect to EmailJS:", err);
+          }
         }
       }
 

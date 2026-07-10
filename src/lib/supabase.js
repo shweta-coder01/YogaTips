@@ -107,6 +107,69 @@ class MockSupabase {
         return { data: { session: JSON.parse(sessionStr) }, error: null };
       },
 
+      async resetPasswordForEmail(email, options) {
+        if (typeof window === 'undefined') return { data: null, error: null };
+        const users = JSON.parse(localStorage.getItem('mock_users') || '[]');
+        const user = users.find(u => u.email && u.email.toLowerCase() === email.toLowerCase());
+        
+        if (!user) {
+          return { data: {}, error: null };
+        }
+        
+        const resetLink = `${options?.redirectTo || (window.location.origin + '/reset-password')}?token=mock-token-${user.id}`;
+        console.log("================================================");
+        console.log("SUPABASE SANDBOX - PASSWORD RESET EMAIL");
+        console.log(`To: ${email}`);
+        console.log(`Reset Link: ${resetLink}`);
+        console.log("================================================");
+        return { data: {}, error: null };
+      },
+
+      async updateUser({ password }) {
+        if (typeof window === 'undefined') return { data: null, error: { message: 'Browser required' } };
+        
+        const sessionStr = localStorage.getItem('mock_session');
+        let userId = '';
+        
+        if (sessionStr) {
+          const session = JSON.parse(sessionStr);
+          userId = session.user.id;
+        } else {
+          const urlParams = new URLSearchParams(window.location.search);
+          const token = urlParams.get('token') || '';
+          if (token.startsWith('mock-token-')) {
+            userId = token.replace('mock-token-', '');
+          }
+        }
+        
+        if (!userId) {
+          return { data: null, error: { message: 'Invalid reset session or token expired.' } };
+        }
+        
+        const users = JSON.parse(localStorage.getItem('mock_users') || '[]');
+        const userIndex = users.findIndex(u => u.id === userId);
+        
+        if (userIndex === -1) {
+          return { data: null, error: { message: 'User not found' } };
+        }
+        
+        users[userIndex].password = password;
+        localStorage.setItem('mock_users', JSON.stringify(users));
+        
+        const updatedUser = { 
+          id: users[userIndex].id, 
+          email: users[userIndex].email, 
+          phone: users[userIndex].phone, 
+          name: users[userIndex].name, 
+          created_at: users[userIndex].created_at 
+        };
+        const session = { user: updatedUser, token: 'mock-jwt-token' };
+        localStorage.setItem('mock_session', JSON.stringify(session));
+        self._notify(session);
+        
+        return { data: { user: updatedUser }, error: null };
+      },
+
       onAuthStateChange(callback) {
         if (typeof window === 'undefined') {
           return { data: { subscription: { unsubscribe() {} } } };
