@@ -140,6 +140,14 @@ import Layout from '../layouts/Layout.astro';
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         
+        const name = (document.getElementById('name') as HTMLInputElement).value.trim();
+        const email = (document.getElementById('email') as HTMLInputElement).value.trim();
+        const subject = (document.getElementById('subject') as HTMLInputElement).value.trim();
+        const message = (document.getElementById('message') as HTMLTextAreaElement).value.trim();
+
+        // Dispatch contact request email in the background
+        sendContactFormEmail(name, email, subject, message);
+
         // Hide form and show success message
         form.classList.add('hidden');
         successMsg.classList.remove('hidden');
@@ -152,6 +160,73 @@ import Layout from '../layouts/Layout.astro';
         successMsg.classList.add('hidden');
         form.classList.remove('hidden');
       });
+    }
+
+    async function sendContactFormEmail(name: string, email: string, subject: string, message: string) {
+      const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID || 'service_9x0ot27';
+      const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID || 'template_85akutm';
+      const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY || 'o3tejlg5hyrcE5bn9';
+
+      const emailContentText = `
+================================================
+GLOBAL YOGA TIPS - NEW CONTACT INQUIRY
+================================================
+From Name:   ${name}
+From Email:  ${email}
+Subject:     ${subject}
+Date:        ${new Date().toLocaleString()}
+
+MESSAGE:
+${message}
+================================================`;
+
+      console.log("================================================");
+      console.log("SENDING CONTACT ENQUIRY VIA EMAILJS...");
+      console.log(emailContentText);
+      console.log("================================================");
+
+      if (serviceId && templateId && publicKey) {
+        try {
+          const htmlBody = `
+            <div style="font-family: sans-serif; padding: 20px; color: #1a1a1a; max-width: 600px; margin: 0 auto; border: 1px solid #eaeaea; border-radius: 12px;">
+              <h2 style="color: #c4829e; font-weight: bold; border-bottom: 2px solid #eaeaea; padding-bottom: 10px;">New Contact Message Received</h2>
+              <p>You have received a new contact inquiry from the website.</p>
+              
+              <div style="background-color: #f7f7f7; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <p style="margin: 5px 0;"><strong>Sender Name:</strong> ${name}</p>
+                <p style="margin: 5px 0;"><strong>Sender Email:</strong> <a href="mailto:${email}" style="color: #c4829e;">${email}</a></p>
+                <p style="margin: 5px 0;"><strong>Subject:</strong> ${subject}</p>
+                <p style="margin: 5px 0;"><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+              </div>
+
+              <h3 style="border-bottom: 1px solid #eaeaea; padding-bottom: 5px;">Message Details</h3>
+              <p style="white-space: pre-wrap; line-height: 1.6;">${message}</p>
+            </div>
+          `;
+
+          const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              service_id: serviceId,
+              template_id: templateId,
+              user_id: publicKey,
+              template_params: {
+                subject: `New Contact Form: ${subject}`,
+                message: htmlBody,
+                to_email: 'shweta981166@gmail.com'
+              }
+            })
+          });
+          if (response.ok) {
+            console.log("Contact form email sent successfully!");
+          } else {
+            console.error("Contact form sending failed:", await response.text());
+          }
+        } catch (err) {
+          console.error("Failed to send contact email:", err);
+        }
+      }
     }
   </script>
 </Layout>

@@ -5,14 +5,8 @@ import Layout from '../layouts/Layout.astro';
 const team = [
   {
     name: "Elena Rostova",
-    role: "Founder & Lead Yoga Instructor",
-    bio: "Elena has spent over 12 years studying Vinyasa and Yin yoga in Rishikesh, India. She founded Global Yoga Tips to make luxury studio guidance accessible to anyone at home.",
-    avatarSvg: "M12 2a5 5 0 100 10 5 5 0 000-10zm0 12c-4.4 0-8 2-8 6v2h16v-2c0-4-3.6-6-8-6z"
-  },
-  {
-    name: "Marcus Vance",
-    role: "Mindfulness & Meditation Coach",
-    bio: "Marcus is a certified cognitive mindfulness specialist with a background in neuroscience. He curates our meditation blueprints to help busy professionals alleviate anxiety.",
+    role: "Lead Yoga Instructor",
+    bio: "Elena has spent over 12 years studying Vinyasa and Yin yoga in Rishikesh, India. She provides expert guidance to make professional studio practice accessible to anyone at home.",
     avatarSvg: "M12 2a5 5 0 100 10 5 5 0 000-10zm0 12c-4.4 0-8 2-8 6v2h16v-2c0-4-3.6-6-8-6z"
   }
 ];
@@ -89,7 +83,7 @@ const basePath = import.meta.env.BASE_URL;
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+      <div class="max-w-md mx-auto">
         {team.map(member => (
           <div class="luxury-card p-6 bg-white border border-border-main rounded-3xl flex flex-col items-center text-center space-y-4">
             <!-- Icon Avatar -->
