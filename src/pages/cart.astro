@@ -27,7 +27,7 @@ const basePath = import.meta.env.BASE_URL;
           <div class="h-0.5 bg-border-main flex-grow -mt-6 mx-2" id="step-line-2"></div>
           <div class="flex flex-col items-center space-y-2 step-indicator" data-step="3" id="step-ind-3">
             <span class="w-8 h-8 rounded-full bg-secondary-bg text-text-secondary flex items-center justify-center font-bold border border-border-main text-xs">3</span>
-            <span>Payment</span>
+            <span>Confirm Order</span>
           </div>
           <div class="h-0.5 bg-border-main flex-grow -mt-6 mx-2" id="step-line-3"></div>
           <div class="flex flex-col items-center space-y-2 step-indicator" data-step="4" id="step-ind-4">
@@ -110,40 +110,40 @@ const basePath = import.meta.env.BASE_URL;
             </form>
           </div>
 
-          <!-- STEP 3: PAYMENT METHOD -->
+          <!-- STEP 3: CONFIRM ORDER (COD) -->
           <div id="step-payment-panel" class="hidden space-y-6">
-            <h2 class="font-heading font-semibold text-2xl text-text-main">Select Payment Method</h2>
-            <p class="text-xs text-text-secondary -mt-4">Select your preferred payment gateway. Transactions are fully encrypted.</p>
+            <h2 class="font-heading font-semibold text-2xl text-text-main">Confirm Your Order</h2>
+            <p class="text-xs text-text-secondary -mt-4">Review your order and place it. Payment will be collected separately.</p>
             
             <div class="space-y-3">
-              <label class="payment-method-option flex items-center justify-between p-4 border border-brand-primary bg-brand-primary/5 rounded-2xl cursor-pointer hover:bg-brand-primary/5 transition-all">
+              <div class="flex items-center justify-between p-4 border border-brand-primary bg-brand-primary/5 rounded-2xl">
                 <div class="flex items-center space-x-3">
-                  <input type="radio" name="payment-method" value="Razorpay" checked class="h-4 w-4 text-brand-primary focus:ring-brand-primary border-border-main cursor-pointer" />
-                  <span class="font-semibold text-sm text-text-main">Razorpay (UPI / Cards / Netbanking)</span>
+                  <div class="w-10 h-10 bg-brand-primary/10 rounded-full flex items-center justify-center text-brand-primary">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                  </div>
+                  <div>
+                    <span class="font-semibold text-sm text-text-main block">Cash on Delivery (COD)</span>
+                    <span class="text-[11px] text-text-secondary">Pay when you receive your order</span>
+                  </div>
                 </div>
-                <div class="text-[9px] uppercase font-bold tracking-wider text-brand-primary bg-brand-primary/10 px-2.5 py-0.5 rounded">Razorpay</div>
-              </label>
+                <div class="text-[9px] uppercase font-bold tracking-wider text-brand-primary bg-brand-primary/10 px-2.5 py-0.5 rounded">COD</div>
+              </div>
 
-              <label class="payment-method-option flex items-center justify-between p-4 border border-border-main rounded-2xl cursor-pointer hover:bg-secondary-bg/20 transition-all">
-                <div class="flex items-center space-x-3">
-                  <input type="radio" name="payment-method" value="Stripe" class="h-4 w-4 text-brand-primary focus:ring-brand-primary border-border-main cursor-pointer" />
-                  <span class="font-semibold text-sm text-text-main">Stripe Checkout</span>
+              <!-- COD Info Note -->
+              <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start space-x-3">
+                <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 shrink-0 mt-0.5">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
-                <div class="text-[9px] uppercase font-bold tracking-wider text-text-secondary bg-secondary-bg px-2.5 py-0.5 rounded">Stripe</div>
-              </label>
-
-              <label class="payment-method-option flex items-center justify-between p-4 border border-border-main rounded-2xl cursor-pointer hover:bg-secondary-bg/20 transition-all">
-                <div class="flex items-center space-x-3">
-                  <input type="radio" name="payment-method" value="PayPal" class="h-4 w-4 text-brand-primary focus:ring-brand-primary border-border-main cursor-pointer" />
-                  <span class="font-semibold text-sm text-text-main">PayPal Secure Payment</span>
+                <div>
+                  <p class="text-xs font-semibold text-amber-800">Payment Link After Order</p>
+                  <p class="text-[11px] text-amber-700 leading-relaxed mt-0.5">Once your order is placed, you will receive a <strong>payment link</strong> on your registered email address. You can complete the payment at your convenience using the link provided.</p>
                 </div>
-                <div class="text-[9px] uppercase font-bold tracking-wider text-[#003087] bg-[#003087]/5 px-2.5 py-0.5 rounded">PayPal</div>
-              </label>
+              </div>
             </div>
             
             <div class="pt-4 flex space-x-3">
               <button type="button" class="back-to-step2-btn w-1/2 border border-border-main rounded-full py-3 text-sm font-semibold hover:bg-secondary-bg/20 transition-colors cursor-pointer">Back to Details</button>
-              <button type="button" id="pay-now-btn" class="w-1/2 btn-primary py-3 rounded-full text-sm font-semibold shadow-sm cursor-pointer">Complete Payment</button>
+              <button type="button" id="pay-now-btn" class="w-1/2 btn-primary py-3 rounded-full text-sm font-semibold shadow-sm cursor-pointer">Place Order (COD)</button>
             </div>
           </div>
 
@@ -157,7 +157,10 @@ const basePath = import.meta.env.BASE_URL;
               </div>
               <h2 class="font-heading font-semibold text-3xl text-text-main">Order Successfully Placed!</h2>
               <p class="text-sm text-text-secondary max-w-md mx-auto">
-                Thank you for your purchase! A confirmation email has been dispatched to <strong id="success-email-text" class="text-text-main"></strong>.
+                Thank you for your order! A confirmation email with your <strong class="text-brand-primary">payment link</strong> will be sent to <strong id="success-email-text" class="text-text-main"></strong>.
+              </p>
+              <p class="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-4 py-2 max-w-md mx-auto mt-2">
+                💳 Please complete your payment using the link you'll receive in your email to confirm your order.
               </p>
             </div>
 
@@ -274,49 +277,7 @@ const basePath = import.meta.env.BASE_URL;
     </div>
   </section>
 
-  <!-- Payment Simulation Modal -->
-  <div id="payment-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden">
-    <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl border border-border-main/50 space-y-6 animate-fade-in">
-      <div class="text-center space-y-2">
-        <div class="inline-flex items-center space-x-1.5 mb-1">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-primary animate-ping"></span>
-          <span class="font-heading font-extrabold text-[10px] uppercase tracking-widest text-text-secondary" id="modal-gateway-name">Razorpay</span>
-          <span class="font-heading font-extrabold text-[10px] uppercase tracking-widest text-brand-primary">Secure Portal</span>
-        </div>
-        <h3 class="font-heading font-semibold text-xl text-text-main">Simulate Payment Gateway</h3>
-        <p class="text-xs text-text-secondary leading-relaxed">
-          Verify e-commerce success or failure scenarios below.
-        </p>
-      </div>
-
-      <div class="bg-secondary-bg/50 border border-border-main/40 rounded-2xl p-4 flex justify-between items-center text-sm">
-        <div class="flex flex-col">
-          <span class="text-xs text-text-secondary">Total Payable</span>
-          <span class="font-heading font-bold text-text-main text-lg" id="modal-amount-payable">₹0.00</span>
-        </div>
-        <div class="flex flex-col items-end">
-          <span class="text-xs text-text-secondary">Billing Account</span>
-          <span class="font-mono text-xs text-text-main font-semibold" id="modal-user-email">guest@example.com</span>
-        </div>
-      </div>
-
-      <div class="flex flex-col gap-3">
-        <button type="button" id="sim-success-btn" class="w-full bg-success-sage hover:bg-success-sage/90 text-white font-semibold py-3.5 rounded-full text-sm shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer">
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-          <span>Simulate Success (Authorise Payment)</span>
-        </button>
-        
-        <button type="button" id="sim-failure-btn" class="w-full bg-[#E53E3E] hover:bg-[#E53E3E]/90 text-white font-semibold py-3.5 rounded-full text-sm shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer">
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
-          <span>Simulate Gateway Failure</span>
-        </button>
-        
-        <button type="button" id="close-modal-btn" class="w-full border border-border-main hover:bg-secondary-bg/30 text-text-secondary font-semibold py-2.5 rounded-full text-xs transition-colors cursor-pointer">
-          Cancel Authorization
-        </button>
-      </div>
-    </div>
-  </div>
+  <!-- Payment Modal removed - COD flow does not need a payment simulation modal -->
 
   <script>
     import { supabase } from '../lib/supabase.js';
@@ -386,7 +347,6 @@ const basePath = import.meta.env.BASE_URL;
       const couponLabel = document.getElementById('applied-coupon-label');
       
       const proceedBtn = document.getElementById('proceed-checkout-btn') as HTMLButtonElement;
-      const paymentModal = document.getElementById('payment-modal');
       const payNowBtn = document.getElementById('pay-now-btn');
       
       // Panels
@@ -470,8 +430,8 @@ const basePath = import.meta.env.BASE_URL;
         } else if (step === 3) {
           panelPayment?.classList.remove('hidden');
           summaryColumn?.classList.remove('hidden');
-          if (titleEl) titleEl.textContent = 'Choose Payment Portal';
-          if (subtitleEl) subtitleEl.textContent = 'Secure gateway authorization.';
+          if (titleEl) titleEl.textContent = 'Confirm Your Order';
+          if (subtitleEl) subtitleEl.textContent = 'Review and place your Cash on Delivery order.';
         } else if (step === 4) {
           panelSuccess?.classList.remove('hidden');
           summaryColumn?.classList.add('hidden'); // Hide summary on final thank you portal
@@ -679,8 +639,8 @@ const basePath = import.meta.env.BASE_URL;
         goToStep(2);
       });
 
-      // 7. Payment simulation flow
-      payNowBtn?.addEventListener('click', () => {
+      // 7. COD Order placement flow
+      payNowBtn?.addEventListener('click', async () => {
         // Form validations
         if (!clientNameInput.value || !clientEmailInput.value) {
           alert('Please make sure you fill in Name and Email correctly in Details.');
@@ -688,39 +648,12 @@ const basePath = import.meta.env.BASE_URL;
           return;
         }
 
-        const selectedGateway = (document.querySelector('input[name="payment-method"]:checked') as HTMLInputElement)?.value || 'Razorpay';
-        const currency = localStorage.getItem('selected_currency') || 'INR';
-        const discountPercentage = COUPON_DISCOUNTS[appliedCoupon] || 0;
-        const finalTotalUSD = currentTotalUSD * (1 - discountPercentage);
-        
-        // Show simulation details in modal
-        const modalGateway = document.getElementById('modal-gateway-name');
-        const modalAmount = document.getElementById('modal-amount-payable');
-        const modalEmail = document.getElementById('modal-user-email');
-
-        if (modalGateway) modalGateway.textContent = selectedGateway;
-        if (modalAmount) modalAmount.textContent = formatVal(finalTotalUSD, currency);
-        if (modalEmail) modalEmail.textContent = clientEmailInput.value;
-
-        // Open modal
-        paymentModal?.classList.remove('hidden');
-      });
-
-      // Close modal
-      document.getElementById('close-modal-btn')?.addEventListener('click', () => {
-        paymentModal?.classList.add('hidden');
-      });
-
-      // Simulation SUCCESS Path
-      document.getElementById('sim-success-btn')?.addEventListener('click', async () => {
-        paymentModal?.classList.add('hidden');
-        
         // Block interface
         payNowBtn!.setAttribute('disabled', 'true');
-        payNowBtn!.textContent = 'Processing Payment...';
+        payNowBtn!.textContent = 'Placing Order...';
 
         const { data: { session } } = await supabase.auth.getSession();
-        const userId = session ? session.user.id : '00000000-0000-0000-0000-000000000000'; // Fallback guest validation if testing mock session
+        const userId = session ? session.user.id : '00000000-0000-0000-0000-000000000000';
 
         const currency = localStorage.getItem('selected_currency') || 'INR';
         const rate = EXCHANGE_RATES[currency] || 95.37;
@@ -740,7 +673,7 @@ const basePath = import.meta.env.BASE_URL;
               user_id: userId,
               product_name: `${item.name} [${currency}]`,
               amount: finalPriceConverted,
-              payment_status: 'completed'
+              payment_status: 'cod_pending'
             });
           } catch (dbErr) {
             console.warn("Could not insert order log:", dbErr);
@@ -769,7 +702,7 @@ const basePath = import.meta.env.BASE_URL;
         localStorage.removeItem('yoga_cart');
         window.dispatchEvent(new Event('cart-updated'));
 
-        // Send Order Confirmation Transactional Email (guest & logged-in user)
+        // Send Order Confirmation Transactional Email to the customer
         const guestName = clientNameInput ? clientNameInput.value.trim() : 'Yoga Practitioner';
         const guestEmail = clientEmailInput ? clientEmailInput.value.trim() : '';
         const groupTotalStr = formatVal(currentTotalUSD * (1 - discountPct), currency);
@@ -784,16 +717,10 @@ const basePath = import.meta.env.BASE_URL;
 
         // Reset pay button
         payNowBtn!.removeAttribute('disabled');
-        payNowBtn!.textContent = 'Complete Payment';
+        payNowBtn!.textContent = 'Place Order (COD)';
 
         // Redirect to Step 4
         goToStep(4);
-      });
-
-      // Simulation FAILURE Path
-      document.getElementById('sim-failure-btn')?.addEventListener('click', () => {
-        paymentModal?.classList.add('hidden');
-        alert('Transaction simulation failed. Please review your billing details or choose another gateway and try again.');
       });
 
       // 8. Thank You access portal dynamic generation
@@ -849,23 +776,26 @@ const basePath = import.meta.env.BASE_URL;
         
         const emailContentText = `
 ================================================
-GLOBAL YOGA TIPS - ORDER CONFIRMATION RECEIPT
+GLOBAL YOGA TIPS - ORDER CONFIRMATION (COD)
 ================================================
 To:          ${email}
 Name:        ${name || 'Valued Practitioner'}
 Order Ref:   ${orderId}
 Date:        ${new Date().toLocaleString()}
 
-Thank you for your purchase from Global Yoga Tips!
-Your digital files are ready for download.
+Thank you for your order from Global Yoga Tips!
+Your order has been placed successfully via Cash on Delivery (COD).
+
+You will receive a payment link on your email shortly.
+Please complete the payment to confirm your order.
 
 ORDER SUMMARY:
 ${orderSummary}
 
-Total Paid:  ${totalStr}
+Total Amount: ${totalStr}
 
 INSTRUCTIONS:
-Your purchased guide is now fully unlocked. You can download the PDF files directly from your User Dashboard at www.globalyogatips.com/dashboard in the "Orders & Downloads" section.
+Once payment is completed, your purchased guide will be fully unlocked. You can download the PDF files directly from your User Dashboard at www.globalyogatips.com/dashboard in the "Orders & Downloads" section.
 
 For support, contact us at: support@globalyogatips.com
 ================================================`;
@@ -879,14 +809,20 @@ For support, contact us at: support@globalyogatips.com
           try {
             const htmlBody = `
               <div style="font-family: sans-serif; padding: 20px; color: #1a1a1a; max-width: 600px; margin: 0 auto; border: 1px solid #eaeaea; border-radius: 12px;">
-                <h2 style="color: #c4829e; font-weight: bold; border-bottom: 2px solid #eaeaea; padding-bottom: 10px;">GLOBAL YOGA TIPS - ORDER RECEIPT</h2>
+                <h2 style="color: #c4829e; font-weight: bold; border-bottom: 2px solid #eaeaea; padding-bottom: 10px;">GLOBAL YOGA TIPS - ORDER CONFIRMATION (COD)</h2>
                 <p>Hello <strong>${name || 'Valued Practitioner'}</strong>,</p>
-                <p>Thank you for your purchase! Your digital files are unlocked and ready for download.</p>
+                <p>Thank you for your order! Your order has been placed successfully via <strong>Cash on Delivery (COD)</strong>.</p>
                 
+                <div style="background-color: #fff8e1; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #ffe082;">
+                  <p style="margin: 5px 0; color: #e65100; font-weight: bold;">💳 Payment Link</p>
+                  <p style="margin: 5px 0; color: #424242;">You will receive a payment link on this email shortly. Please complete the payment to confirm your order and unlock your digital downloads.</p>
+                </div>
+
                 <div style="background-color: #f7f7f7; padding: 15px; border-radius: 8px; margin: 20px 0;">
                   <p style="margin: 5px 0;"><strong>Order Ref:</strong> ${orderId}</p>
                   <p style="margin: 5px 0;"><strong>Date:</strong> ${new Date().toLocaleString()}</p>
-                  <p style="margin: 5px 0;"><strong>Total Paid:</strong> ${totalStr}</p>
+                  <p style="margin: 5px 0;"><strong>Total Amount:</strong> ${totalStr}</p>
+                  <p style="margin: 5px 0;"><strong>Payment Status:</strong> <span style="color: #e65100; font-weight: bold;">Pending (COD)</span></p>
                 </div>
 
                 <h3 style="border-bottom: 1px solid #eaeaea; padding-bottom: 5px;">Order Summary</h3>
@@ -895,7 +831,7 @@ For support, contact us at: support@globalyogatips.com
                 </ul>
 
                 <h3 style="border-bottom: 1px solid #eaeaea; padding-bottom: 5px;">Access Instructions</h3>
-                <p>You can access and download your premium guides directly at any time by logging into your User Dashboard at <a href="https://www.globalyogatips.com/dashboard" style="color: #c4829e; font-weight: bold; text-decoration: none;">www.globalyogatips.com/dashboard</a> under the <em>Orders & Downloads</em> tab.</p>
+                <p>Once payment is completed, you can access and download your premium guides by logging into your User Dashboard at <a href="https://www.globalyogatips.com/dashboard" style="color: #c4829e; font-weight: bold; text-decoration: none;">www.globalyogatips.com/dashboard</a> under the <em>Orders & Downloads</em> tab.</p>
                 
                 <p style="margin-top: 30px; font-size: 11px; color: #888888; border-top: 1px solid #eaeaea; padding-top: 15px; text-align: center;">
                   If you have any questions, reply to this email or contact support@globalyogatips.com.
@@ -911,7 +847,7 @@ For support, contact us at: support@globalyogatips.com
                 template_id: templateId,
                 user_id: publicKey,
                 template_params: {
-                  subject: `Order Confirmation #${orderId} - Global Yoga Tips`,
+                  subject: `Order Confirmation (COD) #${orderId} - Global Yoga Tips`,
                   message: htmlBody,
                   to_email: email
                 }
@@ -991,7 +927,7 @@ For support, reach out via: support@globalyogatips.com
         doc.setFontSize(11);
         doc.text(`Receipt Reference ID: ${orderDetailsCache.groupId}`, 20, 75);
         doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 82);
-        doc.text(`Payment Gateway: simulated`, 20, 89);
+        doc.text(`Payment Method: Cash on Delivery (COD)`, 20, 89);
         
         // Customer Details
         doc.text(`Billed To:`, 120, 75);
